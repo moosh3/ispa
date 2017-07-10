@@ -1,0 +1,4 @@
+.*
+!.coveragrc
+!.env
+!.pylintrc
