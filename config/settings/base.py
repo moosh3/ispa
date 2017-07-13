@@ -27,6 +27,8 @@ if READ_DOT_ENV_FILE:
     env.read_env(env_file)
     print('The .env file has been loaded. See base.py for more information')
 
+WAGTAIL_SITE_NAME = 'My Example Site'
+
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
@@ -40,7 +42,20 @@ DJANGO_APPS = [
 
     # Useful template tags:
     # 'django.contrib.humanize',
+    'wagtail.wagtailforms',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailcore',
 
+    'modelcluster',
+    'taggit',
     # Admin
     'django.contrib.admin',
 ]
@@ -71,6 +86,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
@@ -179,7 +196,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(ROOT_DIR('staticfiles'))
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
