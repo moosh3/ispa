@@ -1,6 +1,4 @@
-FROM ubuntu:precise
-
-WORKDIR /home/docker
+FROM phusion/baseimage:latest
 
 COPY requirements/base.txt /home/docker/requirements.txt
 COPY requirements/local.txt /home/docker/requirements-local.txt
@@ -16,9 +14,10 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && \
         python-setuptools && \
     easy_install pip && pip install uwsgi && \
     pip install -r /home/docker/requirements.txt\
-    -r /home/docker/requirements-local.txt
-    -r /home/docker/requirements-test.txt
-    -r /home/docker/requirements-prod.txt
+    -r /home/docker/requirements-local.txt \
+    -r /home/docker/requirements-test.txt \
+    -r /home/docker/requirements-prod.txt && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY scripts/docker-entrypoint.sh /home/docker/docker-entrypoint.sh
 RUN chmod u+x /home/docker/docker-entrypoint.sh
@@ -26,4 +25,4 @@ RUN chmod u+x /home/docker/docker-entrypoint.sh
 COPY . /home/docker/src
 
 WORKDIR /home/docker
-CMD ["/bin/bash", "docker-entrypoint.sh"]
+CMD ["/sbin/my_init"]
