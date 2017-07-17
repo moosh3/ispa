@@ -1,3 +1,0 @@
-# This file is here because many PaaS look for
-# requirements in the root dir
--r requirements/prod.txt
