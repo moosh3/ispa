@@ -3,7 +3,7 @@ FROM ispa_base:latest
 COPY requirements/base.txt /home/docker/requirements-base.txt
 COPY requirements/local.txt /home/docker/requirements-local.txt
 
-RUN easy_install pip && pip install -r /home/docker/requirements-base.txt \
+RUN pip3 install -r /home/docker/requirements-base.txt \
     -r /home/docker/requirements-local.txt
 
 COPY docker-entrypoint.sh /usr/local/bin/

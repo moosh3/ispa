@@ -3,7 +3,7 @@ FROM ispa_base:latest
 COPY requirements/base.txt /home/docker/requirements-base.txt
 COPY requirements/prod.txt /home/docker/requirements-prod.txt
 
-RUN pip install -r /home/docker/requirements-base.txt \
+RUN pip3 install -r /home/docker/requirements-base.txt \
     -r /home/docker/requirements/prod.txt
 
 RUN pip install uwsgi
