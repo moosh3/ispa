@@ -3,8 +3,9 @@ FROM ispa_base:latest
 COPY requirements/base.txt /home/docker/requirements-base.txt
 COPY requirements/local.txt /home/docker/requirements-local.txt
 
-RUN pip install -r /home/docker/requirements-base.txt \
-    -r /home/docker/requirements-local.txt
+RUN pip3 install -r /home/docker/requirements-base.txt\
+    -r /home/docker/requirements-local.txt && \
+    apt-get remove -y python3-pip
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh

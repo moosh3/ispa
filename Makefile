@@ -4,8 +4,8 @@ build:
 
 			docker build -t ispa_base:latest -f Dockerfile.base .
 			docker build -t ispa:latest -f Dockerfile.prod .
-			docker build -t ispa:latest-local Dockerfile.local .
-			docker build -t ispa:latest-test Dockerfile.unittest .
+			docker build -t ispa:latest-local -f Dockerfile.local .
+			docker build -t ispa:latest-test -f Dockerfile.unittest .
 			docker-compose -f common-services.yml build
 
 start_services:
