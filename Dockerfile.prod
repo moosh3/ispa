@@ -1,0 +1,16 @@
+FROM ispa_base:latest
+
+COPY requirements/base.txt /home/docker/requirements-base.txt
+COPY requirements/prod.txt /home/docker/requirements-prod.txt
+
+RUN pip install -r /home/docker/requirements-base.txt \
+    -r /home/docker/requirements/prod.txt
+
+COPY home/docker/docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+COPY /home/docker/run_celery.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/run_celery.sh
+
+RUN adduser --disabled-password --gecos '' celery
+CMD ["./docker-entrypoint.sh"]

@@ -1,52 +1,16 @@
 version: '2'
 
 services:
-  nginx:
-    image: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - .:/home/docker
-      - ./config/nginx/conf.d/nginx.conf:/etc/nginx/conf.d/nginx.conf
-    depends_on:
-      - web  # PostgreSQL database
-
-  db:
-    image: postgres:9.4
-    hostname: db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-    ports:
-      - "5432:5432"
-
-  # Redis
-  redis:
-    image: redis:2.8.19
-    hostname: redis
-
-  # RabbitMQ
-  rabbit:
-    hostname: rabbit
-    image: rabbitmq:3.6.0
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=mypass
-    ports:
-      - "5672:5672"  # we forward this port because it's useful for debugging
-      - "15672:15672"  # here, we can access rabbitmq management plugin
-
-  # Django web server
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
+    command: python manage.py runserver 0.0.0.0:8000
     hostname: web
     volumes:
       - .:/home/docker  # mount current directory inside container
     ports:
-      - "8000"
+      - "8000:8000"
     # set up links so that web knows about db, rabbit and redis
     links:
       - db

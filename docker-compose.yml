@@ -4,7 +4,10 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
+      labels:
+        com.ispa.description: "ISPA webapp"
+        com.ispa.maintainer: "Alec Cunningham"
     hostname: web
     volumes:
       - .:/home/docker  # mount current directory inside container
