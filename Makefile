@@ -6,16 +6,16 @@ build:
 			docker build -t ispa:latest -f Dockerfile.prod .
 			docker build -t ispa:latest-local Dockerfile.local .
 			docker build -t ispa:latest-test Dockerfile.unittest .
-			docker-compose -f docker-compose.local.yml build
+			docker-compose -f common-services.yml build
 
 start_services:
 
-			docker-compose -f common-services up
+			docker-compose -f common-services.yml up
 
 run_local:
 
 			docker run -it --rm -d --workdir=/home/docker/ \
-			--volume $(pwd)/config:/home/docker/config \
+			--volume $(pwd)/config:/home/docker/config/ \
 			--volume $(pwd)/ispa:/home/docker/src \
 			--volume $(pwd)/requirements:/home/docker/requirements \
 			--name ispa --publish 8000:8000 \
