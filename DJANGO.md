@@ -3,11 +3,11 @@ Based on the google doc, break down the site into Django views and models, speci
 
 ## Views
 EX (just list them for now):
-EventHome
+- EventHome
 
 ## Models
 EX:
-Event <-- MODEL NAME
-  name <-- MODEL FIELDS
-  date
-  location
+- Event <-- MODEL NAME
+  - name <-- MODEL FIELDS
+  - date
+  - location
