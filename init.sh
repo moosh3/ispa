@@ -16,3 +16,5 @@ chmod +x /usr/local/bin/docker-cleanup
 
 ln -s /vagrant /home/ubuntu/code
 apt-get install -y make
+
+groupadd docker && usermod -aG docker $USER
