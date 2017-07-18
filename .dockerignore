@@ -3,3 +3,8 @@
 !.env
 !.pylintrc
 docs/
+CONTRIBUTING.md
+README.md
+Makefile
+LICENSE
+Vagrantfile
