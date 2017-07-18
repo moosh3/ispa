@@ -21,7 +21,7 @@ groupadd docker && usermod -aG docker $USER
 
 #Install python3, python3-dev, python3-setuptools & python3-pip
 
-apt-get install python3 \
+apt-get install -y python3 \
 	python3-dev \
 	python3-setuptools \
 	python3-pip 
