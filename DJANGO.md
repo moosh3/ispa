@@ -23,15 +23,44 @@ EX:
   - description
   - time
   - type of event (speaker, ball game, meeting?)
-  - rsvp? (going, not going, interested)
+  - rsvp? (going, not going, interested) 
 
 - Past Events (maybe seperate model for archiving special events (speakers or games??)
   - # of people that attended
 
 - Blog
   - posts
-    - author
-    - date
-    - time
-    - description
+    
+- Posts     
+  - author
+  - date
+  - time
+  - description
+
+- Team 
+  - name 
+  - Grade 
+  - Major
+  - email
+
+- User
+  - first name 
+  - last name
+  - id
+  - username
+  - grade
+  - grad year
+  - email
+  - major
+  - phone #
+  - points (for point system?)
+
+
+
+
+
+
+
+
+
 
