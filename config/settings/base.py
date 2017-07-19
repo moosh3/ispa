@@ -28,7 +28,7 @@ if READ_DOT_ENV_FILE:
     env.read_env(env_file)
     print('The .env file has been loaded. See base.py for more information')
 
-WAGTAIL_SITE_NAME = 'My Example Site'
+WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -42,9 +42,18 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     # API
     'rest_framework',
-    'ispa',
     # Useful template tags:
     # 'django.contrib.humanize',
+    'modelcluster',
+    'taggit',
+    # Admin
+    'django.contrib.admin',
+]
+THIRD_PARTY_APPS = [
+    'crispy_forms',  # Form layouts
+    'allauth',  # registration
+    'allauth.account',  # registration
+    'allauth.socialaccount',  # registration
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -56,23 +65,14 @@ DJANGO_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
-
-    'modelcluster',
-    'taggit',
-    # Admin
-    'django.contrib.admin',
-]
-THIRD_PARTY_APPS = [
-    'crispy_forms',  # Form layouts
-    'allauth',  # registration
-    'allauth.account',  # registration
-    'allauth.socialaccount',  # registration
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    # custom users app
     # Your stuff: custom apps go here
+    'core',
+    'events',
+    'points',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -114,6 +114,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
     ("Alec Cunningham", 'aleccunningham96@gmail.com'),
+    ("Freddy Marquez", 'freddymrqz28@gmail.com'),
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers

@@ -2,13 +2,7 @@
 Local settings
 
 - Run in Debug mode
-{% if cookiecutter.use_mailhog == 'y' and cookiecutter.use_docker == 'y' %}
-- Use mailhog for emails
-{% elif cookiecutter.use_mailhog == 'y' and cookiecutter.use_docker == 'n' %}
-- Use mailhog for emails
-{% else %}
 - Use console backend for emails
-{% endif %}
 - Add Django Debug Toolbar
 - Add django-extensions as app
 """
@@ -57,7 +51,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # django-extensions
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ['django_extensions', 'core', 'api', 'events', 'points']
+INSTALLED_APPS += ['django_extensions',]
 
 # TESTING
 # ------------------------------------------------------------------------------
