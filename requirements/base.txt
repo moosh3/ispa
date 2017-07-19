@@ -14,4 +14,4 @@ djangorestframework
 markdown
 wagtail
 django-crispy-forms
-gunicorn
+gunicorn==19.7.1
