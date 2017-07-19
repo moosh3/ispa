@@ -57,7 +57,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # django-extensions
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ['django_extensions', ]
+INSTALLED_APPS += ['django_extensions', 'core', 'api', 'events', 'points']
 
 # TESTING
 # ------------------------------------------------------------------------------
