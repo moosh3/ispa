@@ -10,7 +10,7 @@ build:
 
 start_services:
 
-			docker-compose -f common-services.yml up
+			docker-compose -f common-services.yml up -d
 
 run_local:
 
