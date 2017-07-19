@@ -47,8 +47,6 @@ X_FRAME_OPTIONS = 'DENY'
 ALLOWED_HOSTS = '*'
 # END SITE CONFIGURATION
 
-INSTALLED_APPS += ['gunicorn', ]
-
 # URL that handles the media served from MEDIA_ROOT, used for managing
 # stored files.
 
@@ -98,7 +96,7 @@ CACHES = {
     }
 }
 
-#TODO Add logging configuration 
+#TODO Add logging configuration
 
 # Custom Admin URL, use {% raw %}{% url 'admin:index' %}{% endraw %}
 ADMIN_URL = env('DJANGO_ADMIN_URL')
