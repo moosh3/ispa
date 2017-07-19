@@ -18,3 +18,10 @@ ln -s /vagrant /home/ubuntu/code
 apt-get install -y make
 
 groupadd docker && usermod -aG docker $USER
+
+#Install python3, python3-dev, python3-setuptools & python3-pip
+
+apt-get install -y python3 \
+	python3-dev \
+	python3-setuptools \
+	python3-pip 
