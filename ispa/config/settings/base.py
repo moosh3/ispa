@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import environ
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 #APP_DIR = BASE_DIR.path('ispa')
 
 # Load operating system environment variables and then prepare to use them

@@ -1,13 +1,22 @@
-FROM ispa_base:latest
+FROM python:3.5
+ENV PYTHONUNBUFFERED 1
 
 COPY requirements/base.txt /home/docker/requirements-base.txt
 COPY requirements/local.txt /home/docker/requirements-local.txt
 
-RUN pip3 install -r /home/docker/requirements-base.txt\
-    -r /home/docker/requirements-local.txt && \
-    apt-get remove -y python3-pip
-
-COPY . .
+RUN pip install -r /home/docker/requirements-base.txt\
+    -r /home/docker/requirements-local.txt
 
 RUN adduser --disabled-password --gecos '' celery
-CMD ["./docker-entrypoint.sh"]
+
+WORKDIR /home/docker
+
+COPY entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r//' /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+COPY start-dev.sh /start-dev.sh
+RUN sed -i 's/\r//' /start-dev.sh
+RUN chmod +x /start-dev.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
