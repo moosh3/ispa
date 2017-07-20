@@ -15,6 +15,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - postgres_backup:/backups
+    env_file: .env
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ispa_project/nging/Dockerfile
+    depends_on:
+      - django
+    ports:
+      - "0.0.0.0:80:80"
 
   django:
     build:
@@ -25,10 +35,9 @@ services:
         com.ispa.maintainer: "Alec Cunningham"
     hostname: web
     command: /gunicorn.sh
-    ports:
-      - "0.0.0.0:8000"
     depends_on:
       - db
+    env_file: .env
 
   # Redis
   redis:

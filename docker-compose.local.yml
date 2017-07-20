@@ -48,18 +48,3 @@ services:
     ports:
       - "5672:5672"  # we forward this port because it's useful for debugging
       - "15672:15672"  # here, we can access rabbitmq management plugin
-
-  # Celery worker
-  worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: ./run_celery.sh
-    volumes:
-      - .:/home/docker
-    links:
-      - db
-      - rabbit
-      - redis
-    depends_on:
-      - rabbit
