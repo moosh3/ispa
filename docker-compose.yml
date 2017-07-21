@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 
 volumes:
   postgres_data: {}
@@ -6,7 +6,9 @@ volumes:
 
 services:
   db:
-    image: postgresql:latest
+    build:
+      context: postgres/
+    container_name: ispa_db_prod
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -14,12 +16,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - postgres_backup:/backups
-    env_file: .env
 
   nginx:
     build:
       context: nginx/
-      dockerfile: Dockerfile
+    container_name: ispa_nginx_prod
     depends_on:
       - django
     ports:
@@ -29,8 +30,7 @@ services:
     build:
       context: ispa_project/
       dockerfile: Dockerfile
-    hostname: django
-    command: /gunicorn.sh
+    container_name: ispa_prod
     depends_on:
       - db
     env_file: .env
@@ -38,12 +38,13 @@ services:
   # Redis
   redis:
     image: redis:3.0
-    hostname: redis
+    container_name: ispa_redis_prod
+
 
   # RabbitMQ
   rabbit:
-    hostname: rabbit
     image: rabbitmq:3.6.0
+    container_name: ispa_rabbit_prod
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=mypass

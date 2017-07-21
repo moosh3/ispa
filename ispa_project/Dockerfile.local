@@ -9,14 +9,10 @@ RUN pip install -r /home/docker/requirements-base.txt\
 
 RUN adduser --disabled-password --gecos '' celery
 
-WORKDIR /home/docker
-
-COPY entrypoint.sh /entrypoint.sh
-RUN sed -i 's/\r//' /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+WORKDIR /home/docker/ispa_project
 
 COPY start-dev.sh /start-dev.sh
 RUN sed -i 's/\r//' /start-dev.sh
 RUN chmod +x /start-dev.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/start-dev.sh"]

@@ -22,7 +22,10 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
-from ispa.core.views import AboutView
+if settings.DEBUG:
+    import debug_toolbar
+
+from core.views import AboutView, HomeView
 
 urlpatterns = [
     # Wagtail admin
@@ -31,6 +34,10 @@ urlpatterns = [
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^pages/', include(wagtail_urls)),
+    # django-debug-toolbar
+    url(r'^__debug__/', include(debug_toolbar.urls)),
+    # Custom
+    url(r'^', HomeView.as_view()),
     url(r'^about/$', AboutView.as_view()),
     # Celery job api
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))

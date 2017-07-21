@@ -7,8 +7,8 @@ volumes:
 services:
   db:
     build:
-      context: postgres/ 
-    hostname: Dockerfile
+      context: postgres/
+    container_name: ispa_db
     volumes:
       - postgres_data_dev:/var/lib/postgresql/data
       - postgres_backup_dev:/backups
@@ -23,8 +23,8 @@ services:
     build:
       context: ispa_project/
       dockerfile: Dockerfile.local
-    command: /start-dev.sh
-    hostname: web
+    container_name: ispa
+    command: bash -c "sleep 3 && python manage.py runserver_plus 0.0.0.0:8000"
     environment:
       - USE_DOCKER=yes
     volumes:
@@ -37,11 +37,11 @@ services:
   # Redis
   redis:
     image: redis:3.0
-    hostname: redis
+    container_name: ispa_redis
 
   # RabbitMQ
   rabbit:
-    hostname: rabbit
+    container_name: ispa_rabbit
     image: rabbitmq:3.6.0
     environment:
       - RABBITMQ_DEFAULT_USER=admin
