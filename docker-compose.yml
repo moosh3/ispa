@@ -6,8 +6,7 @@ volumes:
 
 services:
   db:
-    image: postgres:9.4
-    hostname: db
+    image: postgresql:latest
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -19,8 +18,8 @@ services:
 
   nginx:
     build:
-      context: .
-      dockerfile: ispa_project/nging/Dockerfile
+      context: nginx/
+      dockerfile: Dockerfile
     depends_on:
       - django
     ports:
@@ -28,12 +27,9 @@ services:
 
   django:
     build:
-      context: .
-      dockerfile: Dockerfile.prod
-      labels:
-        com.ispa.description: "ISPA webapp"
-        com.ispa.maintainer: "Alec Cunningham"
-    hostname: web
+      context: ispa_project/
+      dockerfile: Dockerfile
+    hostname: django
     command: /gunicorn.sh
     depends_on:
       - db
@@ -54,18 +50,3 @@ services:
     ports:
       - "5672:5672"  # we forward this port because it's useful for debugging
       - "15672:15672"  # here, we can access rabbitmq management plugin
-
-  # Celery worker
-  worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: ./run_celery.sh
-    volumes:
-      - .:/home/docker
-    links:
-      - db
-      - rabbit
-      - redis
-    depends_on:
-      - rabbit

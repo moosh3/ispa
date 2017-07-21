@@ -6,8 +6,9 @@ volumes:
 
 services:
   db:
-    image: postgres:9.4
-    hostname: db
+    build:
+      context: postgres/ 
+    hostname: Dockerfile
     volumes:
       - postgres_data_dev:/var/lib/postgresql/data
       - postgres_backup_dev:/backups
@@ -20,7 +21,7 @@ services:
 
   django:
     build:
-      context: .
+      context: ispa_project/
       dockerfile: Dockerfile.local
     command: /start-dev.sh
     hostname: web

@@ -1,4 +1,4 @@
-FROM postgres:{{ cookiecutter.postgresql_version }}
+FROM postgres:9.4
 
 # add backup scripts
 ADD backup.sh /usr/local/bin/backup
