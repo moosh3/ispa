@@ -24,11 +24,22 @@ For local development, specify the docker-compose file as such:
 Once finished, you can access the website by going to 0.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
 If you would like to enter the container, exec into it:
 
-```docker exec -it ispa bash```
+```Bash
+$ docker exec -it ispa bash
+```
 
 Which will create a bash shell in the ispa container. The normal ```docker-compose.yml``` file and ```Dockerfile``` run production using gunicorn and nginx. Only run this in testing; deployment will come at a later date.
 
 I've included two shell scripts that automate the building; ```local.sh``` and ```prod.sh```. Running either will build the corresponding Dockerfile and docker-compose file.
+
+In local development, Django's local runserver is replaced with ```runserver_plus```. In the same form, grab a django shell like so:
+
+```Bash
+$ docker exec -it ispa bash # hop into the container
+root@e08fa21c207a:/home/docker/ispa_project# ./manage.py shell_plus
+```
+
+That imports all models automatically for you; comes in handy.
 
 ## Trello workflow
 

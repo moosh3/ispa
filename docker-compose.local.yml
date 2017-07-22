@@ -24,7 +24,6 @@ services:
       context: ispa_project/
       dockerfile: Dockerfile.local
     container_name: ispa
-    command: /start-dev.sh
     environment:
       - USE_DOCKER=yes
     volumes:
