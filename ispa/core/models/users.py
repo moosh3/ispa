@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from core.models.base import BaseModel
-
+from events.models.event import Event
 
 class UserProxy(User):
 
@@ -34,7 +34,9 @@ class MemberProfile(BaseModel):
     USER = 'user'
 
     user = models.OneToOneField('auth.User')
+    guest = models.ForeignKey('Event')
     bio = models.CharField(max_length=256, blank=True, null=True)
+    points = models.IntegerField(max_length=100)
 
     def __str__(self):
         return '{}'.format(self.user.username)
