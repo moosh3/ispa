@@ -1,5 +1,4 @@
 #!/bin/bash
 set -e
-cmd="$@"
 
-exec $cmd
+#TODO add wait_for_it.sh
