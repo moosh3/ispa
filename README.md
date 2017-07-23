@@ -17,7 +17,7 @@ $ docker-compose -f docker-compose.local.yml up -d
 
 You'll have to exec into the ispa container and create a superuser for wagtail like so:
 
-``Bash
+```Bash
 $ docker exec -it ispa bash
 root@f83c760407ea:/home/docker/ispa# ./manage.py createsuperuser
 Username (leave blank to use 'root'): $USER
