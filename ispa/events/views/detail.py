@@ -7,7 +7,6 @@ from events.models import Event
 
 class EventDetail(DetailView):
 
-    template_name = event.html
     model = Event
     status = 200
     paginate_by = 25

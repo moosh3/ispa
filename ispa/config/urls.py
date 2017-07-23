@@ -26,6 +26,7 @@ if settings.DEBUG:
     import debug_toolbar
 
 from core.views import AboutView, HomeView
+from events.views import EventDashboard
 
 urlpatterns = [
     # Wagtail admin
@@ -38,7 +39,8 @@ urlpatterns = [
     url(r'^__debug__/', include(debug_toolbar.urls)),
     # Custom
     url('^$', HomeView.as_view()),
-    url(r'^about/$', AboutView.as_view()),
+    url(r'^about/', AboutView.as_view()),
+    url(r'^events/$', EventDashboard.as_view()),
     # Celery job api
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
