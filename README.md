@@ -3,17 +3,20 @@ Illinois Sports Business Association official website
 
 ## Getting Started
 
-Read below for specifics, but if you'd like to get started right away, run the local.sh script:
+Read below for specifics, but if you'd like to get started right away, start with the build.sh script:
 
-```$ ./local.sh```
+```$ ./build.sh```
 
-Which builds the required docker images, volumes and networks and then runs docker-compose up using the local yml file. For reference, the contents of the script:
+That takes care of both prod and local Dockerfiles, along with the corresponding docker-compose builds. Moving forward, you can use `local.sh` whenever you make changes that require rebuilding the local Dockerfile or the whole docker-compose services. It looks like this:
 
 ```Bash
 $ cd ispa_project && docker build -t ispa:latest-local -f Dockerfile.local . && cd ..
 $ docker-compose -f docker-compose.local.yml build
 $ docker-compose -f docker-compose.local.yml up -d
+$ docker ps
 ```
+
+## Wagtail
 
 You'll have to exec into the ispa container and create a superuser for wagtail like so:
 
