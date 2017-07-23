@@ -38,9 +38,9 @@ urlpatterns = [
     # django-debug-toolbar
     url(r'^__debug__/', include(debug_toolbar.urls)),
     # Custom
-    url('^$', HomeView.as_view()),
-    url(r'^about/', AboutView.as_view()),
-    url(r'^events/$', EventDashboard.as_view()),
+    url('^$', HomeView.as_view(), name='home-view'),
+    url(r'^about/', AboutView.as_view(), name='about-view'),
+    url(r'^events/$', EventDashboard.as_view(), name='event-view'),
     # Celery job api
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
