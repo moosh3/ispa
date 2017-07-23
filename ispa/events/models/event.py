@@ -2,30 +2,30 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
+import uuid
+
 from core.models import BaseModel
+from .eventlocation import EventLocation
+from .eventtype import EventType
 
 class EventManager(models.Manager):
 
     def active(self):
         return self.get_queryset().filter(is_active=True)
 
+    def is_owner(self):
+        return self.get_queryset().filter(owner=User)
+
 
 class Event(BaseModel):
-    
-    event_id = models.IntegerField()
-    owner = models.ForeignKey('auth.User')
-    guests = models.ManyToManyField('auth.User', through='EventGuest')
-    creation_date = models.DateField('Event Creation Date') 
-    title = models.CharField('Event Name', max_length=45, null=True, blank=True)
+
     slug = models.SlugField(unique=True)
-    address = models.CharField('Address', max_length=45, null=True, blank=True)
-    address2 = models.CharField('Address 2', max_length=45, null=True, blank=True)
-    city = models.CharField('City', max_length=45, null=True, blank=True)
-    state = models.CharField('State', max_length=45, null=True, blank=True)
-    zipcode = models.CharField('Zipcode', max_length=10, null=True, blank=True)
+    location = models.ForeignKey(EventLocation)
     date = models.DateTimeField('Event Date', null=True, blank=True, auto_now=False)
-    description = models.CharField('Description', max_length=512, null=True, blank=True) 
-    is_active = models.BooleanField(deafult=True)
+    description = models.CharField('Description', max_length=512, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    name = models.CharField('Name', max_length=256, null=True, blank=True)
+    event_type = models.ForeignKey(EventType)
 
     def __str__(self):
         return 'EVENT {}'.format(self.event_id)
@@ -34,20 +34,45 @@ class Event(BaseModel):
         return reverse('event-detail', args=[self.slug])
 
     @classmethod
-    def create_event(cls, owner, title, address, address2,
-                     city, state, zipcode, date, description):
+    def create_event(cls, event_id, owner, guests, name, slug,
+                     address, address2, city, state, zipcode,
+                     date, description, event_type):
 
         return cls.object.create(
+            event_id=event_id,
             owner=owner,
-            title=title,
-            address=address,
-            address2=address2,
-            city=city,
-            state=state,
-            zipcode=zipcode,
+            guests=guests,
+            name=name,
+            slug=slug,
+            location=location,
             date=date,
-            description=description
+            description=description,
+            is_active=is_active,
+            event_type=event_type
         )
+
+    def to_json(self):
+        return {
+            'event': {
+                'event_id': self.event.pk,
+                'slug': self.event.slug,
+                'name': self.event.name,
+            },
+            'guests': self.eventguest.to_json(),
+            'location': self.eventlocation.to_json(),
+            'description': self.description,
+            'is_active': self.is_active,
+            'related_object': self.related_object.to_json(),
+            'owner': {
+                'name': self.user.userprofile.name,
+                'username': self.user.username,
+                'pk': self.user.pk,
+                'url': self.user.userprofile.get_absolute_url(),
+            },
+            'created': self.created.isoformat(),
+            'modified': self.modified.isoformat(),
+        }
+
 
     class Meta:
         db_table = 'event'
