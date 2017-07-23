@@ -7,7 +7,7 @@ from events.models.event import Event
 
 class EventGuest(models.Model):
 
-    event = models.ManyToManyField('Event')
+    event = models.ForeignKey('Event')
     guest = models.ForeignKey('auth.User')
     is_owner = models.BooleanField(default=False)
 
