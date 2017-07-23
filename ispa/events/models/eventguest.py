@@ -7,7 +7,7 @@ from events.models.event import Event
 
 class EventGuest(models.Model):
 
-    event = models.ForeignKey('Event')
+    event = models.ManyToManyField('Event')
     guest = models.ForeignKey('auth.User')
     is_owner = models.BooleanField(default=False)
 
@@ -16,4 +16,3 @@ class EventGuest(models.Model):
             self.event.slug,
             self.user.userprofile.name,
         )
-
