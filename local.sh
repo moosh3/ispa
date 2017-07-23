@@ -1,5 +1,5 @@
-docker-compose -f docker-compose.local.yml down
+docker-compose down
 cd ispa && docker build -t ispa:latest-local -f Dockerfile.local . && cd ..
-docker-compose -f docker-compose.local.yml build
-docker-compose -f docker-compose.local.yml up -d
+docker-compose build
+docker-compose up -d
 docker ps
