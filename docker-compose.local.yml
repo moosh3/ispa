@@ -21,7 +21,7 @@ services:
 
   django:
     build:
-      context: ispa_project/
+      context: ispa/
       dockerfile: Dockerfile.local
     container_name: ispa
     environment:
