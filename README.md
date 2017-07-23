@@ -3,9 +3,7 @@ Illinois Sports Business Association official website
 
 ## Getting Started
 
-Read below for specifics, but if you'd like to get started right away, start with the build.sh script:
-
-```$ ./build.sh```
+Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script.
 
 That takes care of both prod and local Dockerfiles, along with the corresponding docker-compose builds. Moving forward, you can use `local.sh` whenever you make changes that require rebuilding the local Dockerfile or the whole docker-compose services. It looks like this:
 
@@ -34,16 +32,19 @@ Superuser created successfully.
 
 For local development, specify the docker-compose file as such:
 
-```docker-compose -f docker-compose.local.yml up -d```
+```Bash
+docker-compose up -d
+```
 
 Once finished, you can access the website by going to 0.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
 If you would like to enter the container, exec into it:
 
 ```Bash
 $ docker exec -it ispa bash
+root@9b32bd049709:/home/docker/ispa#
 ```
 
-Which will create a bash shell in the ispa container. The normal ```docker-compose.yml``` file and ```Dockerfile``` run production using gunicorn and nginx. Only run this in testing; deployment will come at a later date.
+Which will create a bash shell in the ispa container. The  ```docker-compose.prod.yml``` file and ```Dockerfile``` run production using gunicorn and nginx. Only run this in testing; deployment will come at a later date.
 
 I've included two shell scripts that automate the building; ```local.sh``` and ```prod.sh```. Running either will build the corresponding Dockerfile and docker-compose file.
 
@@ -52,11 +53,43 @@ In local development, Django's local runserver is replaced with ```runserver_plu
 ```Bash
 $ docker exec -it ispa bash # hop into the container
 root@e08fa21c207a:/home/docker/ispa_project# ./manage.py shell_plus
+# Shell Plus Model Imports
+from django.contrib.admin.models import LogEntry
+from django.contrib.auth.models import Group, Permission, User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.sessions.models import Session
+from django.contrib.sites.models import Site
+from events.models.event import Event
+from events.models.eventguest import EventGuest
+from events.models.eventlocation import EventLocation
+from events.models.eventtype import EventType
+from taggit.models import Tag, TaggedItem
+from wagtail.wagtailcore.models import Collection, CollectionViewRestriction, GroupCollectionPermission, GroupPagePermission, Page, PageRevision, PageViewRestriction, Site
+from wagtail.wagtaildocs.models import Document
+from wagtail.wagtailembeds.models import Embed
+from wagtail.wagtailforms.models import FormSubmission
+from wagtail.wagtailimages.models import Image, Rendition
+from wagtail.wagtailredirects.models import Redirect
+from wagtail.wagtailsearch.models import Query, QueryDailyHits
+from wagtail.wagtailusers.models import UserProfile
+# Shell Plus Django Imports
+from django.urls import reverse
+from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When
+from django.core.cache import cache
+from django.conf import settings
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.db import transaction
+Python 3.5.3 (default, Jul 18 2017, 23:09:11)
+Type 'copyright', 'credits' or 'license' for more information
+IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]:
 ```
 
-That imports all models automatically for you; comes in handy.
+That imports all models automatically for you; comes in handy. If the ispa container ever stops, you can use `docker logs ispa`, which outputs all logging information from `STDOUT`.
 
-#### Building
+## Building
 
 Whenever a change in requirements is made, run the `build.sh` script to get a fresh start. It rebuilds all things docker related, but does not start anything.
 
