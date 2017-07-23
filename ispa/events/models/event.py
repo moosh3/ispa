@@ -28,6 +28,9 @@ class Event(BaseModel):
     def get_absolute_url(self):
         return reverse('event-detail', args=[self.slug])
 
+    def __str__(self):
+        return 'Event: {}'.format(self.name)
+
     def to_json(self):
         return {
             'event': {
