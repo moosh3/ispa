@@ -1,47 +1,50 @@
 version: '2'
 
 volumes:
-  postgres_data_dev: {}
-  postgres_backup_dev: {}
+  postgres_data: {}
+  postgres_backup: {}
 
 services:
   db:
     build:
       context: postgres/
-    container_name: ispa_db
-    volumes:
-      - postgres_data_dev:/var/lib/postgresql/data
-      - postgres_backup_dev:/backups
+    container_name: ispa_db_prod
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backup:/backups
+
+  nginx:
+    build:
+      context: nginx/
+    container_name: ispa_nginx_prod
+    depends_on:
+      - django
     ports:
-      - "5432:5432"
+      - "0.0.0.0:80:80"
 
   django:
     build:
       context: ispa/
-      dockerfile: Dockerfile.local
-    container_name: ispa
-    environment:
-      - USE_DOCKER=yes
-    volumes:
-      - .:/home/docker  # mount current directory inside container
-    ports:
-      - "8000:8000"
+      dockerfile: Dockerfile
+    container_name: ispa_prod
     depends_on:
       - db
+    env_file: .env
 
   # Redis
   redis:
     image: redis:3.0
-    container_name: ispa_redis
+    container_name: ispa_redis_prod
+
 
   # RabbitMQ
   rabbit:
-    container_name: ispa_rabbit
     image: rabbitmq:3.6.0
+    container_name: ispa_rabbit_prod
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=mypass
