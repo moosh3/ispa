@@ -15,6 +15,18 @@ $ docker-compose -f docker-compose.local.yml build
 $ docker-compose -f docker-compose.local.yml up -d
 ```
 
+You'll have to exec into the ispa container and create a superuser for wagtail like so:
+
+``Bash
+$ docker exec -it ispa bash
+root@f83c760407ea:/home/docker/ispa# ./manage.py createsuperuser
+Username (leave blank to use 'root'): $USER
+Email address:
+Password:
+Password (again):
+Superuser created successfully.
+```
+
 ## Docker
 
 For local development, specify the docker-compose file as such:
@@ -47,7 +59,7 @@ Whenever a change in requirements is made, run the `build.sh` script to get a fr
 
 ## Trello workflow
 
-An overview of the workflow for using Trello 
+An overview of the workflow for using Trello
 
 - Create cards for each individual case on the TODO list with conscise title and description
 - Use a checklist when a case has small steps that must be done in order to finish larger cases
@@ -57,15 +69,15 @@ An overview of the workflow for using Trello
 - Add git commits to relevant case card for small changes on master brahch (v rare)
 - Once case has been completed and commits or branches attached, move card to REVIEW list so other members can review your code
 - If something was off or wrong in your code, leave card in REVIEW list and make appropriate changes
-- Once all members are satisfied with completed task, only the members who did not work on task can move case from REVIEW to COMPLETED 
+- Once all members are satisfied with completed task, only the members who did not work on task can move case from REVIEW to COMPLETED
 
 
-### Event relationships 
+### Event relationships
 
 Some quick notes regarding an Event instance and its attributes, along with its FK relationships. The Event object provides `event_id`, `name`, `slug`, `date`, `description`, and `is_active` attributes. The `guests` attribute is a ManyToMany relationship to an `EventGuest` model. `location` is also defined in an Event instance with a ForeignKey to `EventLocation`. Lastly, a ForeignKey to `EventType`.
 
-The model also comes with a custom `EventManager` that can return a query of active events and events of which the user is owner of. 
+The model also comes with a custom `EventManager` that can return a query of active events and events of which the user is owner of.
 
-The `EventGuest` model keeps track of a query of user instances tied to a particular event, along with identifying the user who created the Event in the first place. It can spit out a string with the Event's name and a guest list. Following the same ideology regarding relationship-based models, `EventLocation` stores attributes like `address`, `city`, and so on. This allows the same venue to be referenced in multiple Events. 
+The `EventGuest` model keeps track of a query of user instances tied to a particular event, along with identifying the user who created the Event in the first place. It can spit out a string with the Event's name and a guest list. Following the same ideology regarding relationship-based models, `EventLocation` stores attributes like `address`, `city`, and so on. This allows the same venue to be referenced in multiple Events.
 
-Finally, `EventType` allows an Event owner to set codes declared in the model, allowing them to do things such as making an Event required, `EventType.REQUIRED`. 
+Finally, `EventType` allows an Event owner to set codes declared in the model, allowing them to do things such as making an Event required, `EventType.REQUIRED`.
