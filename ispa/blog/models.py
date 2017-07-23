@@ -11,6 +11,13 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 # Create your models here.
 
+class BlogIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('intro', classname="full")
+    ]
+
 class BlogPage(Page):
 
     #Database fields
@@ -59,3 +66,6 @@ class BlogPageRelatedLink(Orderable):
         FieldPanel('name'),
         FieldPanel('url'),
     ]
+from django.db import models
+
+# Create your models here.
