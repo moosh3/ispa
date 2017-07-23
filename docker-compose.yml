@@ -28,7 +28,7 @@ services:
 
   django:
     build:
-      context: ispa_project/
+      context: ispa/
       dockerfile: Dockerfile
     container_name: ispa_prod
     depends_on:
