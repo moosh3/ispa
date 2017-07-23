@@ -41,6 +41,10 @@ root@e08fa21c207a:/home/docker/ispa_project# ./manage.py shell_plus
 
 That imports all models automatically for you; comes in handy.
 
+#### Building
+
+Whenever a change in requirements is made, run the `build.sh` script to get a fresh start. It rebuilds all things docker related, but does not start anything.
+
 ## Trello workflow
 
 An overview of the workflow for using Trello 
