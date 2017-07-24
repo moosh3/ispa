@@ -1,8 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
-
-import uuid
 
 from core.models import BaseModel
 from .eventlocation import EventLocation
@@ -13,13 +10,10 @@ class EventManager(models.Manager):
     def active(self):
         return self.get_queryset().filter(is_active=True)
 
-    def is_owner(self):
-        return self.get_queryset().filter(owner=self)
-
-
 class Event(BaseModel):
 
     location = models.ForeignKey('EventLocation')
+    event_type = models.ForeignKey('EventType')
     date = models.DateTimeField('Event Date', null=True, blank=True, auto_now=False)
     description = models.CharField('Description', max_length=512, null=True, blank=True)
     is_active = models.BooleanField(default=True)
@@ -52,4 +46,3 @@ class Event(BaseModel):
         verbose_name = 'Events'
         app_label = 'events'
         get_latest_by = 'creation_datetime'
->>>>>>> 545c833f37e5ce15bfa5d5fc2a01af6a04b9635f

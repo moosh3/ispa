@@ -73,6 +73,8 @@ LOCAL_APPS = [
     'core',
     'events',
     'points',
+    'blog',
+    'api',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
