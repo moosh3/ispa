@@ -4,5 +4,8 @@ from core.models import BaseModel
 
 class EventType(BaseModel):
 
-    REQUIRED = 'REQUIRED'
-    OPTIONAL = 'OPTIONAL'
+    REQUIRED = 'required'
+    OPTIONAL = 'optional'
+
+    MEETING = 'meeting'
+    EVENT = 'event'

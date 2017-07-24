@@ -14,7 +14,7 @@ class EventManager(models.Manager):
         return self.get_queryset().filter(is_active=True)
 
     def is_owner(self):
-        return self.get_queryset().filter(owner=User)
+        return self.get_queryset().filter(owner=self)
 
 
 class Event(BaseModel):
@@ -24,6 +24,7 @@ class Event(BaseModel):
     description = models.CharField('Description', max_length=512, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     name = models.CharField('Name', max_length=256, null=True, blank=True)
+    points = models.PositiveIntegerField()
 
     def get_absolute_url(self):
         return reverse('event-detail', args=[self.slug])
