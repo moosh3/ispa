@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth import User
 
 class Point(models.Model):
     TYPES =  (
@@ -9,3 +9,4 @@ class Point(models.Model):
     )
 
     value = models.CharField(max_length=1, choices=TYPES)
+    user = models.ForeignKey(User)

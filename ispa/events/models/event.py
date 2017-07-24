@@ -52,3 +52,4 @@ class Event(BaseModel):
         verbose_name = 'Events'
         app_label = 'events'
         get_latest_by = 'creation_datetime'
+>>>>>>> 545c833f37e5ce15bfa5d5fc2a01af6a04b9635f

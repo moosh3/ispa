@@ -1,3 +1,51 @@
+<<<<<<< HEAD
+"""ispa URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.10/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.conf.urls import url, include
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+"""
+from django.conf.urls import url, include
+from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+
+from wagtail.wagtailadmin import urls as wagtailadmin_urls
+from wagtail.wagtaildocs import urls as wagtaildocs_urls
+from wagtail.wagtailcore import urls as wagtail_urls
+
+if settings.DEBUG:
+    import debug_toolbar
+
+from core.views import AboutView, HomeView
+from events.views import EventDashboard
+
+urlpatterns = [
+    # Wagtail admin
+    url(r'^admin/', admin.site.urls),
+    # Wagtail urls
+    url(r'^cms/', include(wagtailadmin_urls)),
+    url(r'^documents/', include(wagtaildocs_urls)),
+    url(r'^pages/', include(wagtail_urls)),
+    # django-debug-toolbar
+    url(r'^__debug__/', include(debug_toolbar.urls)),
+    # Custom
+    url('^$', HomeView.as_view()),
+    url(r'^about/', AboutView.as_view()),
+    url(r'^events/$', EventDashboard.as_view()),
+    # Celery job api
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
 """ispa URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -44,3 +92,4 @@ urlpatterns = [
     # Celery job api
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+>>>>>>> 545c833f37e5ce15bfa5d5fc2a01af6a04b9635f
