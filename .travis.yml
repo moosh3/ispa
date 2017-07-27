@@ -1,0 +1,21 @@
+sudo: required
+language: python
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
+services:
+  - docker
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose -f common-services.yml up -d
+
+install:
+  - docker build -t ispa:latest-local -f ispa/Dockerfile.local .
+  - docker run --name ispa --link ispa_db --network=ispaproject_default --rm ispa:latest-local
+
+script:
+  - docker ps | grep -q ispa

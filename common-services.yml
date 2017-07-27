@@ -19,20 +19,6 @@ services:
     ports:
       - "5432:5432"
 
-  django:
-    build:
-      context: ispa/
-      dockerfile: Dockerfile.local
-    container_name: ispa
-    environment:
-      - USE_DOCKER=yes
-    volumes:
-      - .:/home/docker  # mount current directory inside container
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-
   # Redis
   redis:
     image: redis:3.0
