@@ -27,6 +27,13 @@ Password:
 Password (again):
 Superuser created successfully.
 ```
+To create a new app run 
+
+```Bash
+$ ./manage.py  startapp <name>
+```
+
+Add the new app to the INSTALLED_APPS in in  `settings/base.py`
 
 ## Docker
 

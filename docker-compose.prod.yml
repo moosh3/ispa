@@ -40,7 +40,6 @@ services:
     image: redis:3.0
     container_name: ispa_redis_prod
 
-
   # RabbitMQ
   rabbit:
     image: rabbitmq:3.6.0

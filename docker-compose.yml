@@ -19,6 +19,7 @@ services:
     ports:
       - "5432:5432"
 
+  # webapp
   django:
     build:
       context: ispa/
