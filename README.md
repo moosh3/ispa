@@ -117,4 +117,3 @@ The model also comes with a custom `EventManager` that can return a query of act
 The `EventGuest` model keeps track of a query of user instances tied to a particular event, along with identifying the user who created the Event in the first place. It can spit out a string with the Event's name and a guest list. Following the same ideology regarding relationship-based models, `EventLocation` stores attributes like `address`, `city`, and so on. This allows the same venue to be referenced in multiple Events.
 
 Finally, `EventType` allows an Event owner to set codes declared in the model, allowing them to do things such as making an Event required, `EventType.REQUIRED`.
->>>>>>> 545c833f37e5ce15bfa5d5fc2a01af6a04b9635f

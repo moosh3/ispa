@@ -1,8 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
-
-import uuid
 
 from core.models import BaseModel
 from .eventlocation import EventLocation
@@ -13,17 +10,15 @@ class EventManager(models.Manager):
     def active(self):
         return self.get_queryset().filter(is_active=True)
 
-    def is_owner(self):
-        return self.get_queryset().filter(owner=User)
-
-
 class Event(BaseModel):
 
     location = models.ForeignKey('EventLocation')
+    event_type = models.ForeignKey('EventType')
     date = models.DateTimeField('Event Date', null=True, blank=True, auto_now=False)
     description = models.CharField('Description', max_length=512, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     name = models.CharField('Name', max_length=256, null=True, blank=True)
+    points = models.PositiveIntegerField()
 
     def get_absolute_url(self):
         return reverse('event-detail', args=[self.slug])
