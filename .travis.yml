@@ -16,7 +16,7 @@ after_success:
   - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG
   - docker tag $REPO:$TRAVIS_COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
   - docker push $REPO
-  - docker save $REPO:TAG > ispa.tar
+  - docker save $REPO:$TAG > ispa.tar
 notifications:
   email:
     recipients:
