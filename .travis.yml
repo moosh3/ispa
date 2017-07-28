@@ -15,12 +15,15 @@ before_install:
 
 install:
   - cd ispa
-  - docker build -t $IMAGE_NAME:latest -f Dockerfile.local .
-  - docker run --name ispa --link ispa_db $REPO/$IMAGE_NAME:latest /bin/echo Success
+  - docker build -f Dockerfile.local  -t $REPO:$COMMIT .
+  - docker run --name ispa --link ispa_db $IMAGE_NAME:latest /bin/echo Success
 
 script:
   - docker ps | grep -q ispa
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push $REPO/ispa:latest
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+  - docker tag $REPO:$COMMIT $REPO:$TAG
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $REPO
