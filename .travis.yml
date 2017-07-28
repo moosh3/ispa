@@ -15,12 +15,12 @@ before_install:
 
 install:
   - cd ispa
-  - docker build -t $IMAGE_NAME:latest-local -f Dockerfile.local .
-  - docker run --name ispa --link ispa_db $IMAGE_NAME:latest-local /bin/echo Success
+  - docker build -t $IMAGE_NAME:latest -f Dockerfile.local .
+  - docker run --name ispa --link ispa_db $IMAGE_NAME:latest /bin/echo Success
 
 script:
   - docker ps | grep -q ispa
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push marjoram0/ispa:latest-local
+  - docker push marjoram0/ispa:latest
