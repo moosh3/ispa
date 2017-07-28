@@ -1,6 +1,8 @@
 # ispa
 Illinois Sports Business Association official website
 
+[![Build Status](https://travis-ci.org/aleccunningham/ispa.svg?branch=master)](https://travis-ci.org/aleccunningham/ispa)
+
 ## Getting Started
 
 Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script.
