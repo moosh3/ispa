@@ -1,18 +1,26 @@
 # ispa
 Illinois Sports Business Association official website
 
+[![Build Status](https://travis-ci.org/aleccunningham/ispa.svg?branch=master)](https://travis-ci.org/aleccunningham/ispa)
+
 ## Getting Started
 
-Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script.
-
-That takes care of both prod and local Dockerfiles, along with the corresponding docker-compose builds. Moving forward, you can use `local.sh` whenever you make changes that require rebuilding the local Dockerfile or the whole docker-compose services. It looks like this:
+Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script AKA:
 
 ```Bash
-$ cd ispa_project && docker build -t ispa:latest-local -f Dockerfile.local . && cd ..
-$ docker-compose -f docker-compose.local.yml build
-$ docker-compose -f docker-compose.local.yml up -d
+$ cd ispa && docker build -t ispa_prod:latest -f Dockerfile . && docker build -t ispa:latest -f Dockerfile.local . && cd ..
+$ docker-compose build
+$ docker-compose -f docker-compose.prod.yml
 $ docker ps
 ```
+
+For local development you'll want to bring up common services like the database, redis and rabbit with `docker-compose up`. The ispa image itself is ran separately via:
+
+```Bash
+$ docker run --name ispa -it --link ispa_db -p 127.0.0.1:8000:8000 --network=ispaproject_default --rm ispa:latest
+```
+
+For reference, ispa has two tags -- `latest` which corresponds with the local `Dockerfile.local`, and `v$VERSION`, which is incremented with each deployment.
 
 ## Wagtail
 
@@ -30,13 +38,19 @@ Superuser created successfully.
 
 ## Docker
 
-For local development, specify the docker-compose file as such:
+For local development, specify the docker-compose file as such, which creates and brings up the containers supplying common services:
 
 ```Bash
 docker-compose up -d
 ```
 
-Once finished, you can access the website by going to 0.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
+Boot up the actual container using `docker run`:
+
+```Bash
+$ docker run --name ispa -it --link ispa_db -p 127.0.0.1:8000:8000 --network=ispaproject_default --rm ispa:latest
+```
+
+Once finished, you can access the website by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
 If you would like to enter the container, exec into it:
 
 ```Bash
@@ -88,10 +102,6 @@ In [1]:
 ```
 
 That imports all models automatically for you; comes in handy. If the ispa container ever stops, you can use `docker logs ispa`, which outputs all logging information from `STDOUT`.
-
-## Building
-
-Whenever a change in requirements is made, run the `build.sh` script to get a fresh start. It rebuilds all things docker related, but does not start anything.
 
 ## Trello workflow
 
