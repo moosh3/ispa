@@ -9,7 +9,8 @@ services:
   - postgresql
 
 install:
-  - docker build -t ispa:latest-local -f ispa/Dockerfile.local .
+  - cd ispa
+  - docker build -t ispa:latest-local -f Dockerfile.local .
   - docker run --name ispa ispa:latest-local
 
 script:
