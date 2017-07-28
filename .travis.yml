@@ -1,37 +1,35 @@
 sudo: required
-
-cache:
-  directories:
-  - $CACHE_DIR
-
-before_install:
-  - if [ -f ${CACHE_FILE_NODE} ]; then gunzip -c ${CACHE_FILE_NODE} | docker load; fi
-
 services:
   - docker
-
 before_install:
-  - docker run -d --name ispa_db -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" postgres:9.5.3
-
+  - docker run -d --name ispa_db -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres"
+  -e "POSTGRES_DB=postgres" postgres:9.5.3
 install:
   - cd ispa
   - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
   - docker run --name ispa --link ispa_db $REPO:$TRAVIS_COMMIT /bin/echo Success
-
 script:
   - docker ps | grep -q ispa
-
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
+  ; fi`
+  - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG
+  - docker tag $REPO:$TRAVIS_COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
   - docker push $REPO
-
+  - docker save $REPO:TAG > ispa.tar
 notifications:
   email:
     recipients:
       - aleccunningham96@gmail.com
-      - freddymrqz28@gmail.com
-    on_success: never # default: change
-    on_failure: always # default: always
+      #- freddymrqz28@gmail.com
+    on_success: never
+    on_failure: always
+deploy:
+  provider: releases
+  api_key:
+    secure: bouy71CrsY5ZEIBXByt5Ced4IBoUvBdZ4PuJ8CrXGYGie99IxbNLbsAx1HGvI5MYZD2kWJj0huzk/+csmylg2y7I41la4FzStLSqodsoJ7hYL1jl5YRFtJXeN/4B0au2Qohi+eltWw8UAtS0x78b+GLeCshHb+ZkzxNO4dM0PTPwRhx3sa0t8YA1Ra8bTbTM29+S6wLm6p+wkN+tNgac3WJX7F93dbUE1lTLmziRB4FsSfvdM/z5u+KcIALvgvK3QLsQwtTnTQmN3JaDLJtQOFr4ADdKYpAR8y0bVL5GrQOTSDcOpKjM7vT1KbR3gf9E1Im8fsTbyNYeKV4gBya8LDFfFFjFN2fjYKyHcX3Z0/06lVXCvQnG7eJ3n5MNv28a8TkUVh33zAc6jlC2jMh74ieAU48MGTCGUTlU8J6IbtTUVPfTIPvyZlI8LSG6E1YwIX+lex6w0Y1kVtucrUR+wODv+yO1VluGHhdKf8ZoI5odyQ8KJ8tc1rSkIYeg/7OTNvFLG9JEhDuyHzTYDe5yYV8Yt6LB0BlPe9VpVoJ1Dn2sb0BQDa8bagBJNVpspvSdBYiGkip+Jl95eo/ZV5FGdLWThgHSwWj9wJMrmamchNAkDpO7bC3u5mb2wIZFU5Nkaviqtx6XdOO/vkJA6kmW3zPFS5swIZUz0BNejAPvYZw=
+  file: ispa.tar
+  on:
+    repo: aleccunningham/ispa
+    tags: true
