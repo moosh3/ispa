@@ -1,5 +1,12 @@
 sudo: required
 
+cache:
+  directories:
+  - $CACHE_DIR
+
+before_install:
+  - if [ -f ${CACHE_FILE_NODE} ]; then gunzip -c ${CACHE_FILE_NODE} | docker load; fi
+
 services:
   - docker
 
@@ -9,7 +16,7 @@ before_install:
 install:
   - cd ispa
   - docker build -t ispa:latest-local -f Dockerfile.local .
-  - docker run --name ispa --link ispa_db ispa:latest-local
+  - docker run --name ispa --link ispa_db ispa:latest-local /bin/echo Success
 
 script:
   - docker ps | grep -q ispa
