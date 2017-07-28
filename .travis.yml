@@ -15,7 +15,7 @@ before_install:
 
 install:
   - cd ispa
-  - docker build -t $IMAGE_NAME:$TRAVIS_COMMIT-local $IMAGE_NAME:latest-local -f Dockerfile.local .
+  - docker build -t $IMAGE_NAME:latest-local -f Dockerfile.local .
   - docker run --name ispa --link ispa_db $IMAGE_NAME:latest-local /bin/echo Success
 
 script:
