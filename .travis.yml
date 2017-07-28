@@ -4,12 +4,12 @@ services:
   - docker
 
 before_install:
-  - docker run -d --name postgres -e "POSTGRES_USER=user" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" postgres:9.5.3
+  - docker run -d --name ispa_db -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" postgres:9.5.3
 
 install:
   - cd ispa
   - docker build -t ispa:latest-local -f Dockerfile.local .
-  - docker run --name ispa --link postgres ispa:latest-local
+  - docker run --name ispa --link ispa_db ispa:latest-local
 
 script:
   - docker ps | grep -q ispa
