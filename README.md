@@ -5,16 +5,22 @@ Illinois Sports Business Association official website
 
 ## Getting Started
 
-Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script.
-
-That takes care of both prod and local Dockerfiles, along with the corresponding docker-compose builds. Moving forward, you can use `local.sh` whenever you make changes that require rebuilding the local Dockerfile or the whole docker-compose services. It looks like this:
+Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script AKA:
 
 ```Bash
-$ cd ispa_project && docker build -t ispa:latest-local -f Dockerfile.local . && cd ..
-$ docker-compose -f docker-compose.local.yml build
-$ docker-compose -f docker-compose.local.yml up -d
+$ cd ispa && docker build -t ispa_prod:latest -f Dockerfile . && docker build -t ispa:latest -f Dockerfile.local . && cd ..
+$ docker-compose build
+$ docker-compose -f docker-compose.prod.yml
 $ docker ps
 ```
+
+For local development you'll want to bring up common services like the database, redis and rabbit with `docker-compose up`. The ispa image itself is ran separately via:
+
+```Bash
+$ docker run --name ispa -it --link ispa_db -p 127.0.0.1:8000:8000 --network=ispaproject_default --rm ispa:latest
+```
+
+For reference, ispa has two tags -- `latest` which corresponds with the local `Dockerfile.local`, and `v$VERSION`, which is incremented with each deployment.
 
 ## Wagtail
 
