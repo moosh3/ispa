@@ -1,7 +1,7 @@
 # ispa
 Illinois Sports Business Association official website
 
-[![Build Status](https://travis-ci.org/aleccunningham/ispa.svg?branch=master)](https://travis-ci.org/aleccunningham/ispa)
+[![Build Status](https://travis-ci.org/marjoram/ispa.svg?branch=master)](https://travis-ci.org/marjoram/ispa)
 
 ## Getting Started
 
