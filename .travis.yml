@@ -1,17 +1,15 @@
 sudo: required
-language: python
-
-addons:
-  postgresql: "9.4"
 
 services:
   - docker
-  - postgresql
+
+before_install:
+  - docker run -d --name postgres -e "POSTGRES_USER=user" -e "POSTGRES_PASSWORD=password" -e "POSTGRES_DB=database" postgres:9.5.3
 
 install:
   - cd ispa
   - docker build -t ispa:latest-local -f Dockerfile.local .
-  - docker run --name ispa ispa:latest-local
+  - docker run --name ispa --link postgres ispa:latest-local
 
 script:
   - docker ps | grep -q ispa
