@@ -6,7 +6,7 @@ class EventType(BaseModel):
 
     REQUIRED = 'REQUIRED'
     OPTIONAL = 'OPTIONAL'
-    
-    MEETING = 'MEETING'
-    EVENT = 'EVENT'
-    SEMESTER = 'SEMESTER'
+
+    MEETING = 3
+    EVENT = 8
+    SEMESTER = 5

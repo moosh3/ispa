@@ -33,7 +33,7 @@ class MemberProfile(BaseModel):
 
     USER = 'user'
 
-    user = models.OneToOneField('auth.User')
+    user = models.OneToOneField(User)
     guest = models.ForeignKey(Event)
     bio = models.CharField(max_length=256, blank=True, null=True)
     points = models.IntegerField()
