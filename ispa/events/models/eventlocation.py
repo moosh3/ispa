@@ -2,10 +2,8 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from core.models import BaseModel
 
-
-class EventLocation(BaseModel):
+class EventLocation(models.Model):
 
     address = models.CharField('Address', max_length=45, null=True, blank=True)
     address2 = models.CharField('Address 2', max_length=45, null=True, blank=True)

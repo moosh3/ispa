@@ -17,4 +17,4 @@ RUN chmod +x /start-dev.sh
 
 COPY . .
 
-CMD ["/start-dev.sh"]
+ENTRYPOINT ["./start-dev.sh"]
