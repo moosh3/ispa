@@ -17,6 +17,7 @@ class EventManager(models.Manager):
 
 class Event(models.Model):
 
+    event_type = models.ForeignKey('EventType')
     location = models.ForeignKey('EventLocation')
     date = models.DateTimeField('Event Date', null=True, blank=True, auto_now=False)
     description = models.CharField('Description', max_length=512, null=True, blank=True)
