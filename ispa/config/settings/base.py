@@ -61,7 +61,6 @@ INSTALLED_APPS = [
     # Your stuff: custom apps go here
     'core',
     'events',
-    'points',
     'graphene_django',
 ]
 
