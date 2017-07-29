@@ -20,6 +20,7 @@ before_install:
 install:
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml build
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml up -d
+  - cd ispa
   - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
 
 script:
