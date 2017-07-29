@@ -3,11 +3,9 @@ language: python
 
 services:
   - docker
-
 addons:
     hosts:
         - db
-
 env:
   - DOCKER_COMPOSE_VERSION=1.7.0
 
@@ -18,14 +16,17 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker volume create --name ispa_pg_data
   - docker volume create --name ispa_rmq_data
+
 install:
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml build
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml up -d
-script:
-  - docker exec -it ispa_vm /bin/bash -c py.test
-  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml down
-after_success:
   - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
+
+script:
+  - docker exec -it ispa /bin/bash -c py.test
+  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml down
+
+after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
   - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG
