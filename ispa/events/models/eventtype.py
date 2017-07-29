@@ -1,8 +1,7 @@
 from django.db import models
 
-from core.models import BaseModel
 
-class EventType(BaseModel):
+class EventType(models.Model):
 
     REQUIRED = 'REQUIRED'
     OPTIONAL = 'OPTIONAL'
