@@ -59,13 +59,13 @@ INSTALLED_APPS = [
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
     # Your stuff: custom apps go here
-    'core',
     'events',
+    'ispa_app',
     'graphene_django',
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'core.schema.schema' # Where your Graphene schema lives
+    'SCHEMA': 'ispa_app.schema.schema' # Where your Graphene schema lives
 }
 
 # MIDDLEWARE CONFIGURATION
