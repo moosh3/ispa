@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
-<p>test</p>
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h2>events</h2>
+{% crispy event_form %}
 {% for obj in objects_list %}
    {{obj.active_events}}
 {% endfor %}

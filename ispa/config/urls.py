@@ -27,7 +27,7 @@ from graphene_django.views import GraphQLView
 if settings.DEBUG:
     import debug_toolbar
 
-from core.views import AboutView, HomeView
+from ispa_app.views import AboutView, HomeView
 from events.views import EventDashboard
 
 urlpatterns = [
