@@ -22,6 +22,8 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
+from graphene_django.views import GraphQLView
+
 if settings.DEBUG:
     import debug_toolbar
 
@@ -41,6 +43,7 @@ urlpatterns = [
     url('^$', HomeView.as_view(), name='home-view'),
     url(r'^about/', AboutView.as_view(), name='about-view'),
     url(r'^events/$', EventDashboard.as_view(), name='event-view'),
+    url(r'^graphql', GraphQLView.as_view(graphiql=True)),
     # Celery job api
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
