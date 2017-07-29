@@ -1,7 +1,12 @@
 version: '2'
 
-services:
+volumes:
+    ispa_pg_data:
+        external: true
+    ispa_rmq_data:
+        external: true
 
+services:
   db:
     image: postgres:9.4
     container_name: ispa_db
@@ -11,11 +16,8 @@ services:
       - POSTGRES_DB=postgres
     ports:
       - "5432:5432"
-
-  # Redis
-  redis:
-    image: redis:3.0
-    container_name: ispa_redis
+    volumes:
+      - ispa_pg_data:/var/lib/postgresql/data
 
   # RabbitMQ
   rabbit:
@@ -27,3 +29,5 @@ services:
     ports:
       - "5672:5672"  # we forward this port because it's useful for debugging
       - "15672:15672"  # here, we can access rabbitmq management plugin
+    volumes:
+      - ispa_rmq_data:/var/lib/rabbitmq
