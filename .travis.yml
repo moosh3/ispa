@@ -2,6 +2,7 @@ sudo: required
 language: python
 services:
   - docker
+
 before_install:
   - docker run -d --name ispa_db -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" postgres:9.5.3
 install:
@@ -16,6 +17,7 @@ after_success:
   - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG
   - docker tag $REPO:$TRAVIS_COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
   - docker push $REPO
+
 notifications:
   email:
     recipients:
@@ -23,6 +25,7 @@ notifications:
       #- freddymrqz28@gmail.com
     on_success: never
     on_failure: always
+
 deploy:
   provider: releases
   api_key:
