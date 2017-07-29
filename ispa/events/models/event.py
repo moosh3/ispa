@@ -1,8 +1,8 @@
 from django.db import models
-from django.conf import settings
 
 from .eventlocation import EventLocation
 from .eventtype import EventType
+
 from core.models import MemberProfile
 
 class EventManager(models.Manager):
