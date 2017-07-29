@@ -16,7 +16,7 @@ class UserProxy(User):
 
     def is_event_creator(self, event):
         event_creator = self.eventguest_set.filter(
-            event=event) 
+            event=event)
         return event_creator.filter(pk=self.pk).exists()
 
     @property
@@ -34,9 +34,9 @@ class MemberProfile(BaseModel):
     USER = 'user'
 
     user = models.OneToOneField('auth.User')
-    guest = models.ForeignKey('Event')
+    guest = models.ForeignKey(Event)
     bio = models.CharField(max_length=256, blank=True, null=True)
-    points = models.IntegerField(max_length=100)
+    points = models.IntegerField()
 
     def __str__(self):
         return '{}'.format(self.user.username)
@@ -48,20 +48,19 @@ class MemberProfile(BaseModel):
 
 class UserEventStatus(BaseModel):
 
-    event = models.ForeignKey('Event')
+    event = models.ForeignKey(Event)
     user = models.ForeignKey('auth.User')
     guest = models.BooleanField(default=False)
 
     def __str__(self):
         return 'UserEventStatus: {} - {}'.format(
-            self.user.username
+            self.user.username,
             self.event.title
         )
 
     @classmethod
-    def create_user_event_status(cls, event, user, guest=False)
+    def create_user_event_status(cls, event, user, guest=False):
         obj, _ = cls.objects.get_or_create(event=event, user=user)
         obj.read = read
         obj.save()
         obj
-    

@@ -11,16 +11,30 @@ Read below for specifics, but if you'd like to get started right away, start wit
 $ cd ispa && docker build -t ispa_prod:latest -f Dockerfile . && docker build -t ispa:latest -f Dockerfile.local . && cd ..
 $ docker-compose build
 $ docker-compose -f docker-compose.prod.yml
-$ docker ps
+```
+
+You will also want to create a data container to make sure postgresql data is persistent, allowing you to restart the services without having to reset the database:
+
+```Bash
+$ docker create -v /var/lib/postgresql/data --name postgres9.3.6-data busybox
 ```
 
 For local development you'll want to bring up common services like the database, redis and rabbit with `docker-compose up`. The ispa image itself is ran separately via:
 
 ```Bash
-$ docker run --name ispa -it --link ispa_db -p 127.0.0.1:8000:8000 --network=ispaproject_default --rm ispa:latest
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
 ```
 
-For reference, ispa has two tags -- `latest` which corresponds with the local `Dockerfile.local`, and `v$VERSION`, which is incremented with each deployment.
+Since we have a data container mounted on the postgres service, we can grab the database on command, to keep backups or just to ensure that you have a sql file that you know will work. Use these commands to generate the backups:
+
+```Bash
+# dump database into a sql file
+$ docker exec -t postgres9.4-data pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+# restore a sql file
+$ cat your_dump.sql | docker exec -i data psql -U postgres
+```
+
+**Note**: Docker might return an error when you run the backup command, but the sql file is still generated.
 
 ## Wagtail
 
@@ -47,7 +61,7 @@ docker-compose up -d
 Boot up the actual container using `docker run`:
 
 ```Bash
-$ docker run --name ispa -it --link ispa_db -p 127.0.0.1:8000:8000 --network=ispaproject_default --rm ispa:latest
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
 ```
 
 Once finished, you can access the website by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
@@ -116,14 +130,3 @@ An overview of the workflow for using Trello
 - Once case has been completed and commits or branches attached, move card to REVIEW list so other members can review your code
 - If something was off or wrong in your code, leave card in REVIEW list and make appropriate changes
 - Once all members are satisfied with completed task, only the members who did not work on task can move case from REVIEW to COMPLETED
-
-
-### Event relationships
-
-Some quick notes regarding an Event instance and its attributes, along with its FK relationships. The Event object provides `event_id`, `name`, `slug`, `date`, `description`, and `is_active` attributes. The `guests` attribute is a ManyToMany relationship to an `EventGuest` model. `location` is also defined in an Event instance with a ForeignKey to `EventLocation`. Lastly, a ForeignKey to `EventType`.
-
-The model also comes with a custom `EventManager` that can return a query of active events and events of which the user is owner of.
-
-The `EventGuest` model keeps track of a query of user instances tied to a particular event, along with identifying the user who created the Event in the first place. It can spit out a string with the Event's name and a guest list. Following the same ideology regarding relationship-based models, `EventLocation` stores attributes like `address`, `city`, and so on. This allows the same venue to be referenced in multiple Events.
-
-Finally, `EventType` allows an Event owner to set codes declared in the model, allowing them to do things such as making an Event required, `EventType.REQUIRED`.
