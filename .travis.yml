@@ -7,7 +7,7 @@ before_install:
 install:
   - cd ispa
   - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
-  - docker run --name ispa --link ispa_db $REPO:$TRAVIS_COMMIT /bin/echo Success
+  - docker run --name ispa --link ispa_db $REPO:$TRAVIS_COMMIT echo Success
 script:
   - docker ps | grep -q ispa
 after_success:
@@ -16,7 +16,6 @@ after_success:
   - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG
   - docker tag $REPO:$TRAVIS_COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
   - docker push $REPO
-  - docker save $REPO:$TAG > ispa.tar
 notifications:
   email:
     recipients:

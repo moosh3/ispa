@@ -17,4 +17,4 @@ RUN chmod +x /start-dev.sh
 
 COPY . .
 
-CMD ["/bin/bash"]
+CMD ["./start-dev.sh"]
