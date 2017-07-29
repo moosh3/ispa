@@ -22,7 +22,7 @@ install:
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml build
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml up -d
 script:
-  - docker exec -it ispa_app /bin/bash -c py.test
+  - docker exec -it ispa_vm /bin/bash -c py.test
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml down
 after_success:
   - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
