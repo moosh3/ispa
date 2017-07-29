@@ -1,5 +1,5 @@
 """
-Django settings for {{cookiecutter.project_name}} project.
+Django settings for ispa project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/
@@ -32,7 +32,7 @@ WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
-DJANGO_APPS = [
+INSTALLED_APPS = [
     # Default Django apps:
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,18 +42,11 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     # API
     'rest_framework',
-    # Useful template tags:
-    # 'django.contrib.humanize',
     'modelcluster',
     'taggit',
     # Admin
     'django.contrib.admin',
-]
-THIRD_PARTY_APPS = [
     'crispy_forms',  # Form layouts
-    #'allauth',  # registration
-    #'allauth.account',  # registration
-    #'allauth.socialaccount',  # registration
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -65,18 +58,15 @@ THIRD_PARTY_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
-]
-
-# Apps specific for this project go here.
-LOCAL_APPS = [
     # Your stuff: custom apps go here
     'core',
     'events',
-    'points',
+    'graphene_django',
 ]
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+GRAPHENE = {
+    'SCHEMA': 'core.schema.schema' # Where your Graphene schema lives
+}
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -268,15 +258,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# Some really nice defaults
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-
-ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
 
 # Custom user app defaults
 # Select the correct user model

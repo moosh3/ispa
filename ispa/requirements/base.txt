@@ -16,3 +16,4 @@ wagtail
 django-crispy-forms
 gunicorn==19.7.1
 argon2-cffi==16.3.0
+graphene-django>=1.0

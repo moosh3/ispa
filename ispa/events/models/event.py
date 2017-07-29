@@ -1,10 +1,8 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
 
 import uuid
 
-from core.models import BaseModel
 from .eventlocation import EventLocation
 from .eventtype import EventType
 
@@ -17,7 +15,7 @@ class EventManager(models.Manager):
         return self.get_queryset().filter(owner=User)
 
 
-class Event(BaseModel):
+class Event(models.Model):
 
     location = models.ForeignKey('EventLocation')
     date = models.DateTimeField('Event Date', null=True, blank=True, auto_now=False)
