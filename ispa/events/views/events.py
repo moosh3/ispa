@@ -87,9 +87,9 @@ class EditEventView(TemplateView):
         pass
 
 
-class EventList(ListView):
+class EventListView(ListView):
 
-    model = Event
+    model = models.Event
 
     @login_required
     def dispatch(self, request, *args, **kwargs):
