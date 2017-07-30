@@ -1,0 +1,18 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+class Member(models.Model):
+
+    user = models.OneToOneField('auth.User')
+    points = models.IntegerField()
+    bio = models.CharField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return '{}'.format(self.user.username)
+
+    def __unicode__(self):
+        return __str__()
+
+    @property
+    def name(self):
+        return self.__str__()
