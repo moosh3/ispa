@@ -11,19 +11,8 @@ class EventLocation(models.Model):
     state = models.CharField('State', max_length=45, null=True, blank=True)
     zipcode = models.CharField('Zipcode', max_length=10, null=True, blank=True)
 
-    def to_json(self):
-        return {
-            'address': self.address,
-            'address2': self.address2,
-            'city': self.city,
-            'state': self.state,
-            'zipcode': self.zipcode,
-            'owner': {
-                'name': self.user.userprofile.name,
-                'username': self.user.username,
-                'pk': self.user.pk,
-                'url': self.user.userprofile.get_absolute_url(),
-            },
-            'created': self.created.isoformat(),
-            'modified': self.modified.isoformat(),
-        }
+    def __str__(self):
+        return 'EventLocation: {}'.format(self.address)
+
+    def __unicode__(self):
+        return __str__()

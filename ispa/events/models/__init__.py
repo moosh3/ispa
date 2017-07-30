@@ -1,3 +1,2 @@
-from .event import Event, EventGuest, Member
+from .event import Event, Guest
 from .eventlocation import EventLocation
-from .eventtype import EventType
