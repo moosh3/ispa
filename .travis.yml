@@ -15,7 +15,6 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker volume create --name ispa_pg_data
-  - docker volume create --name ispa_rmq_data
 
 install:
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml build

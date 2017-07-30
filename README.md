@@ -26,7 +26,18 @@ $ docker-compose up --remove-orphans -d
 $ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
 ```
 
-**Note**: Docker might return an error when you run the backup command, but the sql file is still generated.
+**Note**: For tagged releases, the data volume most likely will have to be delete due to modifications to the migrations, possible messing up postgresql. In `data/` will be a tarball that has the newest (clean) database -- all we did was run the new migrations. Here are some commands that might be of use:
+
+```Bash
+# to backup
+$ docker exec -t -u postgres your-db-container pg_dumpall -c > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+# to drop db
+$ docker exec -u <your_postgres_user> <postgres_container_name> psql -c 'DROP DATABASE <your_db_name>'
+# to restoredocker
+$ cat your_dump.sql | docker exec -i your-postgres-container psql -U postgres
+```
+
+Dropping the database is only recommended in dev environments.
 
 ## Wagtail
 
