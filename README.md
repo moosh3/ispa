@@ -17,7 +17,6 @@ You will also want to create a data container to make sure postgresql data is pe
 
 ```Bash
 $ docker volume create --name ispa_pg_data
-$ docker volume create --name ispa_rmq_data
 ```
 
 For local development you'll want to bring up common services like the database, redis and rabbit with docker-compose. The ispa image itself is ran separately:
@@ -67,33 +66,12 @@ root@9b32bd049709:/home/docker/ispa#
 
 Which will create a bash shell in the ispa container. The  ```docker-compose.prod.yml``` file and ```Dockerfile``` run production using gunicorn and nginx. Only run this in testing; deployment will come at a later date.
 
-I've included two shell scripts that automate the building; ```local.sh``` and ```prod.sh```. Running either will build the corresponding Dockerfile and docker-compose file.
-
 In local development, Django's local runserver is replaced with ```runserver_plus```. In the same form, grab a django shell like so:
 
 ```Bash
 $ docker exec -it ispa bash # hop into the container
 root@e08fa21c207a:/home/docker/ispa_project# ./manage.py shell_plus
 # Shell Plus Model Imports
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.models import Session
-from django.contrib.sites.models import Site
-from events.models.event import Event
-from events.models.eventguest import EventGuest
-from events.models.eventlocation import EventLocation
-from events.models.eventtype import EventType
-from taggit.models import Tag, TaggedItem
-from wagtail.wagtailcore.models import Collection, CollectionViewRestriction, GroupCollectionPermission, GroupPagePermission, Page, PageRevision, PageViewRestriction, Site
-from wagtail.wagtaildocs.models import Document
-from wagtail.wagtailembeds.models import Embed
-from wagtail.wagtailforms.models import FormSubmission
-from wagtail.wagtailimages.models import Image, Rendition
-from wagtail.wagtailredirects.models import Redirect
-from wagtail.wagtailsearch.models import Query, QueryDailyHits
-from wagtail.wagtailusers.models import UserProfile
-# Shell Plus Django Imports
 from django.urls import reverse
 from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When
 from django.core.cache import cache
