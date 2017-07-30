@@ -64,7 +64,16 @@ $ docker exec -it ispa bash
 root@9b32bd049709:/home/docker/ispa#
 ```
 
-Which will create a bash shell in the ispa container. The  ```docker-compose.prod.yml``` file and ```Dockerfile``` run production using gunicorn and nginx. Only run this in testing; deployment will come at a later date.
+Since we have a data container mounted onto a postgresql docker instance, we can run commands that will backup the contents of the container for backups, data sharing, etc.
+
+To back up our database, create a second volume named backup. Then we want to run an ubuntu instance of which we mount our original `ispa_pg_data` volume, and export it into the other container, generating a tarball. It looks like this:
+
+```Bash
+# Create another volume
+$ docker volume create --name dbbackup
+$ docker run --rm --volumes-from ispa_db -v $(pwd):/backup ubuntu tar cvf /backup/backup0.tar /dbbackup
+# It might return an error, but the tarball should be generated
+```
 
 In local development, Django's local runserver is replaced with ```runserver_plus```. In the same form, grab a django shell like so:
 
