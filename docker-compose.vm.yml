@@ -1,0 +1,16 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.4
+  ispa:
+    build:
+      context: ./ispa
+      dockerfile: Dockerfile.local
+    image: marjoram0/ispa
+    volumes:
+      - .:/home/docker
+    container_name: ispa_vm
+    ports:
+      - 8000:8000
+    depends_on:
+      - db

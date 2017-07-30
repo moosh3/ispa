@@ -5,7 +5,7 @@ Illinois Sports Business Association official website
 
 ## Getting Started
 
-Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script AKA:
+Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script which runs the following commands:
 
 ```Bash
 $ cd ispa && docker build -t ispa_prod:latest -f Dockerfile . && docker build -t ispa:latest -f Dockerfile.local . && cd ..
@@ -16,22 +16,15 @@ $ docker-compose -f docker-compose.prod.yml
 You will also want to create a data container to make sure postgresql data is persistent, allowing you to restart the services without having to reset the database:
 
 ```Bash
-$ docker create -v /var/lib/postgresql/data --name postgres9.3.6-data busybox
+$ docker volume create --name ispa_pg_data
+$ docker volume create --name ispa_rmq_data
 ```
 
-For local development you'll want to bring up common services like the database, redis and rabbit with `docker-compose up`. The ispa image itself is ran separately via:
+For local development you'll want to bring up common services like the database, redis and rabbit with docker-compose. The ispa image itself is ran separately:
 
 ```Bash
+$ docker-compose up --remove-orphans -d
 $ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
-```
-
-Since we have a data container mounted on the postgres service, we can grab the database on command, to keep backups or just to ensure that you have a sql file that you know will work. Use these commands to generate the backups:
-
-```Bash
-# dump database into a sql file
-$ docker exec -t postgres9.4-data pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
-# restore a sql file
-$ cat your_dump.sql | docker exec -i data psql -U postgres
 ```
 
 **Note**: Docker might return an error when you run the backup command, but the sql file is still generated.

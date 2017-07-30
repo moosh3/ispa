@@ -1,16 +1,33 @@
 sudo: required
 language: python
+
 services:
   - docker
+addons:
+    hosts:
+        - db
+env:
+  - DOCKER_COMPOSE_VERSION=1.7.0
 
 before_install:
-  - docker run -d --name ispa_db -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -e "POSTGRES_DB=postgres" postgres:9.5.3
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker volume create --name ispa_pg_data
+  - docker volume create --name ispa_rmq_data
+
 install:
+  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml build
+  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml up -d
   - cd ispa
   - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
+  - cd .. #TODO this is an awful hacky solution
+
 script:
-  - docker run --name ispa --link ispa_db --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test
-  - docker ps | grep -q ispa
+  - docker run -it --rm -d --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test
+  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml down
+
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
