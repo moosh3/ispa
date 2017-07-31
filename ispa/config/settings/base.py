@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     # Your stuff: custom apps go here
     'events',
     'ispa_app',
+    'blog',
     'graphene_django',
 ]
 
