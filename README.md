@@ -30,11 +30,11 @@ $ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 
 
 ```Bash
 # to backup
-$ docker exec -t -u postgres your-db-container pg_dumpall -c > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+$ docker exec -t -u postgres <postgres_container> pg_dumpall -c > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
 # to drop db
-$ docker exec -u <your_postgres_user> <postgres_container_name> psql -c 'DROP DATABASE <your_db_name>'
+$ docker exec -u postgres <postgres_container> psql -c 'DROP DATABASE <your_db_name>'
 # to restoredocker
-$ cat your_dump.sql | docker exec -i your-postgres-container psql -U postgres
+$ cat your_dump.sql | docker exec -i <postgres_container> psql -U postgres
 ```
 
 Dropping the database is only recommended in dev environments.
