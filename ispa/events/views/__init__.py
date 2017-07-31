@@ -1,3 +1,2 @@
-from .detail import EventDetail
-from .home import EventDashboard
-from .list import EventList, EventHistory
+from .events import EventDetailView, CreateEventView, EditEventView, EventListView
+from .dashboard import EventDashboard

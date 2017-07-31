@@ -17,7 +17,6 @@ You will also want to create a data container to make sure postgresql data is pe
 
 ```Bash
 $ docker volume create --name ispa_pg_data
-$ docker volume create --name ispa_rmq_data
 ```
 
 For local development you'll want to bring up common services like the database, redis and rabbit with docker-compose. The ispa image itself is ran separately:
@@ -27,7 +26,18 @@ $ docker-compose up --remove-orphans -d
 $ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
 ```
 
-**Note**: Docker might return an error when you run the backup command, but the sql file is still generated.
+**Note**: For tagged releases, the data volume most likely will have to be delete due to modifications to the migrations, possible messing up postgresql. In `data/` will be a tarball that has the newest (clean) database -- all we did was run the new migrations. Here are some commands that might be of use:
+
+```Bash
+# to backup
+$ docker exec -t -u postgres your-db-container pg_dumpall -c > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+# to drop db
+$ docker exec -u <your_postgres_user> <postgres_container_name> psql -c 'DROP DATABASE <your_db_name>'
+# to restoredocker
+$ cat your_dump.sql | docker exec -i your-postgres-container psql -U postgres
+```
+
+Dropping the database is only recommended in dev environments.
 
 ## Wagtail
 
@@ -65,9 +75,16 @@ $ docker exec -it ispa bash
 root@9b32bd049709:/home/docker/ispa#
 ```
 
-Which will create a bash shell in the ispa container. The  ```docker-compose.prod.yml``` file and ```Dockerfile``` run production using gunicorn and nginx. Only run this in testing; deployment will come at a later date.
+Since we have a data container mounted onto a postgresql docker instance, we can run commands that will backup the contents of the container for backups, data sharing, etc.
 
-I've included two shell scripts that automate the building; ```local.sh``` and ```prod.sh```. Running either will build the corresponding Dockerfile and docker-compose file.
+To back up our database, create a second volume named backup. Then we want to run an ubuntu instance of which we mount our original `ispa_pg_data` volume, and export it into the other container, generating a tarball. It looks like this:
+
+```Bash
+# Create another volume
+$ docker volume create --name dbbackup
+$ docker run --rm --volumes-from ispa_db -v $(pwd):/backup ubuntu tar cvf /backup/backup0.tar /dbbackup
+# It might return an error, but the tarball should be generated
+```
 
 In local development, Django's local runserver is replaced with ```runserver_plus```. In the same form, grab a django shell like so:
 
@@ -75,25 +92,6 @@ In local development, Django's local runserver is replaced with ```runserver_plu
 $ docker exec -it ispa bash # hop into the container
 root@e08fa21c207a:/home/docker/ispa_project# ./manage.py shell_plus
 # Shell Plus Model Imports
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.models import Session
-from django.contrib.sites.models import Site
-from events.models.event import Event
-from events.models.eventguest import EventGuest
-from events.models.eventlocation import EventLocation
-from events.models.eventtype import EventType
-from taggit.models import Tag, TaggedItem
-from wagtail.wagtailcore.models import Collection, CollectionViewRestriction, GroupCollectionPermission, GroupPagePermission, Page, PageRevision, PageViewRestriction, Site
-from wagtail.wagtaildocs.models import Document
-from wagtail.wagtailembeds.models import Embed
-from wagtail.wagtailforms.models import FormSubmission
-from wagtail.wagtailimages.models import Image, Rendition
-from wagtail.wagtailredirects.models import Redirect
-from wagtail.wagtailsearch.models import Query, QueryDailyHits
-from wagtail.wagtailusers.models import UserProfile
-# Shell Plus Django Imports
 from django.urls import reverse
 from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When
 from django.core.cache import cache

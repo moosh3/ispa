@@ -3,9 +3,7 @@ version: '2'
 volumes:
     ispa_pg_data:
         external: true
-    ispa_rmq_data:
-        external: true
-
+        
 services:
   db:
     image: postgres:9.4
@@ -29,5 +27,3 @@ services:
     ports:
       - "5672:5672"  # we forward this port because it's useful for debugging
       - "15672:15672"  # here, we can access rabbitmq management plugin
-    volumes:
-      - ispa_rmq_data:/var/lib/rabbitmq
