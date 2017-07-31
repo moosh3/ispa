@@ -57,6 +57,8 @@ Superuser created successfully.
 
 ## Docker
 
+[Here](https://asciinema.org/a/I4RhmVynrkZj8r8UyuvO4QKzY) is a screen cast which shows the manual installation of everything from start to finish.
+
 For local development, specify the docker-compose file as such, which creates and brings up the containers supplying common services:
 
 ```Bash
