@@ -3,7 +3,7 @@ version: '2'
 volumes:
     ispa_pg_data:
         external: true
-        
+
 services:
   db:
     image: postgres:9.4
@@ -16,14 +16,3 @@ services:
       - "5432:5432"
     volumes:
       - ispa_pg_data:/var/lib/postgresql/data
-
-  # RabbitMQ
-  rabbit:
-    container_name: ispa_rabbit
-    image: rabbitmq:3.6.0
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=mypass
-    ports:
-      - "5672:5672"  # we forward this port because it's useful for debugging
-      - "15672:15672"  # here, we can access rabbitmq management plugin

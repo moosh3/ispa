@@ -1,2 +1,2 @@
-from .event import Event, Guest
+from .event import Event
 from .eventlocation import EventLocation
