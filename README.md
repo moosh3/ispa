@@ -5,6 +5,8 @@ Illinois Sports Business Association official website
 
 ## Getting Started
 
+![Imgur](http://i.imgur.com/pmPxikr.png)
+
 Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script which runs the following commands:
 
 ```Bash
@@ -54,6 +56,8 @@ Superuser created successfully.
 ```
 
 ## Docker
+
+[Here](https://asciinema.org/a/I4RhmVynrkZj8r8UyuvO4QKzY) is a screen cast which shows the manual installation of everything from start to finish.
 
 For local development, specify the docker-compose file as such, which creates and brings up the containers supplying common services:
 
