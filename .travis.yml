@@ -8,7 +8,7 @@ addons:
         - db
 
 install:
-  - docker build -f ispa/Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
+  - docker build -f ispa/Dockerfile.local -t $REPO:$TRAVIS_COMMIT ./ispa
 
 script:
   - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test
