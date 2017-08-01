@@ -16,3 +16,11 @@ class Member(models.Model):
     @property
     def name(self):
         return self.__str__()
+
+    @classmethod
+    def create_user_member(cls, user, points, bio):
+        return cls.objects.create(
+            user=user,
+            points=points,
+            bio=bio,
+        )
