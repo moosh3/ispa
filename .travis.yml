@@ -6,26 +6,12 @@ services:
 addons:
     hosts:
         - db
-env:
-  - DOCKER_COMPOSE_VERSION=1.7.0
-
-before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - docker volume create --name ispa_pg_data
 
 install:
-  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml build
-  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml up -d
-  - cd ispa
-  - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
-  - cd .. #TODO this is an awful hacky solution
+  - docker build -f ispa/Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
 
 script:
   - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test
-  - docker-compose -f docker-compose.yml -f docker-compose.vm.yml down
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
