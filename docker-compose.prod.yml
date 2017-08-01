@@ -1,39 +1,20 @@
 version: '2'
 
-volumes:
-  postgres_data: {}
-  postgres_backup: {}
-
 services:
   db:
-    build:
-      context: postgres/
+    image: postgres:9.4
     container_name: ispa_db_prod
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - postgres_backup:/backups
 
   nginx:
     build:
       context: nginx/
     container_name: ispa_nginx_prod
-    depends_on:
-      - django
     ports:
       - "0.0.0.0:80:80"
-
-  django:
-    build:
-      context: ispa/
-      dockerfile: Dockerfile
-    container_name: ispa_prod
-    depends_on:
-      - db
-    env_file: .env
 
   # Redis
   redis:

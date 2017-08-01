@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 COPY requirements/base.txt /home/docker/requirements-base.txt
 COPY requirements/prod.txt /home/docker/requirements-prod.txt
 
-WORKDIR /home/docker/ispa_project
+WORKDIR /home/docker/ispa
 
 COPY gunicorn.sh /gunicorn.sh
 

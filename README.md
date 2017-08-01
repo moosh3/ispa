@@ -1,18 +1,45 @@
 # ispa
 Illinois Sports Business Association official website
 
+[![Build Status](https://travis-ci.org/marjoram/ispa.svg?branch=master)](https://travis-ci.org/marjoram/ispa)
+
 ## Getting Started
 
-Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script.
+![Imgur](http://i.imgur.com/pmPxikr.png)
 
-That takes care of both prod and local Dockerfiles, along with the corresponding docker-compose builds. Moving forward, you can use `local.sh` whenever you make changes that require rebuilding the local Dockerfile or the whole docker-compose services. It looks like this:
+Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script which runs the following commands:
 
 ```Bash
-$ cd ispa_project && docker build -t ispa:latest-local -f Dockerfile.local . && cd ..
-$ docker-compose -f docker-compose.local.yml build
-$ docker-compose -f docker-compose.local.yml up -d
-$ docker ps
+$ cd ispa && docker build -t ispa_prod:latest -f Dockerfile . && docker build -t ispa:latest -f Dockerfile.local . && cd ..
+$ docker-compose build
+$ docker-compose -f docker-compose.prod.yml
 ```
+
+You will also want to create a data container to make sure postgresql data is persistent, allowing you to restart the services without having to reset the database:
+
+```Bash
+$ docker volume create --name ispa_pg_data
+```
+
+For local development you'll want to bring up common services like the database, redis and rabbit with docker-compose. The ispa image itself is ran separately:
+
+```Bash
+$ docker-compose up --remove-orphans -d
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
+```
+
+**Note**: For tagged releases, the data volume most likely will have to be delete due to modifications to the migrations, possible messing up postgresql. In `data/` will be a tarball that has the newest (clean) database -- all we did was run the new migrations. Here are some commands that might be of use:
+
+```Bash
+# to backup
+$ docker exec -t -u postgres <postgres_container> pg_dumpall -c > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+# to drop db
+$ docker exec -u postgres <postgres_container> psql -c 'DROP DATABASE <your_db_name>'
+# to restoredocker
+$ cat your_dump.sql | docker exec -i <postgres_container> psql -U postgres
+```
+
+Dropping the database is only recommended in dev environments.
 
 ## Wagtail
 
@@ -30,13 +57,21 @@ Superuser created successfully.
 
 ## Docker
 
-For local development, specify the docker-compose file as such:
+[Here](https://asciinema.org/a/I4RhmVynrkZj8r8UyuvO4QKzY) is a screen cast which shows the manual installation of everything from start to finish.
+
+For local development, specify the docker-compose file as such, which creates and brings up the containers supplying common services:
 
 ```Bash
 docker-compose up -d
 ```
 
-Once finished, you can access the website by going to 0.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
+Boot up the actual container using `docker run`:
+
+```Bash
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
+```
+
+Once finished, you can access the website by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
 If you would like to enter the container, exec into it:
 
 ```Bash
@@ -44,9 +79,16 @@ $ docker exec -it ispa bash
 root@9b32bd049709:/home/docker/ispa#
 ```
 
-Which will create a bash shell in the ispa container. The  ```docker-compose.prod.yml``` file and ```Dockerfile``` run production using gunicorn and nginx. Only run this in testing; deployment will come at a later date.
+Since we have a data container mounted onto a postgresql docker instance, we can run commands that will backup the contents of the container for backups, data sharing, etc.
 
-I've included two shell scripts that automate the building; ```local.sh``` and ```prod.sh```. Running either will build the corresponding Dockerfile and docker-compose file.
+To back up our database, create a second volume named backup. Then we want to run an ubuntu instance of which we mount our original `ispa_pg_data` volume, and export it into the other container, generating a tarball. It looks like this:
+
+```Bash
+# Create another volume
+$ docker volume create --name dbbackup
+$ docker run --rm --volumes-from ispa_db -v $(pwd):/backup ubuntu tar cvf /backup/backup0.tar /dbbackup
+# It might return an error, but the tarball should be generated
+```
 
 In local development, Django's local runserver is replaced with ```runserver_plus```. In the same form, grab a django shell like so:
 
@@ -54,25 +96,6 @@ In local development, Django's local runserver is replaced with ```runserver_plu
 $ docker exec -it ispa bash # hop into the container
 root@e08fa21c207a:/home/docker/ispa_project# ./manage.py shell_plus
 # Shell Plus Model Imports
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.models import Session
-from django.contrib.sites.models import Site
-from events.models.event import Event
-from events.models.eventguest import EventGuest
-from events.models.eventlocation import EventLocation
-from events.models.eventtype import EventType
-from taggit.models import Tag, TaggedItem
-from wagtail.wagtailcore.models import Collection, CollectionViewRestriction, GroupCollectionPermission, GroupPagePermission, Page, PageRevision, PageViewRestriction, Site
-from wagtail.wagtaildocs.models import Document
-from wagtail.wagtailembeds.models import Embed
-from wagtail.wagtailforms.models import FormSubmission
-from wagtail.wagtailimages.models import Image, Rendition
-from wagtail.wagtailredirects.models import Redirect
-from wagtail.wagtailsearch.models import Query, QueryDailyHits
-from wagtail.wagtailusers.models import UserProfile
-# Shell Plus Django Imports
 from django.urls import reverse
 from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When
 from django.core.cache import cache
@@ -89,10 +112,6 @@ In [1]:
 
 That imports all models automatically for you; comes in handy. If the ispa container ever stops, you can use `docker logs ispa`, which outputs all logging information from `STDOUT`.
 
-## Building
-
-Whenever a change in requirements is made, run the `build.sh` script to get a fresh start. It rebuilds all things docker related, but does not start anything.
-
 ## Trello workflow
 
 An overview of the workflow for using Trello
@@ -106,14 +125,3 @@ An overview of the workflow for using Trello
 - Once case has been completed and commits or branches attached, move card to REVIEW list so other members can review your code
 - If something was off or wrong in your code, leave card in REVIEW list and make appropriate changes
 - Once all members are satisfied with completed task, only the members who did not work on task can move case from REVIEW to COMPLETED
-
-
-### Event relationships
-
-Some quick notes regarding an Event instance and its attributes, along with its FK relationships. The Event object provides `event_id`, `name`, `slug`, `date`, `description`, and `is_active` attributes. The `guests` attribute is a ManyToMany relationship to an `EventGuest` model. `location` is also defined in an Event instance with a ForeignKey to `EventLocation`. Lastly, a ForeignKey to `EventType`.
-
-The model also comes with a custom `EventManager` that can return a query of active events and events of which the user is owner of.
-
-The `EventGuest` model keeps track of a query of user instances tied to a particular event, along with identifying the user who created the Event in the first place. It can spit out a string with the Event's name and a guest list. Following the same ideology regarding relationship-based models, `EventLocation` stores attributes like `address`, `city`, and so on. This allows the same venue to be referenced in multiple Events.
-
-Finally, `EventType` allows an Event owner to set codes declared in the model, allowing them to do things such as making an Event required, `EventType.REQUIRED`.
