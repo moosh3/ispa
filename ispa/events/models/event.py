@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from modelcluster.models import ClusterableModel
+from modelcluster.fields import ParentalManyToManyField
+
 from .eventlocation import EventLocation
+from ispa_app.models import Member
 
 from events.constants import (
     EVENT,
@@ -15,7 +19,7 @@ class EventManager(models.Manager):
         return self.get_queryset().filter(is_active=True)
 
 
-class Event(models.Model):
+class Event(ClusterableModel):
 
     EVENT_TYPE_CHOICES = (
         (EVENT, EVENT.capitalize()),
@@ -25,11 +29,7 @@ class Event(models.Model):
 
     location = models.ForeignKey('EventLocation')
     creator = models.ForeignKey('auth.User')
-    guests = models.ManyToManyField(
-        'auth.User',
-        related_name='guests',
-        through='Guest',
-    )
+    guests = ParentalManyToManyField(Member, related_name='events')
     date = models.DateTimeField('Event Date', null=True, blank=True, auto_now=False)
     description = models.CharField('Description', max_length=512, null=True, blank=True)
     is_active = models.BooleanField(default=True)
@@ -53,26 +53,3 @@ class Event(models.Model):
 
     #def get_absolute_url(self):
     #    return reverse('profile', args=[self.user.username])
-
-
-class Guest(models.Model):
-
-    event = models.ForeignKey('Event')
-    member = models.ForeignKey('auth.User')
-    rsvp = models.BooleanField(default=False)
-
-    def __str__(self):
-        return 'Guest: {} - {}'.format(
-            self.user.username,
-            self.event.name
-        )
-
-    def __unicode__(self):
-        return __str__()
-
-    @classmethod
-    def create_guest(cls, event, user, rsvp=False):
-        obj, _ = cls.objects.get_or_create(event=event, user=user)
-        obj.rsvp = rsvp
-        obj.save()
-        return obj
