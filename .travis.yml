@@ -24,7 +24,7 @@ install:
   - cd .. #TODO this is an awful hacky solution
 
 script:
-  - docker run -it --rm -d --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test
+  - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test
   - docker-compose -f docker-compose.yml -f docker-compose.vm.yml down
 
 after_success:
