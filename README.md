@@ -71,17 +71,36 @@ Boot up the actual container using `docker run`:
 $ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
 ```
 
-Once finished, you can access the website by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production)
-If you would like to enter the container, exec into it:
+Once you've started the container, you can access the app by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production).
+
+Since that run command detaches it from the shell, you can't access it without `exec`-ing into it. With our workflow, that is not recommended. Instead, if it crashes you should run `docker logs ispa` to see the output and the error that shut down the server for debugging. Even better, when working locally, you can start the container with a bash shell; overriding the entrypoint `start-dev.sh`.
 
 ```Bash
-$ docker exec -it ispa bash
-root@9b32bd049709:/home/docker/ispa#
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa:latest
+# You can now attach to it
+$ docker attach ispa
+# You may need to type ctrl+C to exit the local bash
+^C
+root@419c7491c798:/home/docker/ispa# # Run ./manage.py, pytest, whatever
 ```
+
+When attached to a container you can also run `./manage.py runserver_plus 0.0.0.0:8000` to start the app and access it in your browser.
 
 Since we have a data container mounted onto a postgresql docker instance, we can run commands that will backup the contents of the container for backups, data sharing, etc.
 
-To back up our database, create a second volume named backup. Then we want to run an ubuntu instance of which we mount our original `ispa_pg_data` volume, and export it into the other container, generating a tarball. It looks like this:
+
+#### Backup
+
+There's two ways to backup the data. The easiest is to create fixtures from using `manage.py`:
+
+```Bash
+# ispa is running with a bash entrypoint
+root@419c7491c798:/home/docker/ispa# ./manage.py dumpdata
+# to load data, specify the fixture:
+root@419c7491c798:/home/docker/ispa# ./manage.py loaddata fixtures/initial_data.json
+```
+
+To back up our postgresql database, create a second volume named backup. Then we want to run an ubuntu instance of which we mount our original `ispa_pg_data` volume, and export it into the other container, generating a tarball. It looks like this:
 
 ```Bash
 # Create another volume
@@ -90,27 +109,14 @@ $ docker run --rm --volumes-from ispa_db -v $(pwd):/backup ubuntu tar cvf /backu
 # It might return an error, but the tarball should be generated
 ```
 
-In local development, Django's local runserver is replaced with ```runserver_plus```. In the same form, grab a django shell like so:
+#### Testing
+
+For testing, you can override the entrypoint again but pass a command into bash from the docker run command:
 
 ```Bash
-$ docker exec -it ispa bash # hop into the container
-root@e08fa21c207a:/home/docker/ispa_project# ./manage.py shell_plus
-# Shell Plus Model Imports
-from django.urls import reverse
-from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When
-from django.core.cache import cache
-from django.conf import settings
-from django.utils import timezone
-from django.contrib.auth import get_user_model
-from django.db import transaction
-Python 3.5.3 (default, Jul 18 2017, 23:09:11)
-Type 'copyright', 'credits' or 'license' for more information
-IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
-
-In [1]:
+$ docker run -it --rm --name ispa --entrypoint /bin/bash ispa:latest -c py.test
+# Will output the test pass/fail report from py.test
 ```
-
-That imports all models automatically for you; comes in handy. If the ispa container ever stops, you can use `docker logs ispa`, which outputs all logging information from `STDOUT`.
 
 ## Trello workflow
 
