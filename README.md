@@ -118,6 +118,14 @@ $ docker run -it --rm --name ispa --entrypoint /bin/bash ispa:latest -c py.test
 # Will output the test pass/fail report from py.test
 ```
 
+py.test has some awesome plugins and customizations. Here's some examples:
+
+- run 10 slowest tests: `--duration=10`
+- stop on first fail: `-x`
+- drop to pdb on failure: `--pdb`
+- post to pastebin: `--pastebin=failed`
+- modify tracebacks: `--showlocals --tb=long`
+
 ## Trello workflow
 
 An overview of the workflow for using Trello
