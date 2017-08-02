@@ -2,6 +2,7 @@ from django.views.generic import FormView
 
 from events.models import Event
 
+
 class EventDashboard(FormView):
     template_name = 'dashboard.html'
 

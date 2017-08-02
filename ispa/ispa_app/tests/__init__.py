@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from ispa_app import models
 from events import models as emodels
 
+
 class BaseTestCase(TestCase):
 
     def setUp(self):
@@ -36,4 +37,6 @@ class BaseTestCase(TestCase):
             u.save()
             models.Member.objects.create(user=u, points=1, bio='')
 
-        self.test_members = User.objects.filter(username__startswith='test_member_')
+        self.test_members = User.objects.filter(
+                                username__startswith='test_member_'
+        )

@@ -126,6 +126,12 @@ py.test has some awesome plugins and customizations. Here's some examples:
 - post to pastebin: `--pastebin=failed`
 - modify tracebacks: `--showlocals --tb=long`
 
+**plugins**:
+
+[pytest-cache](https://pythonhosted.org/pytest-cache/readme.html)
+- rerun only the failed test: `--lf`
+- clear test cache: `--clearcache`
+
 ## Trello workflow
 
 An overview of the workflow for using Trello

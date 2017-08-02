@@ -11,11 +11,13 @@ class EventNode(DjangoObjectType):
         model = Event
         interfaces = (Node, )
 
+
 class EventLocationNode(DjangoObjectType):
 
     class Meta:
         model = EventLocation
         interfaces = (Node, )
+
 
 class Query(ObjectType):
     event = Node.Field(EventNode)

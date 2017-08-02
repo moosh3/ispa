@@ -6,13 +6,14 @@ from django.views.generic import (
 
 from events import models
 
+
 class EventDetailView(DetailView):
 
     model = models.Event
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.event =  None
+        self.event = None
         self.user = None
 
     def dispatch(self, *args, **kwargs):
@@ -37,6 +38,7 @@ class EventDetailView(DetailView):
 
         context['guests'] = self.guests
         return context
+
 
 class CreateEventView(View):
 

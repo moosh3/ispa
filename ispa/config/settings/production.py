@@ -14,8 +14,6 @@ SECURE_PROXY_SSL_HEADER = 'https'
 
 # SECURITY CONFIGURATION
 # ------------------------------------------------------------------------------
-# See https://docs.djangoproject.com/en/dev/ref/middleware/#module-django.middleware.security
-# and https://docs.djangoproject.com/en/dev/howto/deployment/checklist/#run-manage-py-check-deploy
 
 # set this to 60 seconds and then to 518400 when you can prove it works
 SECURE_HSTS_SECONDS = 60
@@ -48,15 +46,15 @@ ALLOWED_HOSTS = '*'
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See:
-# https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader
 TEMPLATES[0]['OPTIONS']['loaders'] = [
     ('django.template.loaders.cached.Loader', [
-        'django.template.loaders.filesystem.Loader', 'django.template.loaders.app_directories.Loader', ]),
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    ]),
 ]
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
-# Uses Amazon RDS for database hosting, which doesn't follow the Heroku-style spec
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -68,22 +66,21 @@ DATABASES = {
     },
 }
 
-# CACHING #TODO
+# CACHING # TODO
 # ------------------------------------------------------------------------------
 # Heroku URL does not pass the DB number, so we parse it in
-#CACHES = {
+# CACHES = {
 #    'default': {
 #        'BACKEND': 'django_redis.cache.RedisCache',
 #        'LOCATION': REDIS_LOCATION,
 #        'OPTIONS': {
 #            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
 #            'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
-#                                        # http://niwinz.github.io/django-redis/latest/#_memcached_exceptions_behavior
-#        }
+#
 #    }
-#}
+# }
 
-#TODO Add logging configuration
+# TODO Add logging configuration
 
 # Custom Admin URL, use {% raw %}{% url 'admin:index' %}{% endraw %}
 

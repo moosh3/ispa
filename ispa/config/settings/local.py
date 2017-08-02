@@ -1,11 +1,5 @@
-"""
-Local settings
-
-- Run in Debug mode
-- Use console backend for emails
-- Add Django Debug Toolbar
-- Add django-extensions as app
-"""
+import socket
+import os
 
 from .base import *  # noqa
 
@@ -35,9 +29,7 @@ MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 INSTALLED_APPS += ['debug_toolbar', ]
 
 INTERNAL_IPS = ['127.0.0.1', '10.0.2.2', ]
-#This is a workaround to flake8 "imported but unused" errors #}
-import socket
-import os
+# This is a workaround to flake8 "imported but unused" errors #}
 # tricks to have debug toolbar when developing with docker
 ip = socket.gethostbyname(socket.gethostname())
 INTERNAL_IPS += [ip[:-1] + '1']
@@ -50,7 +42,7 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # django-extensions
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ['django_extensions',]
+INSTALLED_APPS += ['django_extensions', ]
 
 # TESTING
 # ------------------------------------------------------------------------------

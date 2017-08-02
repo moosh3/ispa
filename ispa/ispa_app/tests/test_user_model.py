@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from ispa_app import models
 from ispa_app.tests import BaseTestCase
 
+
 class TestMemberProxy(BaseTestCase):
 
     def test_create_user_member(self):

@@ -13,6 +13,7 @@ from events.constants import (
     SEMESTER
 )
 
+
 class EventManager(models.Manager):
 
     def active(self):
@@ -30,14 +31,18 @@ class Event(ClusterableModel):
     location = models.ForeignKey('EventLocation')
     creator = models.ForeignKey('auth.User')
     guests = ParentalManyToManyField(Member, related_name='events')
-    date = models.DateTimeField('Event Date', null=True, blank=True, auto_now=False)
-    description = models.CharField('Description', max_length=512, null=True, blank=True)
+    date = models.DateTimeField(
+        'Event Date', null=True,
+        blank=True, auto_now=False
+    )
+    description = models.CharField(
+        'Description', max_length=512,
+        null=True, blank=True)
     is_active = models.BooleanField(default=True)
     name = models.CharField('Name', max_length=256, null=True, blank=True)
     points = models.IntegerField()
     eventtype = models.CharField(max_length=128,
-        choices=EVENT_TYPE_CHOICES, default=EVENT,
-    )
+                                 choices=EVENT_TYPE_CHOICES, default=EVENT)
 
     def get_absolute_url(self):
         return reverse('event-detail', args=[self.slug])
@@ -51,5 +56,5 @@ class Event(ClusterableModel):
     class Meta:
         ordering = ('name',)
 
-    #def get_absolute_url(self):
+    # def get_absolute_url(self):
     #    return reverse('profile', args=[self.user.username])
