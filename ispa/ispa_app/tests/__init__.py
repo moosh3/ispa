@@ -45,13 +45,13 @@ class BaseTestCase(TestCase):
         )
 
         self.default_event_kwargs = {
-            'name'='Test Event',
-            'description'='Test Event at 1234 Main St.',
-            'creator'=self.user,
-            'location'=self.location,
-            'guests'=self.test_members,
-            'date'=datetime.datetime.now(),
-            'points'=5,
-            'is_active'=True,
-            'eventtype'='EVENT'
+            'name': 'Test Event',
+            'description': 'Test Event at 1234 Main St.',
+            'creator': self.user,
+            'location': self.location,
+            'guests': self.test_members,
+            'date': datetime.datetime.now(),
+            'points': 5,
+            'is_active': True,
+            'eventtype': 'EVENT'
         }
