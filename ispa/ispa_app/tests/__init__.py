@@ -44,14 +44,15 @@ class BaseTestCase(TestCase):
             username__startswith='test_member_',
         )
 
-        self.default_event_kwargs = {
-            'name': 'Test Event',
-            'description': 'Test Event at 1234 Main St.',
-            'creator': self.user,
-            'location': self.location,
-            'guests': self.test_members,
-            'date': datetime.datetime.now(),
-            'points': 5,
-            'is_active': True,
-            'eventtype': 'EVENT'
-        }
+        self.event = emodels.Event.objects.create(
+            name= 'Test Event',
+            description= 'Test Event at 1234 Main St.',
+            creator= self.user,
+            location= self.location,
+            guests= self.test_members,
+            date= datetime.datetime.now(),
+            points= 5,
+            is_active= True,
+            eventtype= 'EVENT'
+        )
+        self.event.save()
