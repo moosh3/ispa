@@ -15,8 +15,7 @@ install:
   - docker build -f ispa/Dockerfile.local -t $REPO:$TRAVIS_COMMIT ./ispa
 
 script:
-  - docker run -it --rm --volume $(pwd)/.coverage:/home/docker/ispa/.coverage --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test -v --cov --pep8
-  - coveralls
+  - docker run -it --rm --volume $(pwd)/.coverage:/home/docker/ispa/.coverage --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test --cov --pep8
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
