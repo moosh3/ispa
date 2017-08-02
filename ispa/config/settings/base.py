@@ -204,16 +204,16 @@ PASSWORD_HASHERS = [
 
 AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # pragma: no cover
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # pragma: no cover
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # pragma: no cover
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # pragma: no cover
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  
     },
 ]
 
