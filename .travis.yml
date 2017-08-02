@@ -9,12 +9,13 @@ addons:
 
 before_install:
   - pip install coveralls
+  - export COVERALLS_REPO_TOKEN=$COV_TOKEN coveralls
 
 install:
   - docker build -f ispa/Dockerfile.local -t $REPO:$TRAVIS_COMMIT ./ispa
 
 script:
-  - docker run -it --rm --volume $(pwd)/.coverage:/home/docker/ispa/.coverage --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test --cov --pep8
+  - docker run -it --rm --volume $(pwd)/.coverage:/home/docker/ispa/.coverage --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test -v --cov --pep8
   - coveralls
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
