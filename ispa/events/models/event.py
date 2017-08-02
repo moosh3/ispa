@@ -63,6 +63,9 @@ class Event(ClusterableModel):
     def __unicode__(self):
         return __str__()
 
+    def get_absolute_url(self):
+        return reverse('event-detail', args=[self.slug])
+
     @classmethod
     def create_event(cls, location, owners, guests, date,
                      description, is_active, name, points, eventtype):

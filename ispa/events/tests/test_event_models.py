@@ -8,7 +8,7 @@ from events import models
 class TestGroupModel(BaseTestCase):
 
     def test_create_event(self):
-        self.event = models.Event.create(self.**default_event_kwargs)
+        self.event = models.Event.create(**self.default_event_kwargs)
         self.assertEqual(self.event.name, 'Test Event')
         self.assertEqual(self.event.__str__(), 'Event: Test Event')
 
