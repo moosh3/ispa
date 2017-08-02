@@ -1,3 +1,5 @@
+import datetime
+
 from django.test import TestCase
 from django.contrib.auth.models import User
 
@@ -22,14 +24,6 @@ class BaseTestCase(TestCase):
         )
         self.location.save()
 
-        self.event = emodels.Event.objects.create(
-            name='Test Event',
-            location=self.location,
-            points=5,
-            creator=self.user,
-        )
-        self.event.save()
-
         for count in range(0, 3):
             u = User.objects.create(username='test_member_{}'.format(count))
             u.set_password('justtestit')
@@ -37,6 +31,27 @@ class BaseTestCase(TestCase):
             u.save()
             models.Member.objects.create(user=u, points=1, bio='')
 
-        self.test_members = User.objects.filter(
-                                username__startswith='test_member_'
+        for count in range(0, 3):
+            u = User.objects.create(username='test_user_{}'.format(count))
+            u.set_password('justtestit')
+            u.email = '{}@example.com'.format(u.username)
+            u.save()
+
+        self.test_users = User.objects.filter(
+            username__startswith='test_user_',
         )
+        self.test_members = User.objects.filter(
+            username__startswith='test_member_',
+        )
+
+        self.default_event_kwargs = {
+            name='Test Event',
+            description = 'Test Event at 1234 Main St.',
+            creator=self.user,
+            location=self.location,
+            guests=self.test_members,
+            date= datetime.datetime.now(),
+            points=5,
+            is_active=True,
+            eventtype='EVENT'
+        }
