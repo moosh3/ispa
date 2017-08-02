@@ -15,6 +15,8 @@ from django.contrib.auth.views import (
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtailsearch import urls as wagtailsearch_urls
+
 from graphene_django.views import GraphQLView
 
 from events.views import events
@@ -30,12 +32,12 @@ urlpatterns = [
     url(r'^about/', TemplateView.as_view(
         template_name='ispa/about.html'),
         name='about'),
+    url(r'^django-admin/', admin.site.urls),
 ]
 
 # Wagtail
 urlpatterns += [
-    url(r'^admin/', admin.site.urls),
-    url(r'^cms/', include(wagtailadmin_urls)),
+    url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^pages/', include(wagtail_urls)),
 ]
@@ -66,6 +68,8 @@ urlpatterns += [
 urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
     # Celery job api
-    url(r'^api-auth/', include('rest_framework.urls',
-        namespace='rest_framework'))
+    url(r'^api-auth/', include(
+        'rest_framework.urls',
+        namespace='rest_framework')),
+    url(r'', include(wagtail_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
