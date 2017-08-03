@@ -130,6 +130,7 @@ py.test has some awesome plugins and customizations. Here's some examples:
 
 [pytest-cache](https://pythonhosted.org/pytest-cache/readme.html)
 - rerun only the failed test: `--lf`
+- run failed tests first: `--ff`
 - clear test cache: `--clearcache`
 
 ## Trello workflow
