@@ -67,11 +67,11 @@ class Event(ClusterableModel):
         return reverse('event-detail', args=[self.slug])
 
     @classmethod
-    def create_event(cls, location, owners, guests, date,
+    def create_event(cls, location, guests, date,
                      description, is_active, name, points, eventtype):
-        obj = cls.create(
+        return cls.objects.create(
             location=location,
-            owners=owners,
+            # owners=owners,
             guests=guests,
             date=date,
             description=description,
@@ -81,8 +81,6 @@ class Event(ClusterableModel):
             eventtype=eventtype,
             slug=slugify(name)
         )
-
-        return obj
 
     class Meta:
         ordering = ('name',)
