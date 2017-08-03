@@ -10,4 +10,4 @@ class TestEventViews(BaseTestCase):
     def setUp(self):
         super(TestEventViews, self).setUp()
         # Sample event
-        self.event = models.Event.create_review(**self.default_event_kwargs)
+        self.event = models.Event.create_event(**self.default_event_kwargs)

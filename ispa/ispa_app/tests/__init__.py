@@ -40,19 +40,17 @@ class BaseTestCase(TestCase):
         self.test_users = User.objects.filter(
             username__startswith='test_user_',
         )
-        self.test_members = User.objects.filter(
-            username__startswith='test_member_',
+        self.test_members = models.Member.objects.filter(
+            user__username__startswith='test_member_',
         )
 
-        self.event = emodels.Event.objects.create(
-            name= 'Test Event',
-            description= 'Test Event at 1234 Main St.',
-            creator= self.user,
-            location= self.location,
-            guests= self.test_members,
-            date= datetime.datetime.now(),
-            points= 5,
-            is_active= True,
-            eventtype= 'EVENT'
-        )
-        self.event.save()
+        self.default_event_kwargs = {
+            'name': 'Test Event',
+            'description': 'Test Event at 1234 Main St.',
+            'location': self.location,
+            'guests': self.test_members,
+            'date': datetime.date(2007, 12, 5),
+            'points': 5,
+            'is_active': True,
+            'eventtype': 'EVENT',
+        }
