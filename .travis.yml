@@ -11,7 +11,7 @@ install:
   - docker build -f ispa/Dockerfile.local -t $REPO:$TRAVIS_COMMIT ./ispa
 
 script:
-  - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test --cov --verbose
+  - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c py.test --cov=config .coveragerc --verbose
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
