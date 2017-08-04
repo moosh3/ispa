@@ -1,9 +1,7 @@
 from django.contrib.auth.models import User
 
-from ispa_app.tests import BaseTestCase
-
+from events.test import BaseTestCase
 from events import models
-
 
 class TestGroupModel(BaseTestCase):
 
