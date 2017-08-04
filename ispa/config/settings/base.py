@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'wagtail.wagtailcore',
     # Your stuff: custom apps go here
     'events',
-    'ispa_app',
     'graphene_django',
 ]
 
@@ -213,7 +212,7 @@ AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
