@@ -13,7 +13,16 @@ class EventLocation(models.Model):
     zipcode = models.CharField('Zipcode', max_length=10, null=True, blank=True)
 
     def __str__(self):
-        return 'EventLocation: {}'.format(self.address)
+        return '{}'.format(self.address)
 
     def __unicode__(self):
         return __str__()
+
+    def to_json(self):
+        return {
+            'address': self.address,
+            'address2': self.address2,
+            'city': self.city,
+            'state': self.state,
+            'zipcode': self.zipcode,
+        }
