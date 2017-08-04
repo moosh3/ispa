@@ -1,2 +1,2 @@
-psycopg2==2.7.1
 gevent==1.2.2
+gunicorn==19.7.1

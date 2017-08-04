@@ -114,9 +114,24 @@ $ docker run --rm --volumes-from ispa_db -v $(pwd):/backup ubuntu tar cvf /backu
 For testing, you can override the entrypoint again but pass a command into bash from the docker run command:
 
 ```Bash
-$ docker run -it --rm --name ispa --entrypoint /bin/bash ispa:latest -c py.test
+$ docker run -it --rm --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa:latest -c py.test --cov --verbose
 # Will output the test pass/fail report from py.test
 ```
+
+py.test has some awesome plugins and customizations. Here's some examples:
+
+- run 10 slowest tests: `--duration=10`
+- stop on first fail: `-x`
+- drop to pdb on failure: `--pdb`
+- post to pastebin: `--pastebin=failed`
+- modify tracebacks: `--showlocals --tb=long`
+
+**plugins**:
+
+[pytest-cache](https://pythonhosted.org/pytest-cache/readme.html)
+- rerun only the failed test: `--lf`
+- run failed tests first: `--ff`
+- clear test cache: `--clearcache`
 
 ## Trello workflow
 

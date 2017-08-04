@@ -4,11 +4,13 @@ from django.contrib.auth.models import User
 
 from .models import Member
 
+
 class MemberInline(admin.StackedInline):
     model = Member
     can_delete = False
     verbose_name_plural = 'Member'
     fk_name = 'user'
+
 
 class CustomUserAdmin(UserAdmin):
     inlines = (MemberInline, )
