@@ -3,8 +3,7 @@ import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from ispa_app import models
-from events import models as emodels
+from events import models as models
 
 
 class BaseTestCase(TestCase):
@@ -15,7 +14,7 @@ class BaseTestCase(TestCase):
         self.user.email = 'test_user@example.com'
         self.user.save()
 
-        self.location = emodels.EventLocation.objects.create(
+        self.location = models.EventLocation.objects.create(
             address='1234 Main St.',
             address2='Apt 2',
             city='Chicago',
