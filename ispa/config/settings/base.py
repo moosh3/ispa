@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'events',
     'ispa_app',
     'graphene_django',
+    'blog',
 ]
 
 GRAPHENE = {
