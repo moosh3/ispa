@@ -30,8 +30,9 @@ class Event(BaseModel):
         related_name='owners',
         through='Owner',
     )
-    guests = models.ManyToManyField(
+    attendees = models.ManyToManyField(
         'auth.User',
+        related_name='attendees',
         through='Attendance',
     )
     date = models.DateTimeField(
