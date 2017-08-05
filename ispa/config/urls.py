@@ -61,7 +61,7 @@ urlpatterns += [
 
 # django-debug-toolbar
 urlpatterns += [
-    url(r'^__debug__/', include(debug_toolbar.urls)),
+#    url(r'^__debug__/', include(debug_toolbar.urls)),
 ]
 
 # API and GraphQL
