@@ -109,7 +109,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOSTNAME': 'ispa_db',
+        'HOST': 'ispa_db',
         'PORT': '5432',
     },
 }
