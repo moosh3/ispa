@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
+from events.models.base import BaseModel
 
 class EventManager(models.Manager):
 
@@ -9,7 +10,7 @@ class EventManager(models.Manager):
         return self.get_queryset().filter(is_active=True)
 
 
-class Event(models.Model):
+class Event(BaseModel):
 
     EVENT = 8
     SEMESTER = 5
@@ -31,8 +32,7 @@ class Event(models.Model):
     )
     guests = models.ManyToManyField(
         'auth.User',
-        related_name='members',
-        through='Member',
+        through='Attendance',
     )
     date = models.DateTimeField(
         'Event Date', null=True,
@@ -57,11 +57,8 @@ class Event(models.Model):
     def __unicode__(self):
         return __str__()
 
-    def get_absolute_url(self):
-        return reverse('event-detail', args=[self.slug])
-
     @classmethod
-    def create_event(cls, location, guests, date,
+    def create_event(cls, owners, slug, location, guests, date,
                      description, is_active, name, points, event_type):
         return cls.objects.create(
             location=location,
@@ -73,7 +70,7 @@ class Event(models.Model):
             name=name,
             points=points,
             event_type=event_type,
-            slug=slugify(name)
+            slug=slug,
         )
 
     def to_json(self):
