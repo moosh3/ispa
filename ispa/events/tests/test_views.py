@@ -1,11 +1,18 @@
-from django.contrib.auth.models import User
+import pytest
 
-from . import BaseTestCase
-from events import models
+from events import views
 
+@pytest.mark.django_db
+def test_event_list(client):
+    response = client.get('/about/')
+    assert response.status_code == 200
 
-class TestEventViews(BaseTestCase):
+@pytest.mark.django_db
+def test_event_list(client):
+    response = client.get('/')
+    assert response.status_code == 200
 
-    def setUp(self):
-        # Sample event
-        self.event = models.Event.create_event(**self.default_event_kwargs)
+@pytest.mark.django_db
+def test_event_list(client):
+    response = client.get('/events/')
+    assert response.status_code == 200
