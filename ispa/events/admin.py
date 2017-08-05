@@ -7,9 +7,12 @@ from events import models
 class OwnerInline(admin.TabularInline):
     model = models.Owner
 
+class AttendanceInline(admin.TabularInline):
+    model = models.Attendance
+
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
-    inlines = [OwnerInline, ]
+    inlines = [OwnerInline, AttendanceInline, ]
 
 # Register your models here.
 admin.site.register(models.Event, EventAdmin)
