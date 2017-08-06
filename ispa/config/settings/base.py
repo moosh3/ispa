@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # API
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    # Registration
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'modelcluster',
     'taggit',
     # Admin
@@ -60,6 +66,7 @@ INSTALLED_APPS = [
     # Your stuff: custom apps go here
     'events',
     'graphene_django',
+    'api',
 ]
 
 GRAPHENE = {
@@ -232,7 +239,18 @@ AUTHENTICATION_BACKENDS = [
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-ADMIN_URL = r'^admin/'
+ADMIN_URL = r'^django-admin/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
