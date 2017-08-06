@@ -1,0 +1,17 @@
+{
+  "name": "ispa_project",
+  "version": "0.0.3",
+  "description": "ispa source code",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": "git+https://github.com/aleccunningham/ispa.git",
+  "author": "Alec Cunningham, Freddy Marquez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aleccunningham/ispa/issues"
+  },
+  "homepage": "https://github.com/aleccunningham/ispa#readme"
+}
