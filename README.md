@@ -183,6 +183,12 @@ returns id, username, events
 REST schema: /schema
 GraphQL schema: /graphql
 
+## Front end react app
+
+Based heavily on create-react-app by facebook. Here are the commands:
+
+![Imgur](http://imgur.com/a/yJqDZ)
+
 ## Trello workflow
 
 An overview of the workflow for using Trello
