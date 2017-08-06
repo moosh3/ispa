@@ -133,6 +133,56 @@ py.test has some awesome plugins and customizations. Here's some examples:
 - run failed tests first: `--ff`
 - clear test cache: `--clearcache`
 
+## API
+
+### Account and Registration endpoints
+
+/auth//login/ POST
+attributes: username, email, password
+returns token
+
+/auth//logout/ POST
+
+/auth//password/reset/ POST
+attributes: email
+
+/auth//password/reset/confirm/ POST
+attributes: uid, token, new_password1, new_password2
+
+/auth//password/change/ POST
+attributes: new_password1, new_password2, old_password
+
+/auth//user/ GET, PUT, PATCH
+attributes: username, first_name, last_name
+returns pk, username, email, first_name, last_name
+
+/auth//registration/ POST
+attributes: username, password1, password2, email
+
+/auth//registration/verify-email/ POST
+attributes: key
+
+
+### Event endpoints
+
+/api/v1//events/ GET POST HEAD OPTIONS
+list events
+
+/api/v1//events/<pk>/ GET PUT PATCH DELETE HEAD OPTIONS
+attributes: location, slug, event date, description, is_active, name, points, event_type
+
+/api/v1//locations/ GET POST HEAD OPTIONS
+list locations
+
+/api/v1//users/ list, detail
+read-only list of users
+returns id, username, events
+
+### Schema
+
+REST schema: /schema
+GraphQL schema: /graphql
+
 ## Trello workflow
 
 An overview of the workflow for using Trello
