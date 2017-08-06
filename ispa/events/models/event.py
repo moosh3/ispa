@@ -25,11 +25,6 @@ class Event(BaseModel):
     location = models.ForeignKey('EventLocation')
     slug = models.SlugField(unique=True, max_length=40,
                             blank=True, null=True)
-    owners = models.ManyToManyField(
-        'auth.User',
-        related_name='owners',
-        through='Owner',
-    )
     attendees = models.ManyToManyField(
         'auth.User',
         related_name='attendees',
@@ -59,12 +54,11 @@ class Event(BaseModel):
         return __str__()
 
     @classmethod
-    def create_event(cls, owners, slug, location, guests, date,
+    def create_event(cls, slug, location, attendees, date,
                      description, is_active, name, points, event_type):
         return cls.objects.create(
             location=location,
-            owners=owners,
-            guests=guests,
+            attendees=attendees,
             date=date,
             description=description,
             is_active=is_active,
@@ -77,7 +71,7 @@ class Event(BaseModel):
     def to_json(self):
         return {
             'location': self.location.to_json(),
-            'owners': self.owners.to_json(),
+            'attendees': '',
             'date': self.date,
             'description': self.description,
             'is_active': self.is_active,
