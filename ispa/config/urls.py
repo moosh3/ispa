@@ -18,17 +18,32 @@ from wagtail.wagtailcore import urls as wagtail_urls
 from wagtail.wagtailsearch import urls as wagtailsearch_urls
 
 from graphene_django.views import GraphQLView
+from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view
 
 from events.views import events
+from api.viewsets import (
+    EventViewSet,
+    EventLocationViewSet,
+    UserViewSet
+)
 
 if settings.DEBUG:
     import debug_toolbar
 
+schema_view = get_schema_view(title='ISPA API')
+
+router = DefaultRouter()
+router.register(r'events', EventViewSet)
+router.register(r'locations', EventLocationViewSet)
+router.register(r'users', UserViewSet)
+
 # General
 urlpatterns = [
-    url('^$', TemplateView.as_view(
+    url('^', include(router.urls)),
+    url(r'^home/', TemplateView.as_view(
         template_name='ispa/index.html'),
-        name='index'),
+        name='home'),
     url(r'^about/', TemplateView.as_view(
         template_name='ispa/about.html'),
         name='about'),
@@ -62,14 +77,14 @@ urlpatterns += [
 # django-debug-toolbar
 urlpatterns += [
     url(r'^__debug__/', include(debug_toolbar.urls)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API and GraphQL
 urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-    # Celery job api
-    url(r'^api-auth/', include(
-        'rest_framework.urls',
-        namespace='rest_framework')),
-    url(r'', include(wagtail_urls)),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^api/v1/', include(router.urls)),
+    url(r'^schema/$', schema_view),
+    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^auth/', include('rest_auth.urls')),
+    url(r'^auth/registration/', include('rest_auth.registration.urls')),
+]

@@ -2,19 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-from modelcluster.models import ClusterableModel
-from modelcluster.fields import ParentalManyToManyField
-
-from .eventlocation import EventLocation
-from .owner import Owner
-from ispa_app.models import Member
-
-from events.constants import (
-    EVENT,
-    MEETING,
-    SEMESTER
-)
-
+from events.models.base import BaseModel
 
 class EventManager(models.Manager):
 
@@ -22,12 +10,16 @@ class EventManager(models.Manager):
         return self.get_queryset().filter(is_active=True)
 
 
-class Event(ClusterableModel):
+class Event(BaseModel):
 
-    EVENT_TYPE_CHOICES = (
-        (EVENT, EVENT.capitalize()),
-        (MEETING, MEETING.capitalize()),
-        (SEMESTER, SEMESTER.capitalize()),
+    EVENT = 8
+    SEMESTER = 5
+    MEETING = 3
+
+    EVENT_TYPE = (
+        (EVENT, 'event'),
+        (SEMESTER, 'semester'),
+        (MEETING, 'meeting')
     )
 
     location = models.ForeignKey('EventLocation')
@@ -38,7 +30,11 @@ class Event(ClusterableModel):
         related_name='owners',
         through='Owner',
     )
-    guests = ParentalManyToManyField(Member, related_name='events')
+    attendees = models.ManyToManyField(
+        'auth.User',
+        related_name='attendees',
+        through='Attendance',
+    )
     date = models.DateTimeField(
         'Event Date', null=True,
         blank=True, auto_now=False
@@ -49,38 +45,47 @@ class Event(ClusterableModel):
     is_active = models.BooleanField(default=True)
     name = models.CharField('Name', max_length=256, null=True, blank=True)
     points = models.IntegerField()
-    eventtype = models.CharField(max_length=128,
-                                 choices=EVENT_TYPE_CHOICES, default=EVENT)
-
+    event_type = models.CharField('Event Type', max_length=128, null=True,
+                                  blank=True, choices=EVENT_TYPE)
     objects = EventManager()
 
     def get_absolute_url(self):
         return reverse('event-detail', args=[self.slug])
 
     def __str__(self):
-        return 'Event: {}'.format(self.name)
+        return '{}'.format(self.name)
 
     def __unicode__(self):
         return __str__()
 
-    def get_absolute_url(self):
-        return reverse('event-detail', args=[self.slug])
-
     @classmethod
-    def create_event(cls, location, guests, date,
-                     description, is_active, name, points, eventtype):
+    def create_event(cls, owners, slug, location, guests, date,
+                     description, is_active, name, points, event_type):
         return cls.objects.create(
             location=location,
-            # owners=owners,
+            owners=owners,
             guests=guests,
             date=date,
             description=description,
             is_active=is_active,
             name=name,
             points=points,
-            eventtype=eventtype,
-            slug=slugify(name)
+            event_type=event_type,
+            slug=slug,
         )
+
+    def to_json(self):
+        return {
+            'location': self.location.to_json(),
+            'owners': self.owners.to_json(),
+            'date': self.date,
+            'description': self.description,
+            'is_active': self.is_active,
+            'name': self.name,
+            'points': self.points,
+            'event_type': self.event_type,
+            'slug': slugify(self.name),
+        }
 
     class Meta:
         ordering = ('name',)

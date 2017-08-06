@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # API
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    # Registration
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'modelcluster',
     'taggit',
     # Admin
@@ -59,8 +65,8 @@ INSTALLED_APPS = [
     'wagtail.wagtailcore',
     # Your stuff: custom apps go here
     'events',
-    'ispa_app',
     'graphene_django',
+    'api',
 ]
 
 GRAPHENE = {
@@ -213,7 +219,7 @@ AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -233,7 +239,18 @@ AUTHENTICATION_BACKENDS = [
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-ADMIN_URL = r'^admin/'
+ADMIN_URL = r'^django-admin/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------

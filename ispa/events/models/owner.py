@@ -17,17 +17,27 @@ class Owner(models.Model):
     objects = OwnerManager()
 
     def __str__(self):
-        return 'Creator: {} - {}'.format(
+        return 'Owner: {} of {}'.format(
             self.user.username,
             self.event.name,
         )
 
+    def __unicode__(self):
+        return __str__()
+
+    def to_json(self):
+        return {
+            'user': self.user.username,
+            'event': self.event.to_json(),
+            'is_active': self.is_active,
+        }
+
     @classmethod
-    def create_creator(cls, user, event):
+    def create_owner(cls, user, event, is_active):
         obj, created = cls.objects.get_or_create(
             user=user,
-            review=review,
-            defaults={'is_active': True}
+            event=event,
+            is_active=is_active,
         )
         if not created and obj.is_active:
             # Already an active creator
