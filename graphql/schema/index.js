@@ -1,6 +1,8 @@
 import { GraphQLSchema, GraphQLObjectType } from "graphql";
 
-import { allUsers, user, allLocations, location } from "./users";
+import { allUsers, user, } from "./users";
+import { allLocations, location } from "./locations";
+import { allEvents, event } from "./events";
 
 const QueryType = new GraphQLObjectType({
     name: "ISPA",
