@@ -40,8 +40,7 @@ router.register(r'users', UserViewSet)
 
 # General
 urlpatterns = [
-    url('^', include(router.urls)),
-    url(r'^home/', TemplateView.as_view(
+    url(r'^$', TemplateView.as_view(
         template_name='ispa/index.html'),
         name='home'),
     url(r'^about/', TemplateView.as_view(
