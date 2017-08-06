@@ -17,3 +17,4 @@ export function loadUser(id) {
         .auth(config.username, config.password)
         .then(res => res.body);
 }
+s
