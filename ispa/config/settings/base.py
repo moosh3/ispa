@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'events',
     'graphene_django',
     'api',
+    'blog',
 ]
 
 GRAPHENE = {
