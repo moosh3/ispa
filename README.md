@@ -3,6 +3,8 @@ Illinois Sports Business Association official website
 
 [![Build Status](https://travis-ci.org/marjoram/ispa.svg?branch=master)](https://travis-ci.org/marjoram/ispa)
 
+[![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=marjoram&repoName=ispa&branch=master&pipelineName=ispa&accountName=aleccunningham&type=cf-1)]( https://g.codefresh.io/repositories/marjoram/ispa/builds?filter=trigger:build;branch:master;service:598a777c0c92170001750f2a~ispa)
+
 ## Getting Started
 
 ![Imgur](http://i.imgur.com/pmPxikr.png)
@@ -188,6 +190,43 @@ GraphQL schema: /graphql
 Based heavily on create-react-app by facebook. Here are the commands:
 
 ![Imgur](http://imgur.com/a/yJqDZ)
+
+
+### Pages
+
+These are static pages that will not be part of the reactapp
+- home
+- about_us
+- our_team
+- profile page
+- login
+- logout
+- register
+- sponsors
+
+there are under the events api:
+- events
+  - upcoming_events
+  - past_trips
+  - past_speakers
+    - groups of speakers
+
+- home page
+  - points system page
+    - see how many points u have
+    - list point values for upcoming events
+    - export as csv document
+    - "experience opportunities"
+    - upcoming trips
+      - sign up for a trip
+
+these are under the api app:
+- sign in
+  - username is illinois email
+- sign out
+- register
+- reset password
+
 
 ## Trello workflow
 

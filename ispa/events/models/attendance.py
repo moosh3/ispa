@@ -6,7 +6,7 @@ class Attendance(models.Model):
 
     user = models.ForeignKey('auth.User', related_name='events',)
     event = models.ForeignKey('Event')
-    status = models.BooleanField(default=False)
+    attending = models.BooleanField(default=True)
     is_owner = models.BooleanField(default=False)
 
     def __str__(self):
@@ -20,16 +20,10 @@ class Attendance(models.Model):
         return self.__str__()
 
     @classmethod
-    def create_attendee(cls, user, event, status):
+    def create_attendee(cls, user, event, attending, is_owner):
         return cls.objects.create(
             user=user,
             event=event,
-            status=False,
+            attending=attending,
+            is_owner=is_owner,
         )
-
-    @classmethod
-    def create_attendee_status(cls, event, user, status=False):
-        obj, _ = cls.objects.get_or_create(event=event, user=user)
-        obj.status = status
-        obj.save() 
-        return obj

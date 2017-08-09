@@ -8,7 +8,7 @@ from events import models
 
 
 class EventDashboard(TemplateView):
-    template_name = 'dashboard.html'
+    template_name = 'events/home.html'
 
     def dispatch(self, *args, **kwargs):
         return super(EventDashboard, self).dispatch(*args, **kwargs)
@@ -24,32 +24,31 @@ class EventDashboard(TemplateView):
 
 class EventDetailView(DetailView):
 
+    template_name = 'events/detail.html'
     model = models.Event
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(EventDetailView, self).__init__(*args, **kwargs)
         self.event = None
         self.user = None
 
     def dispatch(self, *args, **kwargs):
         self.event = get_object_or_404(
             models.Event,
-            name=self.kwargs['event_slug']
+            slug=self.kwargs['slug']
         )
-        return super(EventDetail, self).dispatch(*args, **kwargs)
+        return super(EventDetailView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(EventDetail, self).get_context_data(**kwargs)
+        context = super(EventDetailView, self).get_context_data(**kwargs)
         try:
-            owners = models.Owner.objects.get(
+            creator = models.Attendance.objects.get(
                 event=self.event,
                 user=self.user,
-                is_active=True
+                is_owner=True
             )
-        except models.Owner.DoesNotExist:
-            owner = None
-        if owners:
-            context['owners'] = owners
+        except models.Attendance.DoesNotExist:
+            creator = None
 
         context['event'] = self.event
         return context

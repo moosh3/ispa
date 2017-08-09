@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
 from api.serializers import EventSerializer
-from events.models import Event, Owner
+from events.models import Event
 
 
 class EventViewSet(viewsets.ModelViewSet):
