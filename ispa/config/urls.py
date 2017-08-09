@@ -25,7 +25,7 @@ from events.views import events
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
-    UserViewSet
+    AttendanceViewSet,
 )
 
 if settings.DEBUG:
@@ -36,7 +36,7 @@ schema_view = get_schema_view(title='ISPA API')
 router = DefaultRouter()
 router.register(r'events', EventViewSet)
 router.register(r'locations', EventLocationViewSet)
-router.register(r'users', UserViewSet)
+router.register(r'attendees', AttendanceViewSet)
 
 # General
 urlpatterns = [
@@ -81,7 +81,7 @@ urlpatterns += [
 # API and GraphQL
 urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-    url(r'^api/v1/', include(router.urls)),
+    url(r'^api/', include(router.urls, namespace='api')),
     url(r'^schema/$', schema_view),
     #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^auth/', include('rest_auth.urls')),

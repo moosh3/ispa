@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
 from api.serializers import EventSerializer
-from events.models import Event
+from events.models import Event, Owner
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -13,6 +13,3 @@ class EventViewSet(viewsets.ModelViewSet):
     """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-    def perform_create(self, serializer):
-        serializer.save(owners=self.request.user)
