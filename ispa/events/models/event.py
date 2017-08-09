@@ -30,6 +30,7 @@ class Event(BaseModel):
     description = models.CharField(
         'Description', max_length=512,
         null=True, blank=True)
+    extended_description = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to=image_field, null=True, blank=True)
     location = models.ForeignKey('EventLocation')
     date = models.DateTimeField(
