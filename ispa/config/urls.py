@@ -34,9 +34,9 @@ if settings.DEBUG:
 schema_view = get_schema_view(title='ISPA API')
 
 router = DefaultRouter()
-router.register(r'events', EventViewSet)
-router.register(r'locations', EventLocationViewSet)
-router.register(r'attendees', AttendanceViewSet)
+router.register(r'eventsp', EventViewSet)
+router.register(r'locationsp', EventLocationViewSet)
+router.register(r'attendeesp', AttendanceViewSet)
 
 # General
 urlpatterns = [
@@ -56,22 +56,26 @@ urlpatterns += [
     url(r'^pages/', include(wagtail_urls)),
 ]
 
+urlpatterns += [
+    url(r'^user/(?P<pk>[\w-]+)')
+]
+
 # Events
 urlpatterns += [
     url(r'^events/$', events.dashboard_view, name='event-dashboard'),
     url(r'^events/list/$', events.list_view, name='event-list'),
     url(r'^events/create/$', events.create_view, name='event-create'),
     url(
-        r'^events/(?P<event_slug>[\w-]+)/$',
+        r'^events/(?P<slug>[\w-]+)/$',
          events.detail_view,
          name='event-detail'
     ),
     url(
-        r'^events/(?P<event_slug>[\w-]+)/edit/$',
+        r'^events/(?P<slug>[\w-]+)/edit/$',
          events.edit_view,
          name='event-edit'
     ),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # django-debug-toolbar
 urlpatterns += [
@@ -81,7 +85,7 @@ urlpatterns += [
 # API and GraphQL
 urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-    url(r'^api/', include(router.urls), namespace='api'),
+    #url(r'^api/', include(router.urls)),
     url(r'^schema/$', schema_view),
     #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^auth/', include('rest_auth.urls')),
