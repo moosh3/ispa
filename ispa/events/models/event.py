@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.core.urlresolvers import reverse
 
 from events.models.base import BaseModel
 
@@ -9,20 +10,35 @@ class EventManager(models.Manager):
     def active(self):
         return self.get_queryset().filter(is_active=True)
 
+def image_field(instance, filename):
+    return os.path.join('events', str(instance.user.pk), filename)
+
 
 class Event(BaseModel):
 
-    EVENT = 8
-    SEMESTER = 5
-    MEETING = 3
+    EVENT = 'event'
+    SEMESTER = 'semester'
+    MEETING = 'meeting'
 
     EVENT_TYPE = (
-        (EVENT, 'event'),
-        (SEMESTER, 'semester'),
-        (MEETING, 'meeting')
+        (EVENT, 'Event'),
+        (SEMESTER, 'Semester'),
+        (MEETING, 'Meeting')
     )
 
+    name = models.CharField('Name', max_length=256, null=True, blank=True)
+    description = models.CharField(
+        'Description', max_length=512,
+        null=True, blank=True)
+    image = models.ImageField(upload_to=image_field, null=True, blank=True)
     location = models.ForeignKey('EventLocation')
+    date = models.DateTimeField(
+        'Event Date', null=True,
+        blank=True, auto_now=False
+    )
+    is_active = models.BooleanField(default=True)
+    event_type = models.CharField('Event Type', max_length=128, null=True,
+                                  blank=True, choices=EVENT_TYPE)
     slug = models.SlugField(unique=True, max_length=40,
                             blank=True, null=True)
     attendees = models.ManyToManyField(
@@ -30,18 +46,6 @@ class Event(BaseModel):
         related_name='attendees',
         through='Attendance',
     )
-    date = models.DateTimeField(
-        'Event Date', null=True,
-        blank=True, auto_now=False
-    )
-    description = models.CharField(
-        'Description', max_length=512,
-        null=True, blank=True)
-    is_active = models.BooleanField(default=True)
-    name = models.CharField('Name', max_length=256, null=True, blank=True)
-    points = models.IntegerField()
-    event_type = models.CharField('Event Type', max_length=128, null=True,
-                                  blank=True, choices=EVENT_TYPE)
     objects = EventManager()
 
     def get_absolute_url(self):
