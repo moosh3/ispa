@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
     # Your stuff: custom apps go here
-    'api'
+    'api',
     'events',
     'graphene_django',
     'blog',
