@@ -41,12 +41,7 @@
               <a class="dropdown-item" href="#">Edit Profile</a>
               <a class="dropdown-item" href="#">Logout</a>
             </div>
-            <li class="nav-item float-right">
-                <a class="nav-link" href="#">
-                  <span class="icon icon-bell"></span>
-                  Notifications
-                </a>
-              </li>
+
             </li>
         </ul>
       </div>
@@ -123,7 +118,7 @@
         <div class="card">
           <div class="card-block">
             <h4 class="card-title">{{ event.name }}</h4>
-            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ event.attendees }}</h6>
             <p class="card-text">{{ event.description }}</p>
             <a href="{{ event.get_absolute_url }}" class="card-link">Learn more</a>
           </div>
