@@ -56,9 +56,9 @@ urlpatterns += [
     url(r'^pages/', include(wagtail_urls)),
 ]
 
-urlpatterns += [
-    url(r'^user/(?P<pk>[\w-]+)')
-]
+#urlpatterns += [
+#    url(r'^user/(?P<pk>[\w-]+)')
+#]
 
 # Events
 urlpatterns += [
@@ -85,7 +85,7 @@ urlpatterns += [
 # API and GraphQL
 urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-    #url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls)),
     url(r'^schema/$', schema_view),
     #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^auth/', include('rest_auth.urls')),
