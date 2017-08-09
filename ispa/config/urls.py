@@ -56,6 +56,10 @@ urlpatterns += [
     url(r'^pages/', include(wagtail_urls)),
 ]
 
+#urlpatterns += [
+#    url(r'^user/(?P<pk>[\w-]+)')
+#]
+
 # Events
 urlpatterns += [
     url(r'^events/$', events.dashboard_view, name='event-dashboard'),

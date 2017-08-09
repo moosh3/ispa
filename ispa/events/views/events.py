@@ -47,6 +47,7 @@ class EventDetailView(DetailView):
                 user=self.user,
                 is_owner=True
             )
+            context['creator'] = creator
         except models.Attendance.DoesNotExist:
             creator = None
 
