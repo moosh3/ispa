@@ -9,13 +9,7 @@ Illinois Sports Business Association official website
 
 ![Imgur](http://i.imgur.com/pmPxikr.png)
 
-Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script which runs the following commands:
-
-```Bash
-$ cd ispa && docker build -t ispa_prod:latest -f Dockerfile . && docker build -t ispa:latest -f Dockerfile.local . && cd ..
-$ docker-compose build
-$ docker-compose -f docker-compose.prod.yml
-```
+Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script which builds all the default images and services.
 
 You will also want to create a data container to make sure postgresql data is persistent, allowing you to restart the services without having to reset the database:
 

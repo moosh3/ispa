@@ -15,6 +15,6 @@ COPY start-dev.sh /start-dev.sh
 RUN sed -i 's/\r//' /start-dev.sh
 RUN chmod +x /start-dev.sh
 
-COPY . .
+COPY ./ispa .
 
-ENTRYPOINT ["./start-dev.sh"]
+ENTRYPOINT ["/bin/bash"]

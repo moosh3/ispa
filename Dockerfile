@@ -16,7 +16,7 @@ RUN groupadd -r django && \
     chmod +x /gunicorn.sh && \
     chown django /gunicorn.sh
 
-COPY . .
+COPY ./ispa .
 
 RUN chown -R django .
 USER django
