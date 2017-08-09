@@ -3,6 +3,8 @@ Illinois Sports Business Association official website
 
 [![Build Status](https://travis-ci.org/marjoram/ispa.svg?branch=master)](https://travis-ci.org/marjoram/ispa)
 
+[![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=marjoram&repoName=ispa&branch=master&pipelineName=ispa&accountName=aleccunningham&type=cf-1)]( https://g.codefresh.io/repositories/marjoram/ispa/builds?filter=trigger:build;branch:master;service:598a777c0c92170001750f2a~ispa)
+
 ## Getting Started
 
 ![Imgur](http://i.imgur.com/pmPxikr.png)
