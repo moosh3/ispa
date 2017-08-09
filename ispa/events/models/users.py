@@ -4,38 +4,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.dispatch import reciever
 from django.db.models.signals import post_save
-
-from rest_framework.authtoken.models import Token
-
+from django.dispatch import receiver
 from events.models.base import BaseModel
-from events.models import Owner, Event
-
 
 def avatar_field(instance, filename):
     return os.path.join('users', str(instance.user.pk), filename)
-
-
-class UserProxy(User):
-
-    def is_guest(self, event):
-        guest_list = User.objects.filter(
-            models.Q(owner__event=event) |
-            models.Q(attendance__event=event)
-        ).distinct()
-        return guest_list.filter(pk=self.pk).exists()
-
-    @property
-    def events(self):
-        return Event.objects.active().filter(
-            models.Q(event__attendee__user=self) |
-            models.Q(event__owner__user=self
-        ).distinct()
-
-    class Meta:
-        proxy = True
-
 
 class UserProfile(BaseModel):
 
@@ -49,7 +23,7 @@ class UserProfile(BaseModel):
 
     user = models.OneToOneField('auth.User')
     avatar = models.ImageField(upload_to=avatar_field, null=True, blank=True)
-    bio = models.TextField(blank=True)
+    bio = models.TextField(blank=True, null=True)
     user_type = models.CharField(
         max_length=1024,
         choices=USER_TYPE_CHOICES,
@@ -57,7 +31,7 @@ class UserProfile(BaseModel):
     )
 
     def __str__(self):
-        return '{}'.format(self.display_name or self.user.username)
+        return '{}'.format(self.user.username)
 
     def __unicode__(self):
         return __str__()
@@ -69,7 +43,8 @@ class UserProfile(BaseModel):
     def get_absolute_url(self):
         return reverse('profile', args=[self.user.username])
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
+
+@receiver(post_save, sender=User)
+def create_profile(sender, instance, created, **kwargs):
     if created:
-        Token.objects.create(user=instance)
+        UserProfile.objects.get_or_create(user=instance)

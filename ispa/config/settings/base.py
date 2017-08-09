@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # API
     'rest_framework',
-    'rest_framework.authtoken',
     'rest_auth',
     # Registration
     'allauth',
@@ -244,7 +243,6 @@ ADMIN_URL = r'^django-admin/'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
