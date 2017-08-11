@@ -21,7 +21,7 @@ from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
-from events.views import events, users
+from events.views import events, users, locations
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
@@ -58,7 +58,7 @@ urlpatterns += [
 
 urlpatterns += [
     url(r'^profile/(?P<username>[\w.-_@]+)', users.detail_view, name='profile'),
-    url(r'^profile/(?P<username>[\w.-_@]+)/edit', users.update_view, name='edit-profile')
+    url(r'^profile/(?P<username>[\w.-_@]+)/edit/$', users.update_view, name='profile-edit')
 ]
 
 # Events
@@ -67,15 +67,17 @@ urlpatterns += [
     url(r'^events/list/$', events.list_view, name='event-list'),
     url(r'^events/create/$', events.create_view, name='event-create'),
     url(
-        r'^events/(?P<slug>[\w-]+)/$',
+        r'^events/(?P<pk>\d+)/$',
          events.detail_view,
          name='event-detail'
     ),
     url(
-        r'^events/(?P<slug>[\w-]+)/edit/$',
+        r'^events/(?P<pk>\d+)/edit/$',
          events.edit_view,
          name='event-edit'
     ),
+    url(r'^locations/create/$', locations.create_view, name='location-create'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # django-debug-toolbar

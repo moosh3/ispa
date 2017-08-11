@@ -1,7 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import (
-    TemplateView, DetailView, ListView, View
+    TemplateView,
+    DetailView,
+    ListView,
+    View,
+    CreateView,
 )
 
 from events import models
@@ -54,36 +58,6 @@ class EventDetailView(DetailView):
         context['event'] = self.event
         return context
 
-
-class CreateEventView(View):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.event = None
-
-    @login_required
-    def dispatch(self, request, *args, **kwargs):
-        self.event = get_object_or_404(
-            models.Event,
-            name=kwargs['name']
-        )
-        return super(CreateEventView).dispatch(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        event = models.Event.create(
-            location=[],
-            creator=[request.user],
-            guests=[],
-            date='',
-            description='',
-            is_active=True,
-            name='',
-            points=[],
-            eventtype=[],
-        )
-        return redirect('edit-event', event_name=self.event.name, pk=event.pk)
-
-
 class EditEventView(TemplateView):
 
     template_name = ''
@@ -94,7 +68,6 @@ class EditEventView(TemplateView):
         self.event_inst = None
         self.event_form = None
 
-    @login_required
     def dispatch(self, request, *args, **kwargs):
         self.event_inst = get_object_or_404(models.Event, pk=kwargs['pk'])
         self.template_name = 'events/edit_event.html'
@@ -111,6 +84,12 @@ class EventListView(ListView):
     @login_required
     def dispatch(self, request, *args, **kwargs):
         return super(EventList, self).dispatch(request, *args, **kwargs)
+
+
+class CreateEventView(CreateView):
+
+    model = models.Event
+    fields = '__all__'
 
 
 dashboard_view = EventDashboard.as_view()

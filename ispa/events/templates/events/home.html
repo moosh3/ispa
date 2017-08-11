@@ -25,9 +25,14 @@
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'event-dashboard' %}">Events <span class="sr-only">(current)</span> </a>
-          </li>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Events
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'event-dashboard' %}">Dashboard</a>
+            <a class="dropdown-item" href="{% url 'event-create' %}">Create event</a>
+            <a class="dropdown-item" href="{% url 'location-create' %}">Create location</a>
+          </div>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
@@ -37,8 +42,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="#">Dues</a>
-              <a class="dropdown-item" href="#">Edit Profile</a>
-              <a class="dropdown-item" href="#">Settings</a>
+              <a class="dropdown-item" href="{% url 'event-create' %}">Settings</a>
             </div>
             <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -57,9 +61,8 @@
         <div class="card text-center">
           <div class="card card-inverse" style="background-color: #333; border-color: #333;">
             <div class="card-block text-left">
-              <h3 class="card-title">Special title treatment</h3>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+              <h3 class="card-title">Welcome, {{ request.user.username }}</h3>
+              <a href="{% url 'profile' username=request.user.username %}" class="btn btn-primary">View Profile</a>
             </div>
           </div>
         </div>
@@ -69,64 +72,27 @@
             <div class="card card-inverse" style="background-color: #333; border-color: #333;">
               <div class="card-block text-left">
                 <h3 class="card-title">Special title treatment</h3>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <!--<a href="{% url 'profile' username=request.user.username %}" class="btn btn-primary">Go somewhere</a> -->
+                <a href="{% url 'event-create' %}" class="btn btn-primary">Create Event</a>
               </div>
             </div>
           </div>
         </div>
       </div>
       <br />
-    <div class="card-deck">
-      <div class="card">
-        <div class="card-header" style="background-image: url(https://igcdn-photos-h-a.akamaihd.net/hphotos-ak-xaf1/t51.2885-15/11240760_365538423656311_112029877_n.jpg);"></div>        <div class="card-block">
-          <h4 class="card-title">Card title</h4>
-          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <button class="btn btn-secondary" type="button">
-            <span class="icon icon-thumbs-up"></span>
-            Like
-          </button>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-block">
-          <h4 class="card-title">Card title</h4>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-          <button class="btn btn-primary" type="button">
-            <span class="icon icon-thumbs-up"></span>
-            Liked!
-          </button>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-      </div>
-      <div class="card card-profile">
-        <div class="card-header" style="background-image: url(https://igcdn-photos-h-a.akamaihd.net/hphotos-ak-xfa1/t51.2885-15/11312291_348657648678007_1202941362_n.jpg);"></div>
-        <div class="card-block text-xs-center">
-          <img class="card-profile-img" src="../assets/img/avatar-fat.jpg">
-          <h5 href="{% url 'profile' username=request.user.username %}" class="card-title">{{ request.user }}</h5>
-          <p class="mb-4">{{ request.user.userprofile.bio }}</p>
-          <button class="btn btn-outline-primary btn-sm">
-            <span class="icon icon-add-user"></span> Profile
-          </button>
-        </div>
-      </div>
-   </div><br />
-  <div class="row">
+        <div class="row">
+
     <div class="col-8">
-      {% for event in active_events %}
+       {% for event in active_events %}
         <div class="card">
           <div class="card-block">
             <h4 class="card-title">{{ event.name }}</h4>
-            <h6 class="card-subtitle mb-2 text-muted">{{ event.attendees.all }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ event.date }}</h6>
             <p class="card-text">{{ event.description }}</p>
-            <a href="{{ event.get_absolute_url }}" class="btn" role="btn">Learn more</a>
+            <a href="{% url 'event-detail' pk=event.pk %}" class="btn btn-primary">More</a>
           </div>
         </div>
         <br />
       {% endfor %}
-      <br />
     </div>
     <div class="col-4">
       <ul class="list-group">
@@ -136,7 +102,9 @@
       </ul>
     </div>
   </div>
+  </div>
 </div>
+<br />
     <div class="card card-link-list">
       <div class="card-block">
         © 2017 ISBA

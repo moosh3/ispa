@@ -25,9 +25,14 @@
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'event-dashboard' %}">Events <span class="sr-only">(current)</span> </a>
-          </li>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Events
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'event-dashboard' %}">Dashboard</a>
+            <a class="dropdown-item" href="{% url 'event-create' %}">Create event</a>
+            <a class="dropdown-item" href="{% url 'location-create' %}">Create location</a>
+          </div>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
@@ -37,8 +42,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="#">Dues</a>
-              <a class="dropdown-item" href="#">Edit Profile</a>
-              <a class="dropdown-item" href="#">Settings</a>
+              <a class="dropdown-item" href="{% url 'event-create' %}">Settings</a>
             </div>
             <li class="nav-item">
                 <a class="nav-link" href="#">

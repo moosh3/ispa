@@ -56,10 +56,14 @@
     </nav>
       <br />
 
-  <h1>Hello, {{ user.username }}</h1>
-  <p>bio {{ user.userprofile.bio }}</p>
-  <!-- Include jQuery (required) and the JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="{% static "events/dist/toolkit.min.js" %}"></script>
-</body>
-</html>
+
+      <form action="" method="post">{% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="Save" />
+      </form>
+
+      <!-- Include jQuery (required) and the JS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script src="{% static "events/dist/toolkit.min.js" %}"></script>
+  </body>
+  </html>
