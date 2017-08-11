@@ -21,7 +21,7 @@ from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
-from events.views import events
+from events.views import events, users
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
@@ -56,9 +56,10 @@ urlpatterns += [
     url(r'^pages/', include(wagtail_urls)),
 ]
 
-#urlpatterns += [
-#    url(r'^user/(?P<pk>[\w-]+)')
-#]
+urlpatterns += [
+    url(r'^profile/(?P<username>[\w.-_@]+)', users.detail_view, name='profile'),
+    url(r'^profile/(?P<username>[\w.-_@]+)/edit', users.update_view, name='edit-profile')
+]
 
 # Events
 urlpatterns += [
@@ -85,9 +86,9 @@ urlpatterns += [
 # API and GraphQL
 urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-    url(r'^api/', include(router.urls)),
+    #url(r'^api/', include(router.urls)),
     url(r'^schema/$', schema_view),
     #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^auth/', include('rest_auth.urls')),
+    url(r'^auth/', include('allauth.urls')),
     url(r'^auth/registration/', include('rest_auth.registration.urls')),
 ]
