@@ -6,7 +6,7 @@ COPY requirements/prod.txt /home/docker/requirements-prod.txt
 
 WORKDIR /home/docker/ispa
 
-COPY gunicorn.sh /gunicorn.sh
+COPY scripts/gunicorn.sh /gunicorn.sh
 
 RUN groupadd -r django && \
       useradd -r -g django django && \
