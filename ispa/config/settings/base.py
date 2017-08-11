@@ -167,8 +167,6 @@ TEMPLATES = [
     },
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -207,7 +205,7 @@ PASSWORD_HASHERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 # ------------------------------------------------------------------------------
 
-AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
+AUTH_PASSWORD_VALIDATORS = [  # pragma: no coverf
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -231,9 +229,9 @@ AUTHENTICATION_BACKENDS = [
 
 # Custom user app defaults
 # Select the correct user model
-# AUTH_USER_MODEL = 'users.User'
-# LOGIN_REDIRECT_URL = 'users:redirect'
-# LOGIN_URL = 'account_login'
+#AUTH_USER_MODEL = 'auth.User'
+#LOGIN_REDIRECT_URL = 'users:redirect'
+#LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

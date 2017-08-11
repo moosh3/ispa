@@ -11,7 +11,7 @@ install:
   - docker build -f Dockerfile.local -t $REPO:$TRAVIS_COMMIT .
 
 script:
-  - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c echo Tests passed
+  - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c pytest
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`

@@ -6,48 +6,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Event Application</title>
+    <title>Bootstrap Theme Example</title>
 
     <!-- Include the CSS -->
     <link href="{% static "events/dist/toolkit.min.css" %}" rel="stylesheet">
 
   </head>
   <body>
-    <div class="container">
 
-
+  <div class="container">
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'home' %}">ISBA</a>
+      <a class="navbar-brand" href="#">ISBA</a>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Events</a>
+            <a class="nav-link" href="{% url 'event-dashboard' %}">Events <span class="sr-only">(current)</span> </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Settings
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="#">Dues</a>
               <a class="dropdown-item" href="#">Edit Profile</a>
-              <a class="dropdown-item" href="#">Logout</a>
+              <a class="dropdown-item" href="#">Settings</a>
             </div>
-
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span class="icon icon-bell"></span>
+                  Notifications
+                </a>
+              </li>
             </li>
         </ul>
       </div>
     </nav>
+      <br />
 
-    <br />
     <div class="row">
       <div class="col">
         <div class="card text-center">
@@ -66,15 +70,13 @@
               <div class="card-block text-left">
                 <h3 class="card-title">Special title treatment</h3>
                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <!--<a href="{% url 'profile' username=request.user.username %}" class="btn btn-primary">Go somewhere</a> -->
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <br />
-
     <div class="card-deck">
       <div class="card">
         <div class="card-header" style="background-image: url(https://igcdn-photos-h-a.akamaihd.net/hphotos-ak-xaf1/t51.2885-15/11240760_365538423656311_112029877_n.jpg);"></div>        <div class="card-block">
@@ -103,50 +105,41 @@
         <div class="card-header" style="background-image: url(https://igcdn-photos-h-a.akamaihd.net/hphotos-ak-xfa1/t51.2885-15/11312291_348657648678007_1202941362_n.jpg);"></div>
         <div class="card-block text-xs-center">
           <img class="card-profile-img" src="../assets/img/avatar-fat.jpg">
-          <h5 class="card-title">Jacob Thornton</h5>
-          <p class="mb-4">Big belly rude boy, million dollar hustler. Unemployed.</p>
+          <h5 href="{% url 'profile' username=request.user.username %}" class="card-title">{{ request.user }}</h5>
+          <p class="mb-4">{{ request.user.userprofile.bio }}</p>
           <button class="btn btn-outline-primary btn-sm">
             <span class="icon icon-add-user"></span> Profile
           </button>
         </div>
       </div>
    </div><br />
-
   <div class="row">
     <div class="col-8">
       {% for event in active_events %}
         <div class="card">
           <div class="card-block">
             <h4 class="card-title">{{ event.name }}</h4>
-            <h6 class="card-subtitle mb-2 text-muted">{{ event.attendees }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ event.attendees.all }}</h6>
             <p class="card-text">{{ event.description }}</p>
-            <a href="{{ event.get_absolute_url }}" class="card-link">Learn more</a>
+            <a href="{{ event.get_absolute_url }}" class="btn" role="btn">Learn more</a>
           </div>
         </div>
+        <br />
       {% endfor %}
       <br />
     </div>
-
     <div class="col-4">
       <ul class="list-group">
-        <li class="list-group-item active">Cras justo odio</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Morbi leo risus</li>
-        <li class="list-group-item">Porta ac consectetur ac</li>
-        <li class="list-group-item">Vestibulum at eros</li>
+        <li class="list-group-item active">Events</li>
+        <li class="list-group-item">I'm Going</li>
+        <li class="list-group-item">Past Events</li>
       </ul>
     </div>
   </div>
-
-
-
-
 </div>
-
     <div class="card card-link-list">
       <div class="card-block">
         © 2017 ISBA
-
         <a href="#">About</a>
         <a href="#">Help</a>
         <a href="#">Terms</a>
@@ -163,8 +156,8 @@
       </div>
     </div>
   </div>
-    <!-- Include jQuery (required) and the JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{% static "events/dist/toolkit.min.js" %}"></script>
-  </body>
+  <!-- Include jQuery (required) and the JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="{% static "events/dist/toolkit.min.js" %}"></script>
+</body>
 </html>
