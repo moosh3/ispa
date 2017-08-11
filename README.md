@@ -3,7 +3,6 @@ Illinois Sports Business Association official website
 
 [![Build Status](https://travis-ci.org/marjoram/ispa.svg?branch=master)](https://travis-ci.org/marjoram/ispa)
 
-[![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=marjoram&repoName=ispa&branch=master&pipelineName=ispa&accountName=aleccunningham&type=cf-1)]( https://g.codefresh.io/repositories/marjoram/ispa/builds?filter=trigger:build;branch:master;service:598a777c0c92170001750f2a~ispa)
 
 ## Getting Started
 
@@ -85,15 +84,15 @@ When attached to a container you can also run `./manage.py runserver_plus 0.0.0.
 Since we have a data container mounted onto a postgresql docker instance, we can run commands that will backup the contents of the container for backups, data sharing, etc.
 
 
-#### Backup
+#### Fixtures
 
-There's two ways to backup the data. The easiest is to create fixtures from using `manage.py`:
+The easiest is to create fixtures from using `manage.py`:
 
 ```Bash
 # ispa is running with a bash entrypoint
-root@419c7491c798:/home/docker/ispa# ./manage.py dumpdata
+root@419c7491c798:/home/docker/ispa# ./manage.py dumpdata > fixtures/data.sql
 # to load data, specify the fixture:
-root@419c7491c798:/home/docker/ispa# ./manage.py loaddata fixtures/initial_data.json
+root@419c7491c798:/home/docker/ispa# ./manage.py loaddata fixtures/data.sql
 ```
 
 To back up our postgresql database, create a second volume named backup. Then we want to run an ubuntu instance of which we mount our original `ispa_pg_data` volume, and export it into the other container, generating a tarball. It looks like this:
@@ -173,17 +172,6 @@ list locations
 /api/v1//users/ list, detail
 read-only list of users
 returns id, username, events
-
-### Schema
-
-REST schema: /schema
-GraphQL schema: /graphql
-
-## Front end react app
-
-Based heavily on create-react-app by facebook. Here are the commands:
-
-![Imgur](http://imgur.com/a/yJqDZ)
 
 
 ### Pages
