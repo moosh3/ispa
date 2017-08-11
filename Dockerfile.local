@@ -11,10 +11,8 @@ RUN pip install -r /home/docker/requirements-base.txt\
 
 WORKDIR /home/docker/ispa
 
-COPY start-dev.sh /start-dev.sh
-RUN sed -i 's/\r//' /start-dev.sh
-RUN chmod +x /start-dev.sh
+COPY scripts/start-dev.sh /start-dev.sh
 
-COPY ./ispa .
+COPY ispa .
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/start-dev.sh"]
