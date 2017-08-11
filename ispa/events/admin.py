@@ -2,8 +2,16 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from .models import Event, EventLocation
+from events import models
 
+class AttendanceInline(admin.TabularInline):
+    model = models.Attendance
 
-admin.site.register(Event)
-admin.site.register(EventLocation)
+class EventAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+    inlines = [AttendanceInline, ]
+
+# Register your models here.
+admin.site.register(models.Event, EventAdmin)
+admin.site.register(models.EventLocation)
+admin.site.register(models.UserProfile)

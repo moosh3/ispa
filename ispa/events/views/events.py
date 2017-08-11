@@ -6,37 +6,54 @@ from django.views.generic import (
 
 from events import models
 
+
+class EventDashboard(TemplateView):
+    template_name = 'events/home.html'
+
+    def dispatch(self, *args, **kwargs):
+        return super(EventDashboard, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDashboard, self).get_context_data(**kwargs)
+        context['active_events'] = models.Event.objects.filter(
+            is_active=True,
+        ).order_by('-name')[:5]
+
+        return context
+
+
 class EventDetailView(DetailView):
 
+    template_name = 'events/detail.html'
     model = models.Event
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.event =  None
+        super(EventDetailView, self).__init__(*args, **kwargs)
+        self.event = None
         self.user = None
 
     def dispatch(self, *args, **kwargs):
         self.event = get_object_or_404(
             models.Event,
-            name=self.kwargs['name']
+            slug=self.kwargs['slug']
         )
-        return super(EventDetail, self).dispatch(*args, **kwargs)
+        return super(EventDetailView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(EventDetail, self).get_context_data(**kwargs)
+        context = super(EventDetailView, self).get_context_data(**kwargs)
         try:
-            creator = models.Creator.objects.get(
+            creator = models.Attendance.objects.get(
                 event=self.event,
-                owner=self.user,
-                is_active=True
+                user=self.user,
+                is_owner=True
             )
-        except models.Creator.DoesNotExist:
-            creator = None
-        if creator:
             context['creator'] = creator
+        except models.Attendance.DoesNotExist:
+            creator = None
 
-        context['guests'] = self.guests
+        context['event'] = self.event
         return context
+
 
 class CreateEventView(View):
 
@@ -94,3 +111,10 @@ class EventListView(ListView):
     @login_required
     def dispatch(self, request, *args, **kwargs):
         return super(EventList, self).dispatch(request, *args, **kwargs)
+
+
+dashboard_view = EventDashboard.as_view()
+detail_view = EventDetailView.as_view()
+create_view = CreateEventView.as_view()
+edit_view = EditEventView.as_view()
+list_view = EventListView.as_view()

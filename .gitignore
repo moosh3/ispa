@@ -9,7 +9,7 @@ __pycache__/
 # Specific
 vagrant/
 .DS_Store
-
+node_modules/
 # Distribution / packaging
 .Python
 env/

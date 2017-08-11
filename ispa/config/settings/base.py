@@ -11,7 +11,6 @@ import environ
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-#APP_DIR = BASE_DIR.path('ispa')
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -20,8 +19,9 @@ env = environ.Env()
 READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 
 if READ_DOT_ENV_FILE:
-    # Operating System Environment variables have precedence over variables defined in the .env file,
-    # that is to say variables from the .env files will only be used if not defined
+    # Operating System Environment variables have precedence over variables
+    # defined in the .env file, that is to say variables from the
+    # .env files will only be used if not defined
     # as environment variables.
     env_file = str('.env')
     print('Loading : {}'.format(env_file))
@@ -42,11 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # API
     'rest_framework',
+    'rest_auth',
+    # Registration
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'modelcluster',
     'taggit',
     # Admin
     'django.contrib.admin',
-    'crispy_forms',  # Form layouts
     'wagtail.wagtailforms',
     'wagtail.wagtailredirects',
     'wagtail.wagtailembeds',
@@ -59,13 +63,13 @@ INSTALLED_APPS = [
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
     # Your stuff: custom apps go here
+    'api',
     'events',
-    'ispa_app',
     'graphene_django',
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'ispa_app.schema.schema' # Where your Graphene schema lives
+    'SCHEMA': 'ispa_app.schema.schema'  # Where your Graphene schema lives
 }
 
 # MIDDLEWARE CONFIGURATION
@@ -85,37 +89,26 @@ MIDDLEWARE = [
 
 # DEBUG
 # ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool('DJANGO_DEBUG', False)
-
-# FIXTURE CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-FIXTURE_DIRS
-FIXTURE_DIRS = (
-    #str(BASE_DIR.path('fixtures')),
-)
 
 ALLOWED_HOSTS = ['*']
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
+                    default='django.core.mail.backends.smtp.EmailBackend')
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
     ("Alec Cunningham", 'aleccunningham96@gmail.com'),
     ("Freddy Marquez", 'freddymrqz28@gmail.com'),
 ]
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
 # DATABASE CONFIGURATION
 # ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
-# Database Condocker-composeuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -129,52 +122,36 @@ DATABASES = {
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
 CELERY_ENABLE_UTC = True
 CELERY_TIMEZONE = "UTC"
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en-us'
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
 USE_L10N = True
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#templates
 TEMPLATES = [
     {
-        # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
 
         ],
         'OPTIONS': {
-            # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
             'debug': DEBUG,
-            # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-            # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
-            # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -190,20 +167,15 @@ TEMPLATES = [
     },
 ]
 
-# See: http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
-# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 
-# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -212,21 +184,17 @@ STATICFILES_FINDERS = [
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-#MEDIA_ROOT = str(APPS_DIR('media'))
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 
 # URL Configuration
 # ------------------------------------------------------------------------------
 ROOT_URLCONF = 'config.urls'
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # PASSWORD STORAGE SETTINGS
 # ------------------------------------------------------------------------------
-# See https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -239,7 +207,7 @@ PASSWORD_HASHERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 # ------------------------------------------------------------------------------
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -270,8 +238,17 @@ AUTHENTICATION_BACKENDS = [
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
-# Location of root django.contrib.admin URL, use {% raw %}{% url 'admin:index' %}{% endraw %}
-ADMIN_URL = r'^admin/'
+ADMIN_URL = r'^django-admin/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
@@ -292,8 +269,8 @@ CELERY_TASK_PUBLISH_RETRY = True
 CELERY_DISABLE_RATE_LIMITS = False
 
 # By default we will ignore result
-# If you want to see results and try out tasks interactively, change it to False
-# Or change this setting on tasks level
+# If you want to see results and try out tasks interactively,
+# change it to False Or change this setting on tasks level
 CELERY_IGNORE_RESULT = True
 CELERY_SEND_TASK_ERROR_EMAILS = False
 CELERY_TASK_RESULT_EXPIRES = 600
