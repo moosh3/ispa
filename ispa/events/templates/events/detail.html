@@ -13,8 +13,8 @@
 
   </head>
   <body>
-    <div class="container">
 
+  <div class="container">
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -23,16 +23,16 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'event-dashboard' %}">Home</a>
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Events <span class="sr-only">(current)</span> </a>
+            <a class="nav-link" href="{% url 'event-dashboard' %}">Events <span class="sr-only">(current)</span> </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Settings
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -55,7 +55,7 @@
       <div class="card">
         <div class="card-block">
           <h4 class="card-title">{{ event.name }}</h4>
-          <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{ event.attendees.all }}</h6>
           <p class="card-text">{{ event.description }}</p>
           <a href="#" class="card-link">Card link</a>
           <a href="#" class="card-link">Another link</a>
@@ -128,9 +128,9 @@
         <div class="media w-100">
           <img class="media-object rounded-circle mr-3" src="../assets/img/avatar-fat.jpg">
           <div class="media-body align-self-center">
-            <button href="{{ guest.user.get_absolute_url }}" class="btn btn-outline-primary btn-sm float-right">
-              <span class="icon icon-add-user"></span> Profile
-            </button>
+            <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' username=guest.username %}">
+              Profile
+            </a>
             <strong>{{ guest.username }}</strong>
             <small>@fat - San Francisco</small>
           </div>
@@ -162,10 +162,8 @@
         </div>
       </div>
     </div>
-
-    </div>
     <!-- Include jQuery (required) and the JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="{% static "events/dist/toolkit.min.js" %}"></script>
-  </body>
+</body>
 </html>
