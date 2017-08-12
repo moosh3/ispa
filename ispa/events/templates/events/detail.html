@@ -62,7 +62,7 @@
         <div class="media w-100">
           <img class="media-object rounded-circle mr-3" src="../assets/img/avatar-fat.jpg">
           <div class="media-body align-self-center">
-            <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' username=guest.username %}">
+            <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
               Profile
             </a>
             <strong>{{ guest.username }}</strong>
