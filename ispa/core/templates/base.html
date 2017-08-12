@@ -8,6 +8,8 @@
 
     <title>Bootstrap Theme Example</title>
 
+    <link href="{% static "core/css/application.css" %}" rel="stylesheet">
+    <link fref="{% static "core/css/sticky-footer.css" %}" rel="stylesheet">
     <!-- Include the CSS -->
     <link href="{% static "events/dist/toolkit.min.css" %}" rel="stylesheet">
 
@@ -68,6 +70,7 @@
       {% block content %}
       {% endblock %}
 
+    <footer class="footer">
       <br />
           <div class="card card-link-list">
             <div class="card-block">
@@ -87,7 +90,7 @@
               <a href="#">Advertise</a>
             </div>
           </div>
-        </div>
+    </footer>
         <!-- Include jQuery (required) and the JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="{% static "events/dist/toolkit.min.js" %}"></script>
