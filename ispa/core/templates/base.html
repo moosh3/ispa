@@ -1,0 +1,95 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- These meta tags come first. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bootstrap Theme Example</title>
+
+    <!-- Include the CSS -->
+    <link href="{% static "events/dist/toolkit.min.css" %}" rel="stylesheet">
+
+  </head>
+  <body>
+
+  <div class="container">
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">ISBA</a>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Events
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'event-dashboard' %}">Dashboard</a>
+            <a class="dropdown-item" href="{% url 'event-create' %}">Create event</a>
+            <a class="dropdown-item" href="{% url 'location-create' %}">Create location</a>
+          </div>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              More
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'dues' %}">Dues</a>
+              <a class="dropdown-item" href="{% url 'user-settings' %}">Settings</a>
+            </div>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_logout' %}">
+                  <span class="icon icon-bell"></span>
+                  Logout
+                </a>
+              </li>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'account_login' %}">
+                  <span class="icon icon-bell"></span>
+                  Login
+                </a>
+              </li>
+            </li>
+            {% endif %}
+        </ul>
+      </div>
+    </nav>
+      <br />
+      {% block content %}
+      {% endblock %}
+
+      <br />
+          <div class="card card-link-list">
+            <div class="card-block">
+              © 2017 ISBA
+              <a href="#">About</a>
+              <a href="#">Help</a>
+              <a href="#">Terms</a>
+              <a href="#">Privacy</a>
+              <a href="#">Cookies</a>
+              <a href="#">Ads </a>
+              <a href="#">Info</a>
+              <a href="#">Brand</a>
+              <a href="#">Blog</a>
+              <a href="#">Status</a>
+              <a href="#">Apps</a>
+              <a href="#">Jobs</a>
+              <a href="#">Advertise</a>
+            </div>
+          </div>
+        </div>
+        <!-- Include jQuery (required) and the JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="{% static "events/dist/toolkit.min.js" %}"></script>
+      </body>
+      </html>

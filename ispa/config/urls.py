@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
+from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.contrib.auth.views import (
     login,
@@ -52,8 +53,11 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url(r'^profile/(?P<username>[\w.-_@]+)', users.detail_view, name='profile'),
-    url(r'^profile/(?P<username>[\w.-_@]+)/edit/$', users.update_view, name='profile-edit')
+    url(r'^accounts/profile/(?P<username>[\w.-_@]+)', users.detail_view, name='profile'),
+    url(r'^accounts/profile/(?P<username>[\w.-_@]+)/edit/$', users.update_view, name='profile-edit'),
+    url(r'^account/settings/', TemplateView.as_view(
+        template_name='users/settings.html'),
+        name='user-settings'),
 ]
 
 # Events
@@ -62,12 +66,12 @@ urlpatterns += [
     url(r'^events/list/$', events.list_view, name='event-list'),
     url(r'^events/create/$', events.create_view, name='event-create'),
     url(
-        r'^events/(?P<pk>\d+)/$',
+        r'^events/(?P<slug>[-\w]+)/$',
          events.detail_view,
          name='event-detail'
     ),
     url(
-        r'^events/(?P<pk>\d+)/edit/$',
+        r'^events/(?P<slug>[-\w]+)/edit/$',
          events.edit_view,
          name='event-edit'
     ),
@@ -85,7 +89,5 @@ urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
     #url(r'^api/', include(router.urls)),
     url(r'^schema/$', schema_view),
-    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^auth/', include('allauth.urls')),
-    url(r'^auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^accounts/', include('allauth.urls')),
 ]

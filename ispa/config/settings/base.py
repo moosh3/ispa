@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Registration
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_auth.registration',
     'modelcluster',
     'taggit',
@@ -145,7 +146,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-
+            os.path.join(BASE_DIR, 'events', 'templates'),
+            os.path.join(BASE_DIR, 'core', 'templates'),
         ],
         'OPTIONS': {
             'debug': DEBUG,
@@ -223,10 +225,22 @@ AUTH_PASSWORD_VALIDATORS = [  # pragma: no coverf
 
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
+    }
 ]
 
+
+LOGIN_REDIRECT_URL = '/events/'
 
 # Custom user app defaults
 # Select the correct user model
