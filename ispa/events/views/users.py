@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic import TemplateView, UpdateView, CreateView
+from django.views.generic import TemplateView, UpdateView, CreateView, ListView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from events.models import UserProfile
