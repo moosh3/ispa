@@ -10,6 +10,9 @@
           <div class="card card-inverse" style="background-color: #333; border-color: #333;">
             <div class="card-block text-left">
               <h3 class="card-title">Welcome, {{ request.user.username }}</h3>
+              <a href="{% url 'event-create' %}" class="btn btn-primary">Create Event</a>
+              <a href="{% url 'location-create' %}" class="btn btn-primary">Add Location</a>
+
             </div>
           </div>
         </div>

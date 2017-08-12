@@ -42,7 +42,7 @@ router.register(r'attendeesp', AttendanceViewSet)
 # General
 urlpatterns = [
     url(r'^', include(core_urls)),
-    url(r'^django-admin/', admin.site.urls),
+    url(r'^django-admin/', admin.site.urls, name='django-admin'),
 ]
 
 # Wagtail
@@ -53,8 +53,9 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url(r'^accounts/profile/(?P<username>[\w.-_@]+)', users.detail_view, name='profile'),
-    url(r'^accounts/profile/(?P<username>[\w.-_@]+)/edit/$', users.update_view, name='profile-edit'),
+    url(r'^member/profile/(?P<username>[\w.-_@]+)', users.detail_view, name='profile'),
+    url(r'^member/profile/(?P<username>[\w.-_@]+)/edit/$', users.update_view, name='profile-edit'),
+    url(r'^member/list/$', users.list_view, name='member-list'),
     url(r'^account/settings/', TemplateView.as_view(
         template_name='users/settings.html'),
         name='user-settings'),

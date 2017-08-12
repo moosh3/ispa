@@ -90,6 +90,7 @@ class CreateEventView(CreateView):
 
     model = models.Event
     fields = '__all__'
+    success_url = '/events/'
 
 
 dashboard_view = EventDashboard.as_view()

@@ -6,4 +6,6 @@
   <h1>Hello, {{ user.username }}</h1>
   <p>bio {{ user.userprofile.bio }}</p>
 
+  <img src="{% static "events/users/{{ user.pk }}/profile.png" %}" alt="nope"/>
+
 {% endblock %}
