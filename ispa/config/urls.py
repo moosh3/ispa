@@ -2,7 +2,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import TemplateView
 from django.contrib.auth.views import (
     login,
     logout_then_login,
@@ -21,6 +20,7 @@ from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
+from core import urls as core_urls
 from events.views import events, users, locations
 from api.viewsets import (
     EventViewSet,
@@ -40,12 +40,7 @@ router.register(r'attendeesp', AttendanceViewSet)
 
 # General
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(
-        template_name='ispa/index.html'),
-        name='home'),
-    url(r'^about/', TemplateView.as_view(
-        template_name='ispa/about.html'),
-        name='about'),
+    url(r'^', include(core_urls)),
     url(r'^django-admin/', admin.site.urls),
 ]
 
