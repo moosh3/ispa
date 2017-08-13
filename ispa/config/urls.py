@@ -49,7 +49,7 @@ urlpatterns = [
 urlpatterns += [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^pages/', include(wagtail_urls)),
+    url(r'^pages/', include(wagtail_urls), name='wagtail-blog'),
 ]
 
 urlpatterns += [
