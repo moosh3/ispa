@@ -8,8 +8,8 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(
         template_name='ispa/index.html'),
         name='home'),
-    url(r'^about/', TemplateView.as_view(
+    url(r'^about/$', TemplateView.as_view(
         template_name='ispa/about.html'),
         name='about'),
-    url(r'^dues/', views.pay_dues, name='dues')
+    url(r'^dues/$', views.pay_dues, name='dues')
 ]
