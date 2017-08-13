@@ -17,3 +17,19 @@ services:
       - "5432:5432"
     volumes:
       - ispa_pg_data:/var/lib/postgresql/data
+
+  rmq:
+    image: rabbitmq:3.6.2
+    environment:
+        - RABBITMQ_DEFAULT_USER=ispa
+        - RABBITMQ_DEFAULT_PASS=ispa
+        - RABBITMQ_DEFAULT_VHOST=ispa
+    volumes:
+        - dt_rmq_data:/var/lib/rabbitmq
+
+  celery:
+    image: ispa:latest
+    command: ./start_celery.sh
+    links:
+      - db
+      - rmq
