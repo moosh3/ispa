@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from events.models import Speaker
+from core.models import Sponsor
 
-class SpeakerSerializer(serializers.ModelSerializer):
+class SponsorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Speaker
+        model = Sponsor
         fields = '__all__'

@@ -27,17 +27,19 @@ from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
     AttendanceViewSet,
+    SpeakerViewSet,
+    SponsorViewSet,
 )
 
 if settings.DEBUG:
     import debug_toolbar
 
-schema_view = get_schema_view(title='ISPA API')
-
 router = DefaultRouter()
 router.register(r'events', EventViewSet)
 router.register(r'locations', EventLocationViewSet)
 router.register(r'attendees', AttendanceViewSet)
+router.register(r'sponsors', SponsorViewSet)
+router.register(r'speakers', SpeakerViewSet)
 
 # General
 urlpatterns = [
