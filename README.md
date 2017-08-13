@@ -6,8 +6,6 @@ Illinois Sports Business Association official website
 
 ## Getting Started
 
-![Imgur](http://i.imgur.com/pmPxikr.png)
-
 Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script which builds all the default images and services.
 
 You will also want to create a data container to make sure postgresql data is persistent, allowing you to restart the services without having to reset the database:
