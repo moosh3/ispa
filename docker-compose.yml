@@ -3,6 +3,7 @@ version: '2'
 volumes:
     ispa_pg_data:
         external: true
+    redisdata:
 
 services:
   db:
@@ -18,9 +19,10 @@ services:
     volumes:
       - ispa_pg_data:/var/lib/postgresql/data
 
-  rmq:
-    image: rabbitmq:3.6.2
-    environment:
-        - RABBITMQ_DEFAULT_USER=ispa
-        - RABBITMQ_DEFAULT_PASS=ispa
-        - RABBITMQ_DEFAULT_VHOST=ispa
+  redis:
+      container_name: redis
+      image: redis:3.2.0
+      ports:
+        - '127.0.0.1:6379:6379'
+      volumes:
+        - 'redisdata:/data'
