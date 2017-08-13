@@ -27,17 +27,19 @@ from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
     AttendanceViewSet,
+    SpeakerViewSet,
+    SponsorViewSet,
 )
 
 if settings.DEBUG:
     import debug_toolbar
 
-schema_view = get_schema_view(title='ISPA API')
-
 router = DefaultRouter()
-router.register(r'eventsp', EventViewSet)
-router.register(r'locationsp', EventLocationViewSet)
-router.register(r'attendeesp', AttendanceViewSet)
+router.register(r'events', EventViewSet)
+router.register(r'locations', EventLocationViewSet)
+router.register(r'attendees', AttendanceViewSet)
+router.register(r'sponsors', SponsorViewSet)
+router.register(r'speakers', SpeakerViewSet)
 
 # General
 urlpatterns = [
@@ -52,7 +54,9 @@ urlpatterns += [
     url(r'^pages/', include(wagtail_urls), name='wagtail-blog'),
 ]
 
+# Members
 urlpatterns += [
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^member/profile/(?P<username>[\w.-_@]+)/$', users.detail_view, name='profile'),
     url(r'^member/edit/(?P<pk>\d+)/$', users.update_view, name='profile-edit'),
     url(r'^member/list/$', users.list_view, name='member-list'),
@@ -85,10 +89,7 @@ urlpatterns += [
     url(r'^__debug__/', include(debug_toolbar.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# API and GraphQL
+# API
 urlpatterns += [
-    url(r'^graphql', GraphQLView.as_view(graphiql=True)),
     url(r'^api/', include(router.urls, namespace='api')),
-    url(r'^schema/$', schema_view),
-    url(r'^accounts/', include('allauth.urls')),
 ]

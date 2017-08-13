@@ -29,6 +29,7 @@ class UserProfile(BaseModel):
         choices=USER_TYPE_CHOICES,
         default=USER,
     )
+    points = models.PositiveIntegerField(blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.user.username)

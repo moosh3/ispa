@@ -2,26 +2,12 @@
 
 {% load static %}
 {% block content %}
-<div class="profile-header text-center" style="background-image: url(http://i.imgur.com/knmxsMm.jpg); ">
   <div class="container-fluid">
     <div class="container-inner">
       <img class="rounded-circle media-object" src="{% static "events/img/avatar-dhg.png" %}">
       <h3 class="profile-header-user">{{ user.username }}</h3>
-      <p class="profile-header-bio">{{ user.userprofile.bio }}</p>
+      <p>{{ user.userprofile.bio }}, Points: {{ user.userprofile.points }}</p>
     </div>
   </div>
-  <nav class="profile-header-nav">
-    <ul class="nav nav-tabs justify-content-center">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Photos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Others</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Anothers</a>
-      </li>
-    </ul>
-  </nav>
 </div>
 {% endblock %}
