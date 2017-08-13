@@ -36,7 +36,7 @@
         <div class="card">
           <div class="card-block">
             <h4 class="card-title">{{ event.name }}</h4>
-            <h6 class="card-subtitle mb-2 text-muted">{{ event.date }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{ event.date }}, Points: {{ event.points }}</h6>
             <p class="card-text">{{ event.description }}</p>
           <a href="{{ event.get_absolute_url }}" class="btn btn-primary">More</a>
           </div>

@@ -6,7 +6,7 @@
 
 {% for member in userprofile_list %}
   <li>
-    <a href="{{ member.get_absolute_url }}">{{ member.user.username }}</a>
+    <a href="{{ member.get_absolute_url }}">{{ member.user.username }} - Points: {{ member.points }}</a>
   </li>
 {% endfor %}
 
