@@ -9,7 +9,7 @@ from django.dispatch import receiver
 from events.models.base import BaseModel
 
 def avatar_field(instance, filename):
-    return os.path.join('users', str(instance.user.pk), filename)
+    return os.path.join('events', 'static', 'users', str(instance.user.pk), filename)
 
 class UserProfile(BaseModel):
 

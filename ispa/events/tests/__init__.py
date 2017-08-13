@@ -10,9 +10,7 @@ from .factories import (
     EventFactory,
     EventLocationFactory,
     AttendeeFactory,
-    OwnerFactory,
     AttendeeWithEventFactory,
-    OwnerWithEventFactory
 )
 
 

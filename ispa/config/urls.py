@@ -1,8 +1,8 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
-from django.conf.urls.static import static
 from django.views.generic import TemplateView
+from django.conf.urls.static import static
 from django.contrib.auth.views import (
     login,
     logout_then_login,
@@ -21,7 +21,8 @@ from graphene_django.views import GraphQLView
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
-from events.views import events
+from core import urls as core_urls
+from events.views import events, users, locations
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
@@ -40,25 +41,25 @@ router.register(r'attendeesp', AttendanceViewSet)
 
 # General
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(
-        template_name='ispa/index.html'),
-        name='home'),
-    url(r'^about/', TemplateView.as_view(
-        template_name='ispa/about.html'),
-        name='about'),
-    url(r'^django-admin/', admin.site.urls),
+    url(r'^', include(core_urls)),
+    url(r'^django-admin/', admin.site.urls, name='django-admin'),
 ]
 
 # Wagtail
 urlpatterns += [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^pages/', include(wagtail_urls)),
+    url(r'^pages/', include(wagtail_urls), name='wagtail-blog'),
 ]
 
-#urlpatterns += [
-#    url(r'^user/(?P<pk>[\w-]+)')
-#]
+urlpatterns += [
+    url(r'^member/profile/(?P<username>[\w.-_@]+)/$', users.detail_view, name='profile'),
+    url(r'^member/edit/(?P<pk>\d+)/$', users.update_view, name='profile-edit'),
+    url(r'^member/list/$', users.list_view, name='member-list'),
+    url(r'^account/settings/', TemplateView.as_view(
+        template_name='users/settings.html'),
+        name='user-settings'),
+]
 
 # Events
 urlpatterns += [
@@ -66,15 +67,17 @@ urlpatterns += [
     url(r'^events/list/$', events.list_view, name='event-list'),
     url(r'^events/create/$', events.create_view, name='event-create'),
     url(
-        r'^events/(?P<slug>[\w-]+)/$',
+        r'^events/(?P<slug>[-\w]+)/$',
          events.detail_view,
          name='event-detail'
     ),
     url(
-        r'^events/(?P<slug>[\w-]+)/edit/$',
+        r'^events/(?P<slug>[-\w]+)/edit/$',
          events.edit_view,
          name='event-edit'
     ),
+    url(r'^locations/create/$', locations.create_view, name='location-create'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # django-debug-toolbar
@@ -85,9 +88,7 @@ urlpatterns += [
 # API and GraphQL
 urlpatterns += [
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-    url(r'^api/', include(router.urls)),
+    url(r'^api/', include(router.urls, namespace='api')),
     url(r'^schema/$', schema_view),
-    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^auth/', include('rest_auth.urls')),
-    url(r'^auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^accounts/', include('allauth.urls')),
 ]
