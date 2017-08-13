@@ -4,4 +4,4 @@ from .attendance import Attendance
 from .base import BaseModel
 from .users import UserProfile
 from .speaker import Speaker
-from .anncouncement import Annoncement
+from .announcement import Announcement
