@@ -15,3 +15,4 @@ class EventAdmin(admin.ModelAdmin):
 admin.site.register(models.Event, EventAdmin)
 admin.site.register(models.EventLocation)
 admin.site.register(models.UserProfile)
+admin.site.register(models.Speaker)
