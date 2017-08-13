@@ -50,7 +50,7 @@
               </small>
             </div>
           </div>
-          <img class="rounded-circle media-object ml-3" src="../assets/img/avatar-dhg.png">
+          <img class="rounded-circle media-object ml-3" src="{% static "events/img/avatar-dhg.png" %}">
         </li>
       </ul>
     </div>
@@ -60,7 +60,7 @@
         {% for guest in event.attendees.all %}
         <li class="list-group-item">
         <div class="media w-100">
-          <img class="media-object rounded-circle mr-3" src="../assets/img/avatar-fat.jpg">
+          <img class="media-object rounded-circle mr-3" src="{% static "events/img/avatar-dhg.png" %}">
           <div class="media-body align-self-center">
             <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
               Profile
