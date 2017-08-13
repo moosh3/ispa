@@ -36,7 +36,7 @@ class UserProfile(BaseModel):
         default=USER,
     )
     points = models.PositiveIntegerField(blank=True, null=True)
-    year = models.CharField(max_length=56, choices=YEAR_CHOICES)
+    year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
 
     def __str__(self):
         return '{}'.format(self.user.username)
