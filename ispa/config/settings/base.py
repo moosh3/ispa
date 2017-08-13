@@ -71,10 +71,6 @@ INSTALLED_APPS = [
     'graphene_django',
 ]
 
-GRAPHENE = {
-    'SCHEMA': 'ispa_app.schema.schema'  # Where your Graphene schema lives
-}
-
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
