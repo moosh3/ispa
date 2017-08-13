@@ -11,8 +11,8 @@ RUN pip install -r /home/docker/requirements-base.txt\
 
 WORKDIR /home/docker/ispa
 
-COPY scripts/start-dev.sh /start-dev.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 COPY ispa .
 
-ENTRYPOINT ["/start-dev.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

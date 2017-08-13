@@ -16,6 +16,12 @@ class UserProfile(BaseModel):
     USER = 'user'
     SYSTEM = 'system'
 
+    YEAR_CHOICES = (
+        ('FR', 'Freshman'),
+        ('SM', 'Sophmore'),
+        ('JR', 'Junior'),
+    )
+
     USER_TYPE_CHOICES = (
         (USER, USER.capitalize()),
         (SYSTEM, SYSTEM.capitalize())
@@ -30,6 +36,7 @@ class UserProfile(BaseModel):
         default=USER,
     )
     points = models.PositiveIntegerField(blank=True, null=True)
+    year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
 
     def __str__(self):
         return '{}'.format(self.user.username)

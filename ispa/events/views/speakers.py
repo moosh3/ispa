@@ -1,5 +1,5 @@
 from django.db import models
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from events import models
 

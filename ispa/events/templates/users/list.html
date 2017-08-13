@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block content %}
-
+<ul class="list-group">
 {% for member in userprofile_list %}
   <li>
-    <a href="{{ member.get_absolute_url }}">{{ member.user.username }} - Points: {{ member.points }}</a>
+    <a class="list-group-item" href="{{ member.get_absolute_url }}">{{ member.user.username }} - Points: {{ member.points }}</a>
   </li>
 {% endfor %}
-
+</u>
 {% endblock %}
