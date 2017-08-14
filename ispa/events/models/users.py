@@ -49,7 +49,7 @@ class UserProfile(BaseModel):
         return self.__unicode__()
 
     def get_absolute_url(self):
-        return reverse('profile', args=[self.user.username])
+        return reverse('profile', args=[self.user])
 
 
 @receiver(post_save, sender=User)
