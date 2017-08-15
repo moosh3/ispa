@@ -19,6 +19,16 @@ class Attendance(models.Model):
     def name(self):
         return self.__str__()
 
+    @property
+    def event_owner(cls, user, event, attending, is_owner):
+        owner = cls.objects.get(
+            user=user,
+            event=event,
+            attending=True,
+            is_owner=True
+        )
+        return owner
+
     @classmethod
     def create_attendee(cls, user, event, attending, is_owner):
         return cls.objects.create(

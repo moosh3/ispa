@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Registration
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_auth.registration',
     'modelcluster',
     'taggit',
@@ -65,12 +66,10 @@ INSTALLED_APPS = [
     # Your stuff: custom apps go here
     'api',
     'events',
+    'core',
+    #'blog',
     'graphene_django',
 ]
-
-GRAPHENE = {
-    'SCHEMA': 'ispa_app.schema.schema'  # Where your Graphene schema lives
-}
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -144,7 +143,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-
+            os.path.join(BASE_DIR, 'events', 'templates'),
+            os.path.join(BASE_DIR, 'core', 'templates'),
         ],
         'OPTIONS': {
             'debug': DEBUG,
@@ -166,8 +166,6 @@ TEMPLATES = [
         },
     },
 ]
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -207,7 +205,7 @@ PASSWORD_HASHERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 # ------------------------------------------------------------------------------
 
-AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
+AUTH_PASSWORD_VALIDATORS = [  # pragma: no coverf
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -224,16 +222,28 @@ AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
 
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
+    }
 ]
 
 
+LOGIN_REDIRECT_URL = '/events/'
+
 # Custom user app defaults
 # Select the correct user model
-# AUTH_USER_MODEL = 'users.User'
-# LOGIN_REDIRECT_URL = 'users:redirect'
-# LOGIN_URL = 'account_login'
+#AUTH_USER_MODEL = 'auth.User'
+#LOGIN_REDIRECT_URL = 'users:redirect'
+#LOGIN_URL = 'account_login'
 
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

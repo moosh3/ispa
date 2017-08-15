@@ -5,9 +5,7 @@ from .factories import (
     EventFactory,
     EventLocationFactory,
     AttendeeFactory,
-    OwnerFactory,
     AttendeeWithEventFactory,
-    OwnerWithEventFactory
 )
 
 
@@ -15,6 +13,4 @@ register(EventFactory)
 register(EventLocationFactory)
 register(UserFactory)
 register(AttendeeFactory)
-register(OwnerFactory)
 register(AttendeeWithEventFactory)
-register(OwnerWithEventFactory)

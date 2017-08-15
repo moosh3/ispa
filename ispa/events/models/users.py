@@ -9,12 +9,18 @@ from django.dispatch import receiver
 from events.models.base import BaseModel
 
 def avatar_field(instance, filename):
-    return os.path.join('users', str(instance.user.pk), filename)
+    return os.path.join('events', 'static', 'users', str(instance.user.pk), filename)
 
 class UserProfile(BaseModel):
 
     USER = 'user'
     SYSTEM = 'system'
+
+    YEAR_CHOICES = (
+        ('FR', 'Freshman'),
+        ('SM', 'Sophmore'),
+        ('JR', 'Junior'),
+    )
 
     USER_TYPE_CHOICES = (
         (USER, USER.capitalize()),
@@ -29,6 +35,8 @@ class UserProfile(BaseModel):
         choices=USER_TYPE_CHOICES,
         default=USER,
     )
+    points = models.PositiveIntegerField(blank=True, null=True)
+    year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
 
     def __str__(self):
         return '{}'.format(self.user.username)

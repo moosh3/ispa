@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+      <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+      <li><a href="{% url 'account_reset_password' %}">Change Password</a></li>
+      <li><a href="{% url 'profile-edit' request.user.userprofile.pk %}">Edit profile</a></li>
+{% endblock %}
