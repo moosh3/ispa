@@ -22,6 +22,8 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
 from events.views import events
+from blog.views import BlogIndexView
+
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
@@ -76,6 +78,10 @@ urlpatterns += [
          name='event-edit'
     ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += [
+    url(r'^blog/', BlogIndexView.as_view(), name='blog'),
+]
 
 # django-debug-toolbar
 urlpatterns += [
