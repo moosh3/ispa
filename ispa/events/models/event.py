@@ -27,6 +27,7 @@ class Event(BaseModel):
     )
 
     name = models.CharField('Name', max_length=256, null=True, blank=True)
+    points = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(
         'Description', max_length=512,
         null=True, blank=True)

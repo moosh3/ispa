@@ -3,6 +3,7 @@ version: '2'
 volumes:
     ispa_pg_data:
         external: true
+    redisdata:
 
 services:
   db:
@@ -17,3 +18,11 @@ services:
       - "5432:5432"
     volumes:
       - ispa_pg_data:/var/lib/postgresql/data
+
+  redis:
+      container_name: redis
+      image: redis:3.2.0
+      ports:
+        - '127.0.0.1:6379:6379'
+      volumes:
+        - 'redisdata:/data'

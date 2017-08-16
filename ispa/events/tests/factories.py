@@ -51,17 +51,5 @@ class AttendeeFactory(factory.django.DjangoModelFactory):
     event = factory.SubFactory(EventFactory)
 
 
-class OwnerFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = 'events.Owner'
-
-    user = factory.SubFactory(UserFactory)
-    event = factory.SubFactory(EventFactory)
-
-
 class AttendeeWithEventFactory(UserFactory):
     event = factory.RelatedFactory(AttendeeFactory, 'user')
-
-
-class OwnerWithEventFactory(UserFactory):
-    event = factory.RelatedFactory(OwnerFactory, 'user')

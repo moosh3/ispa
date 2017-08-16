@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% for sponsor in sponsor_list $}
+  <li>
+    <a href="{{ sponsor.get_absolute_url }}">{{ sponsor.name }}</a>
+  </li>
+{% endfor %}
+
+{% endblock %}

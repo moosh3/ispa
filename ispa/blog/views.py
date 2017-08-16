@@ -7,7 +7,3 @@ from .models import BlogIndexPage
 
 class BlogIndexView(TemplateView):
     template_name = 'blog/blog_index_page.html'
-
-
-
-
