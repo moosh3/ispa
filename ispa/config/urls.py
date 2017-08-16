@@ -28,7 +28,7 @@ from events.views import (
     locations,
     speakers,
 )
-
+from blog.views import BlogIndexView
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
@@ -57,7 +57,7 @@ urlpatterns = [
 urlpatterns += [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^pages/', include(wagtail_urls), name='wagtail-blog'),
+    url(r'^pages/', include(wagtail_urls)),
 ]
 
 # Members
@@ -90,6 +90,10 @@ urlpatterns += [
     url(r'^speaker/(?P<slug>[-\w]+)/$', speakers.detail_view, name='speaker-detail'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+urlpatterns += [
+    url(r'^pages/blog/$', BlogIndexView.as_view(), name='blog'),
+]
 
 # django-debug-toolbar
 urlpatterns += [
