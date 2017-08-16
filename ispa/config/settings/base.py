@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
+    'django_s3_storage',
     # Your stuff: custom apps go here
     'api',
     'events',

@@ -80,6 +80,31 @@ DATABASES = {
 #    }
 # }
 
+# FILE STORAGE
+# ------------------------------------------------------------------------------
+# The AWS region to connect to.
+AWS_REGION = "us-east-1"
+
+# The AWS access key to use.
+AWS_ACCESS_KEY_ID = ""
+
+# The AWS secret access key to use.
+AWS_SECRET_ACCESS_KEY = ""
+
+# The name of the bucket to store files in.
+AWS_S3_BUCKET_NAME = ""
+
+# Bucket for collectstatic
+AWS_S3_BUCKET_NAME_STATIC = ""
+
+AWS_S3_BUCKET_AUTH_STATIC = False
+
+AWS_S3_MAX_AGE_SECONDS_STATIC =  60 * 60 * 24 * 365  # 1 year.
+
+# File caching in browsers
+AWS_S3_BUCKET_AUTH = False
+
+AWS_S3_MAX_AGE_SECONDS = 60 * 60 * 24 * 365  # 1 year.
 # TODO Add logging configuration
 
 # Custom Admin URL, use {% raw %}{% url 'admin:index' %}{% endraw %}
