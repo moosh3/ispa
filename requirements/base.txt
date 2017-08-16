@@ -5,7 +5,7 @@ wheel==0.29.0
 django==1.10.7
 django-environ==0.4.3
 django-model-utils==3.0.0
-django-storages
+django-s3-storage
 Pillow==4.2.1
 awesome-slugify==1.6.5
 djangorestframework==3.6.3

@@ -22,9 +22,13 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
 from core import urls as core_urls
-from events.views import events, users, locations
+from events.views import (
+    events,
+    users,
+    locations,
+    speakers,
+)
 from blog.views import BlogIndexView
-
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
@@ -83,6 +87,7 @@ urlpatterns += [
          name='event-edit'
     ),
     url(r'^locations/create/$', locations.create_view, name='location-create'),
+    url(r'^speaker/(?P<slug>[-\w]+)/$', speakers.detail_view, name='speaker-detail'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

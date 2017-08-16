@@ -27,13 +27,13 @@ class EventDashboard(TemplateView):
         return context
 
 
-class EventDetailView(DetailView):
+class DetailEventView(DetailView):
 
     template_name = 'events/detail.html'
     model = models.Event
 
     def __init__(self, *args, **kwargs):
-        super(EventDetailView, self).__init__(*args, **kwargs)
+        super(DetailEventView, self).__init__(*args, **kwargs)
         self.event = None
         self.user = None
 
@@ -45,7 +45,7 @@ class EventDetailView(DetailView):
         return super(EventDetailView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(EventDetailView, self).get_context_data(**kwargs)
+        context = super(DetailEventView, self).get_context_data(**kwargs)
         try:
             creator = models.Attendance.objects.get(
                 event=self.event,
@@ -78,13 +78,13 @@ class EditEventView(TemplateView):
         pass
 
 
-class EventListView(ListView):
+class ListEventView(ListView):
 
     model = models.Event
 
     @login_required
     def dispatch(self, request, *args, **kwargs):
-        return super(EventList, self).dispatch(request, *args, **kwargs)
+        return super(ListEventView, self).dispatch(request, *args, **kwargs)
 
 
 class CreateEventView(CreateView):
@@ -95,7 +95,7 @@ class CreateEventView(CreateView):
 
 
 dashboard_view = EventDashboard.as_view()
-detail_view = EventDetailView.as_view()
+detail_view = DetailEventView.as_view()
 create_view = CreateEventView.as_view()
 edit_view = EditEventView.as_view()
-list_view = EventListView.as_view()
+list_view = ListEventView.as_view()

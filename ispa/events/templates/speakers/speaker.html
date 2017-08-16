@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<div class="row">
+  <div class="col">
+    <h1>{{ speaker.name }}</h1>
+    <img src="{% static "events/speakers/speaker1.jpg" %}"/>
+    <h1>{{ speaker.description }}</h1>
+
+    <p>Talked at event {{ speaker.event.name }}</p>
+
+
+{% endblock %}
