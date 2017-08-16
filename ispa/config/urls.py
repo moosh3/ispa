@@ -87,7 +87,7 @@ urlpatterns += [
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
-    url(r'^pages/blog/', BlogIndexView.as_view(), name='blog'),
+    url(r'^pages/blog/$', BlogIndexView.as_view(), name='blog'),
 ]
 
 # django-debug-toolbar
