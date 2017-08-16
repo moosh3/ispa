@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'core',
     #'blog',
     'graphene_django',
+    'blog',
 ]
 
 # MIDDLEWARE CONFIGURATION
