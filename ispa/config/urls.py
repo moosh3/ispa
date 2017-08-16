@@ -23,6 +23,7 @@ from rest_framework.schemas import get_schema_view
 
 from core import urls as core_urls
 from events.views import events, users, locations
+from blog.views import BlogIndexView
 
 from api.viewsets import (
     EventViewSet,
@@ -52,7 +53,7 @@ urlpatterns = [
 urlpatterns += [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^pages/', include(wagtail_urls), name='wagtail-blog'),
+    url(r'^pages/', include(wagtail_urls)),
 ]
 
 # Members
@@ -86,7 +87,7 @@ urlpatterns += [
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
-    url(r'^blog/', BlogIndexView.as_view(), name='blog'),
+    url(r'^pages/blog/', BlogIndexView.as_view(), name='blog'),
 ]
 
 # django-debug-toolbar
