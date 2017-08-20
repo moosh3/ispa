@@ -8,7 +8,7 @@ def image_field(instance, filename):
     return os.path.join('core', str(instance.user.pk), filename)
 
 
-class Sponsor(BaseModel):
+class Alumni(BaseModel):
 
     name = models.CharField(max_length=128, null=True, blank=True)
     image = models.ImageField(upload_to=image_field, null=True, blank=True)
@@ -28,7 +28,7 @@ class Sponsor(BaseModel):
         return __str__()
 
     @classmethod
-    def create_sponsor(cls, name, image, description, slug):
+    def create_alumni(cls, name, image, description, slug):
         return cls.objects.create(
             name=name,
             image=image,
