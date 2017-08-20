@@ -15,6 +15,7 @@ class Sponsor(BaseModel):
     description = models.CharField(max_length=512, null=True, blank=True)
     slug = models.SlugField(unique=True, max_length=40,
                             blank=True, null=True)
+    extended_description = models.TextField(blank=True, null=True)
 
 
     def get_absolute_url(self):

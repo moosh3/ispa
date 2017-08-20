@@ -42,7 +42,7 @@ class DetailEventView(DetailView):
             models.Event,
             slug=self.kwargs['slug']
         )
-        return super(EventDetailView, self).dispatch(*args, **kwargs)
+        return super(DetailEventView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(DetailEventView, self).get_context_data(**kwargs)
