@@ -21,7 +21,7 @@ class EventDashboard(TemplateView):
         context = super(EventDashboard, self).get_context_data(**kwargs)
         active_events = models.Event.objects.filter(
             is_active=True,
-        ).order_by('-name')[:5]
+        ).order_by('-date')[:10]
         context['active_events'] = active_events
 
         return context
