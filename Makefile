@@ -1,14 +1,6 @@
-GCLOUD_PROJECT:=$(shell gcloud config list project --format="value(core.project)")
+GCLOUD_PROJECT:="ispa-176718"
 DOCKER_USER="marjoram0"
 all: deploy
-
-create-cluster:
-	gcloud container clusters create ispa \
-		--scope "https://www.googleapis.com/auth/userinfo.email","cloud-platform"
-
-create-bucket:
-	gsutil mb gs://$(GCLOUD_PROJECT)
-    gsutil defacl set public-read gs://$(GCLOUD_PROJECT)
 
 serve:
 	docker-compose up -d
@@ -26,16 +18,11 @@ build:
 	docker build -t marjoram0/ispa:latest .
 
 push: build
-	gcloud docker push gcr.io/$(GCLOUD_PROJECT)/ispa
+	gcloud docker -- push gcr.io/$(GCLOUD_PROJECT)/ispa
 	docker push ${DOCKER_USER}/ispa
 
-deploy:
-	kubectl create -f ispa-app.yml
-
-update:
-	kubectl rolling-update ispa --image=gcr.io/${GCLOUD_PROJECT}/ispa
-
 delete:
+	kubectl delete -f ispa-app.yml
 	kubectl delete deployment ispa
 	kubectl delete service ispa
 	gcloud container clusters delete ispa
