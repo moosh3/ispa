@@ -6,7 +6,7 @@ from .base import *  # noqa
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
 SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
 
-
+DEBUG = True
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
 SECURE_PROXY_SSL_HEADER = 'https'
@@ -57,8 +57,8 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 # ------------------------------------------------------------------------------
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql,
-        'NAME': 'postgres',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ispadb',
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': '127.0.0.1',
@@ -79,35 +79,3 @@ DATABASES = {
 #
 #    }
 # }
-
-# FILE STORAGE
-# ------------------------------------------------------------------------------
-# The AWS region to connect to.
-AWS_REGION = "us-east-1"
-
-# The AWS access key to use.
-AWS_ACCESS_KEY_ID = ""
-
-# The AWS secret access key to use.
-AWS_SECRET_ACCESS_KEY = ""
-
-# The name of the bucket to store files in.
-AWS_S3_BUCKET_NAME = ""
-
-# Bucket for collectstatic
-AWS_S3_BUCKET_NAME_STATIC = ""
-
-AWS_S3_BUCKET_AUTH_STATIC = False
-
-AWS_S3_MAX_AGE_SECONDS_STATIC =  60 * 60 * 24 * 365  # 1 year.
-
-# File caching in browsers
-AWS_S3_BUCKET_AUTH = False
-
-AWS_S3_MAX_AGE_SECONDS = 60 * 60 * 24 * 365  # 1 year.
-# TODO Add logging configuration
-
-# Custom Admin URL, use {% raw %}{% url 'admin:index' %}{% endraw %}
-
-# Your production stuff: Below this line define 3rd party library settings
-# ------------------------------------------------------------------------------
