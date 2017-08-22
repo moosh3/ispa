@@ -11,7 +11,7 @@ create-bucket:
     gsutil defacl set public-read gs://$(GCLOUD_PROJECT)
 
 serve:
-	docker-compose up
+	docker-compose up -d
 	docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa_local ./manage.py runserver_plus 0.0.0.0:8000
 
 stop:
