@@ -7,13 +7,16 @@ create-bucket:
 
 serve:
 	docker-compose up -d
-	docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa_local ./manage.py runserver_plus 0.0.0.0:8000
+	docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(CURDIR)/ispa:/home/docker/ispa --name ispa ispa_local ./manage.py runserver_plus 0.0.0.0:8000
 
 stop:
 	docker stop ispa
 
+attach:
+	docker attach ispa
+
 debug:
-	docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest /bin/bash
+	docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(CURDIR)/ispa:/home/docker/ispa --name ispa ispa_local /bin/bash
 
 build:
 	docker build -t ispa_local -f Dockerfile.local .
