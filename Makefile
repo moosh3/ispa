@@ -24,9 +24,6 @@ push: build
 	gcloud docker -- push gcr.io/$(GCLOUD_PROJECT)/ispa
 	docker push ${DOCKER_USER}/ispa
 
-deploy: push
-	kubectl create -f alltogether.yaml
-
 update:
 	kubectl rolling-update ispa --image=gcr.io/${GCLOUD_PROJECT}/ispa
 
