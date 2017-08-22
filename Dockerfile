@@ -6,10 +6,11 @@ COPY requirements/prod.txt /home/docker/requirements-prod.txt
 
 WORKDIR /home/docker/ispa
 
+COPY gunicorn.sh /gunicorn.sh
+
 RUN pip install --no-cache-dir -r /home/docker/requirements-base.txt\
       -r /home/docker/requirements-prod.txt
 
-COPY ./ispa .
-ENV DJANGO_SETTINGS_MODULE=config.settings.production
+COPY ispa .
 
-CMD gunicorn -b :8080 config.wsgi
+CMD ["/gunicorn.sh"]
