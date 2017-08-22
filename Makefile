@@ -18,7 +18,7 @@ build:
 	docker build -t ispa_local -f Dockerfile.local .
 	docker build -t gcr.io/$(GCLOUD_PROJECT)/ispa .
 
-push: build
+push:
 	gcloud docker -- push gcr.io/$(GCLOUD_PROJECT)/ispa
 
 update:
