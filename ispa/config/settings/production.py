@@ -29,7 +29,7 @@ X_FRAME_OPTIONS = 'DENY'
 # ------------------------------------------------------------------------------
 # Hosts/domain names that are valid for this site
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = '*'
+ALLOWED_HOSTS = ['*']
 # END SITE CONFIGURATION
 
 # URL that handles the media served from MEDIA_ROOT, used for managing
