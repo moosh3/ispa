@@ -1,10 +1,6 @@
 GCLOUD_PROJECT:="ispa-176718"
 DOCKER_USER="marjoram0"
 
-create-bucket:
-	gsutil mb gs://$(GCLOUD_PROJECT)
-    gsutil defacl set public-read gs://$(GCLOUD_PROJECT)
-
 serve:
 	docker-compose up -d
 	docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(CURDIR)/ispa:/home/docker/ispa --name ispa ispa_local ./manage.py runserver_plus 0.0.0.0:8000
@@ -21,11 +17,9 @@ debug:
 build:
 	docker build -t ispa_local -f Dockerfile.local .
 	docker build -t gcr.io/$(GCLOUD_PROJECT)/ispa .
-	docker build -t marjoram0/ispa:latest .
 
 push: build
 	gcloud docker -- push gcr.io/$(GCLOUD_PROJECT)/ispa
-	docker push ${DOCKER_USER}/ispa
 
 update:
 	kubectl rolling-update ispa --image=gcr.io/${GCLOUD_PROJECT}/ispa
