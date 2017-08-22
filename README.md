@@ -18,7 +18,7 @@ For local development you'll want to bring up common services like the database,
 
 ```Bash
 $ docker-compose up --remove-orphans -d
-$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa_local
 ```
 
 **Note**: For tagged releases, the data volume most likely will have to be delete due to modifications to the migrations, possible messing up postgresql. In `data/` will be a tarball that has the newest (clean) database -- all we did was run the new migrations. Here are some commands that might be of use:
@@ -61,7 +61,7 @@ docker-compose up -d
 Boot up the actual container using `docker run`:
 
 ```Bash
-$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa:latest
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa_local
 ```
 
 Once you've started the container, you can access the app by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production).
@@ -69,7 +69,7 @@ Once you've started the container, you can access the app by going to 127.0.0.0:
 Since that run command detaches it from the shell, you can't access it without `exec`-ing into it. With our workflow, that is not recommended. Instead, if it crashes you should run `docker logs ispa` to see the output and the error that shut down the server for debugging. Even better, when working locally, you can start the container with a bash shell; overriding the entrypoint `start-dev.sh`.
 
 ```Bash
-$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa:latest
+$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa_local
 # You can now attach to it
 $ docker attach ispa
 # You may need to type ctrl+C to exit the local bash
@@ -107,7 +107,7 @@ $ docker run --rm --volumes-from ispa_db -v $(pwd):/backup ubuntu tar cvf /backu
 For testing, you can override the entrypoint again but pass a command into bash from the docker run command:
 
 ```Bash
-$ docker run -it --rm --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa:latest -c py.test --cov --verbose
+$ docker run -it --rm --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa_local -c py.test --cov --verbose
 # Will output the test pass/fail report from py.test
 ```
 
