@@ -6,19 +6,10 @@ COPY requirements/prod.txt /home/docker/requirements-prod.txt
 
 WORKDIR /home/docker/ispa
 
-COPY gunicorn.sh /gunicorn.sh
-
-RUN groupadd -r django && \
-      useradd -r -g django django && \
-      pip install --no-cache-dir -r /home/docker/requirements-base.txt\
-      -r /home/docker/requirements-prod.txt && \
-    sed -i 's/\r//' /gunicorn.sh && \
-    chmod +x /gunicorn.sh && \
-    chown django /gunicorn.sh
+RUN pip install --no-cache-dir -r /home/docker/requirements-base.txt\
+      -r /home/docker/requirements-prod.txt
 
 COPY ./ispa .
+ENV DJANGO_SETTINGS_MODULE=config.settings.production
 
-RUN chown -R django .
-USER django
-
-CMD ["/gunicorn.sh"]
+CMD gunicorn -b :8080 config.wsgi
