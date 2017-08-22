@@ -68,8 +68,6 @@ INSTALLED_APPS = [
     'api',
     'events',
     'core',
-    #'blog',
-    'graphene_django',
     'blog',
 ]
 
@@ -109,17 +107,6 @@ ADMINS = [
 MANAGERS = ADMINS
 
 # DATABASE CONFIGURATION
-# ------------------------------------------------------------------------------
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'ispa_db',
-        'PORT': '5432',
-    },
-}
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------

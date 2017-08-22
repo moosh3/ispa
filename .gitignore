@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# GCP credentials
+secrets/
+
 # Specific
 vagrant/
 .DS_Store

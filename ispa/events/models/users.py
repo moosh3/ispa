@@ -20,6 +20,7 @@ class UserProfile(BaseModel):
         ('FR', 'Freshman'),
         ('SM', 'Sophmore'),
         ('JR', 'Junior'),
+        ('SR', 'Senior')
     )
 
     USER_TYPE_CHOICES = (
@@ -35,6 +36,7 @@ class UserProfile(BaseModel):
         choices=USER_TYPE_CHOICES,
         default=USER,
     )
+    dues_paid = models.BooleanField(default=False)
     points = models.PositiveIntegerField(blank=True, null=True)
     year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
 
@@ -49,7 +51,7 @@ class UserProfile(BaseModel):
         return self.__unicode__()
 
     def get_absolute_url(self):
-        return reverse('profile', args=[self.user])
+        return reverse('profile', args=[self.user.username])
 
 
 @receiver(post_save, sender=User)
