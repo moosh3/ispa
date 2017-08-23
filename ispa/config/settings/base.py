@@ -88,6 +88,15 @@ ADMINS = [
 MANAGERS = ADMINS
 
 # DATABASE CONFIGURATION
+DATABASES =  {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'ispa_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'PORT': 5432,
+    }
+}
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
