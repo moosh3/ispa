@@ -11,7 +11,7 @@ awesome-slugify==1.6.5
 djangorestframework==3.6.3
 django-rest-auth[with_social]
 markdown==2.6.8
-wagtail==1.11.1
+# wagtail==1.11.1
 argon2-cffi==16.3.0
 coreapi==2.3.1
 celery==3.1.23

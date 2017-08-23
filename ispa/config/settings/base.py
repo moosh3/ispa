@@ -31,27 +31,27 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
-    'modelcluster',
-    'taggit',
+    #'modelcluster',
+    #'taggit',
     # Admin
     'django.contrib.admin',
-    'wagtail.wagtailforms',
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailembeds',
-    'wagtail.wagtailsites',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailsearch',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtailcore',
+    #'wagtail.wagtailforms',
+    #'wagtail.wagtailredirects',
+    #'wagtail.wagtailembeds',
+    #'wagtail.wagtailsites',
+    #'wagtail.wagtailusers',
+    #'wagtail.wagtailsnippets',
+    #'wagtail.wagtaildocs',
+    #'wagtail.wagtailimages',
+    #'wagtail.wagtailsearch',
+    #'wagtail.wagtailadmin',
+    #'wagtail.wagtailcore',
     'django_s3_storage',
     # Your stuff: custom apps go here
     'api',
     'events',
     'core',
-    'blog',
+    #'blog',
 ]
 
 # MIDDLEWARE CONFIGURATION
@@ -64,8 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'wagtail.wagtailcore.middleware.SiteMiddleware',
-    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    #'wagtail.wagtailcore.middleware.SiteMiddleware',
+    #'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
 
