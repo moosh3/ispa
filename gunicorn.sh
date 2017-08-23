@@ -1,5 +1,5 @@
 #!/bin/bash
-python manage.py migrate
+python manage.py migrate --settings=config.settings.production
 python manage.py collectstatic --clear --noinput # Remove current static files
 python manage.py collectstatic --noinput
 
