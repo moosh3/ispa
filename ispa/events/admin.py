@@ -5,7 +5,8 @@ from events.models import (
     EventLocation,
     UserProfile,
     Speaker,
-    Announcement
+    Announcement,
+    Attendance
 )
 
 class AttendanceInline(admin.TabularInline):
