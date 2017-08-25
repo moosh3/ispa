@@ -6,14 +6,19 @@ volumes:
     redisdata:
 
 services:
+  ispa_local:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    volumes:
+      - ./ispa:/home/docker/ispa
+    ports:
+      - "8000:8000"
+    command: /start-dev.sh
+
   db:
     image: postgres:9.4
     container_name: ispa_db
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-      - POSTGRES_HOSTNAME=ispa_db
     ports:
       - "5432:5432"
     volumes:
