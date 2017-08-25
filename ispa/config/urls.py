@@ -26,6 +26,7 @@ from events.views import (
     users,
     locations,
     speakers,
+    dues,
 )
 from blog.views import BlogIndexView
 from api.viewsets import (
@@ -85,11 +86,12 @@ urlpatterns += [
     ),
     url(r'^locations/create/$', locations.create_view, name='location-create'),
     url(r'^speaker/(?P<slug>[-\w]+)/$', speakers.detail_view, name='speaker-detail'),
+    url(r'^dues/$', dues.pay_dues, name='dues'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
-    url(r'^pages/blog/$', BlogIndexView.as_view(), name='blog'),
+    url(r'^pages/$', BlogIndexView.as_view(), name='blog'),
 ]
 
 # django-debug-toolbar
