@@ -38,7 +38,6 @@
         </ul> <br />
         <!-- Map -->
 
-
       <ul class="media-list media-list-conversation c-w-md">
         <li class="media media-current-user mb-4">
           <div class="media-body">
@@ -74,7 +73,7 @@
         <div class="media w-100">
           <img class="media-object rounded-circle mr-3" src="{% static "events/img/avatar-dhg.png" %}">
           <div class="media-body align-self-center">
-            <a class="btn btn-outline-primary btn-sm float-right" href="{{ get_absolute_url args=guest.user }}">
+            <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
               Profile
             </a>
             <strong>{{ guest.username }}</strong>

@@ -5,19 +5,16 @@ Illinois Sports Business Association official website
 
 ## Getting Started
 
-Read below for specifics, but if you'd like to get started right away, start with the `build.sh` script which builds all the default images and services.
-
 You will also want to create a data container to make sure postgresql data is persistent, allowing you to restart the services without having to reset the database:
 
 ```Bash
 $ docker volume create --name ispa_pg_data
 ```
 
-For local development you'll want to bring up common services like the database, redis and rabbit with docker-compose. The ispa image itself is ran separately:
+For local development you'll want to bring up common services like the database, redis and ispa with docker-compose.
 
 ```Bash
 $ docker-compose up --remove-orphans -d
-$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa_local
 ```
 
 **Note**: For tagged releases, the data volume most likely will have to be delete due to modifications to the migrations, possible messing up postgresql. In `data/` will be a tarball that has the newest (clean) database -- all we did was run the new migrations. Here are some commands that might be of use:
@@ -31,84 +28,11 @@ $ docker exec -u postgres <postgres_container> psql -c 'DROP DATABASE <your_db_n
 $ cat your_dump.sql | docker exec -i <postgres_container> psql -U postgres
 ```
 
-Dropping the database is only recommended in dev environments.
-
-## Wagtail
-
-You'll have to exec into the ispa container and create a superuser for wagtail like so:
-
-```Bash
-$ docker exec -it ispa bash
-root@f83c760407ea:/home/docker/ispa# ./manage.py createsuperuser
-Username (leave blank to use 'root'): $USER
-Email address:
-Password:
-Password (again):
-Superuser created successfully.
-```
-
-## Docker
-
-[Here](https://asciinema.org/a/I4RhmVynrkZj8r8UyuvO4QKzY) is a screen cast which shows the manual installation of everything from start to finish.
-
-For local development, specify the docker-compose file as such, which creates and brings up the containers supplying common services:
-
-```Bash
-docker-compose up -d
-```
-
-Boot up the actual container using `docker run`:
-
-```Bash
-$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa ispa_local
-```
-
-Once you've started the container, you can access the app by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000 (and 80 if you'd like to run production).
-
-Since that run command detaches it from the shell, you can't access it without `exec`-ing into it. With our workflow, that is not recommended. Instead, if it crashes you should run `docker logs ispa` to see the output and the error that shut down the server for debugging. Even better, when working locally, you can start the container with a bash shell; overriding the entrypoint `start-dev.sh`.
-
-```Bash
-$ docker run -it --rm -d --network=ispaproject_default --link ispa_db --publish 8000:8000 --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa_local
-# You can now attach to it
-$ docker attach ispa
-# You may need to type ctrl+C to exit the local bash
-^C
-root@419c7491c798:/home/docker/ispa# # Run ./manage.py, pytest, whatever
-```
-
-When attached to a container you can also run `./manage.py runserver_plus 0.0.0.0:8000` to start the app and access it in your browser.
-
-Since we have a data container mounted onto a postgresql docker instance, we can run commands that will backup the contents of the container for backups, data sharing, etc.
-
-
-#### Fixtures
-
-The easiest is to create fixtures from using `manage.py`:
-
-```Bash
-# ispa is running with a bash entrypoint
-root@419c7491c798:/home/docker/ispa# ./manage.py dumpdata > fixtures/data.sql
-# to load data, specify the fixture:
-root@419c7491c798:/home/docker/ispa# ./manage.py loaddata fixtures/data.sql
-```
-
-To back up our postgresql database, create a second volume named backup. Then we want to run an ubuntu instance of which we mount our original `ispa_pg_data` volume, and export it into the other container, generating a tarball. It looks like this:
-
-```Bash
-# Create another volume
-$ docker volume create --name dbbackup
-$ docker run --rm --volumes-from ispa_db -v $(pwd):/backup ubuntu tar cvf /backup/backup0.tar /dbbackup
-# It might return an error, but the tarball should be generated
-```
+Once you've started the container, you can access the app by going to 127.0.0.0:8000 in your browser. If you are running this in a vagrant environment, ensure you've forwarded port 8000
 
 #### Testing
 
-For testing, you can override the entrypoint again but pass a command into bash from the docker run command:
-
-```Bash
-$ docker run -it --rm --volume $(pwd)/ispa:/home/docker/ispa --name ispa --entrypoint /bin/bash ispa_local -c py.test --cov --verbose
-# Will output the test pass/fail report from py.test
-```
+For testing, you can override the entrypoint via docker-compose but pass a command into bash from the docker run command:
 
 py.test has some awesome plugins and customizations. Here's some examples:
 

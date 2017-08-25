@@ -15,10 +15,8 @@ from django.contrib.auth.views import (
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtailsearch import urls as wagtailsearch_urls
 
 from rest_framework.routers import DefaultRouter
-from rest_framework.schemas import get_schema_view
 
 from core import urls as core_urls
 from events.views import (
@@ -26,6 +24,7 @@ from events.views import (
     users,
     locations,
     speakers,
+    dues,
 )
 from blog.views import BlogIndexView
 from api.viewsets import (
@@ -85,11 +84,12 @@ urlpatterns += [
     ),
     url(r'^locations/create/$', locations.create_view, name='location-create'),
     url(r'^speaker/(?P<slug>[-\w]+)/$', speakers.detail_view, name='speaker-detail'),
+    url(r'^dues/$', dues.pay_dues, name='dues'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
-    url(r'^pages/blog/$', BlogIndexView.as_view(), name='blog'),
+    url(r'^pages/$', BlogIndexView.as_view(), name='blog'),
 ]
 
 # django-debug-toolbar

@@ -1,6 +1,9 @@
+from __future__ import unicode_literals
+import os
+
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.utils.text import slugify
+from django.utils.encoding import python_2_unicode_compatible
 
 from events.models.base import BaseModel
 
@@ -8,6 +11,7 @@ def image_field(instance, filename):
     return os.path.join('core', str(instance.user.pk), filename)
 
 
+@python_2_unicode_compatible
 class Sponsor(BaseModel):
 
     name = models.CharField(max_length=128, null=True, blank=True)
@@ -24,9 +28,6 @@ class Sponsor(BaseModel):
     def __str__(self):
         return '{}'.format(self.name)
 
-    def __unicode__(self):
-        return __str__()
-
     @classmethod
     def create_sponsor(cls, name, image, description, slug):
         return cls.objects.create(
@@ -36,5 +37,5 @@ class Sponsor(BaseModel):
             slug=slug,
         )
 
-    class Meta:
+    class Meta: # pylint: disable=C1001
         ordering = ('name',)

@@ -7,28 +7,13 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import environ
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-# Load operating system environment variables and then prepare to use them
-env = environ.Env()
-
-# .env file, should load only in development environment
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
-
-if READ_DOT_ENV_FILE:
-    # Operating System Environment variables have precedence over variables
-    # defined in the .env file, that is to say variables from the
-    # .env files will only be used if not defined
-    # as environment variables.
-    env_file = str('.env')
-    print('Loading : {}'.format(env_file))
-    env.read_env(env_file)
-    print('The .env file has been loaded. See base.py for more information')
-
-WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
+# Operating System Environment variables have precedence over variables defined in the .env file,
+# that is to say variables from the .env files will only be used if not defined
+# as environment variables.
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -63,7 +48,6 @@ INSTALLED_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
-    'django_s3_storage',
     # Your stuff: custom apps go here
     'api',
     'events',
@@ -85,17 +69,17 @@ MIDDLEWARE = [
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
+SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
 
 # DEBUG
 # ------------------------------------------------------------------------------
-DEBUG = env.bool('DJANGO_DEBUG', False)
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
-                    default='django.core.mail.backends.smtp.EmailBackend')
+#EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND')
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -107,6 +91,16 @@ ADMINS = [
 MANAGERS = ADMINS
 
 # DATABASE CONFIGURATION
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'ispa_db',
+        'PORT': '5432',
+    },
+}
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -227,14 +221,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LOGIN_REDIRECT_URL = '/events/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = False
 
-# Custom user app defaults
-# Select the correct user model
-#AUTH_USER_MODEL = 'auth.User'
-#LOGIN_REDIRECT_URL = 'users:redirect'
-#LOGIN_URL = 'account_login'
 
-# SLUGLIFIER
+
+WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
+
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ADMIN_URL = r'^django-admin/'
@@ -253,9 +246,9 @@ REST_FRAMEWORK = {
 # ------------------------------------------------------------------------------
 # Redis
 
-REDIS_PORT = 6379
-REDIS_DB = 0
-REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
+#REDIS_PORT = 6379
+#REDIS_DB = 0
+#REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 # Celery configuration
 
@@ -275,7 +268,7 @@ CELERY_SEND_TASK_ERROR_EMAILS = False
 CELERY_TASK_RESULT_EXPIRES = 600
 
 # Set redis as celery result backend
-CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
+#CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 CELERY_REDIS_MAX_CONNECTIONS = 1
 
 # Don't use pickle as serializer, json is much safer

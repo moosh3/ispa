@@ -1,3 +1,7 @@
+from __future__ import unicode_literals
+import os
+
+from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
@@ -13,7 +17,7 @@ class EventManager(models.Manager):
 def image_field(instance, filename):
     return os.path.join('events', str(instance.user.pk), filename)
 
-
+@python_2_unicode_compatible
 class Event(BaseModel):
 
     EVENT = 'event'
@@ -56,9 +60,6 @@ class Event(BaseModel):
     def __str__(self):
         return '{}'.format(self.name)
 
-    def __unicode__(self):
-        return __str__()
-
     @classmethod
     def create_event(cls, slug, location, attendees, date,
                      description, is_active, name, points, event_type):
@@ -87,8 +88,8 @@ class Event(BaseModel):
             'slug': slugify(self.name),
         }
 
-    class Meta:
-        ordering = ('name',)
+    class Meta: # pylint: disable=C1001
+        ordering = ('date',)
 
     # def get_absolute_url(self):
     #    return reverse('profile', args=[self.user.username])

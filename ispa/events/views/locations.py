@@ -1,12 +1,12 @@
 from django.db import models
 from django.views.generic import CreateView
 
-from events import models
+from events.models import EventLocation
 
 
 class CreateLocationView(CreateView):
 
-    model = models.EventLocation
+    model = EventLocation
     fields = '__all__'
     success_url = '/events/'
 
