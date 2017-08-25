@@ -1,9 +1,15 @@
 from django.contrib import admin
 
-from events import models
+from events.models import (
+    Event,
+    EventLocation,
+    UserProfile,
+    Speaker,
+    Announcement
+)
 
 class AttendanceInline(admin.TabularInline):
-    model = models.Attendance
+    model = Attendance
 
 class EventAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
@@ -13,8 +19,8 @@ class SpeakerAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 # Register your models here.
-admin.site.register(models.Event, EventAdmin)
-admin.site.register(models.EventLocation)
-admin.site.register(models.UserProfile)
-admin.site.register(models.Speaker, SpeakerAdmin)
-admin.site.register(models.Announcement)
+admin.site.register(Event, EventAdmin)
+admin.site.register(EventLocation)
+admin.site.register(UserProfile)
+admin.site.register(Speaker, SpeakerAdmin)
+admin.site.register(Announcement)
