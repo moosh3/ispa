@@ -3,6 +3,7 @@ import os
 
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.utils.encoding import python_2_unicode_compatible
 
 from events.models.base import BaseModel
 
