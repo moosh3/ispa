@@ -7,7 +7,7 @@ class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-    class Meta:
+    class Meta: # pylint: disable=C1001
         abstract = True
         ordering = ['-created']
         app_label = 'events'

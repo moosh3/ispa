@@ -39,5 +39,5 @@ class Speaker(BaseModel):
             event=event,
         )
 
-    class Meta:
+    class Meta: # pylint: disable=C1001
         ordering = ('name',)

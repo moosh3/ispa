@@ -31,5 +31,5 @@ class Announcement(BaseModel):
             slug=slug,
         )
 
-    class Meta:
+    class Meta: # pylint: disable=C1001
         ordering = ('title',)

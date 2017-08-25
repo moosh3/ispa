@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import os
 
 from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
@@ -87,7 +88,7 @@ class Event(BaseModel):
             'slug': slugify(self.name),
         }
 
-    class Meta:
+    class Meta: # pylint: disable=C1001
         ordering = ('date',)
 
     # def get_absolute_url(self):

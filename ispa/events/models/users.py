@@ -47,9 +47,6 @@ class UserProfile(BaseModel):
     def __str__(self):
         return '{}'.format(self.user.username)
 
-    def __unicode__(self):
-        return __str__()
-
     @property
     def name(self):
         return self.__unicode__()
