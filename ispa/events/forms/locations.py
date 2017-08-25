@@ -1,7 +1,8 @@
 from django import ModelForm
-from events import models
+
+from events.models import EventLocation
 
 class LocationForm(ModelForm):
     class Meta:
-        model = models.EventLocation
+        model = EventLocation
         fields = '__all__'
