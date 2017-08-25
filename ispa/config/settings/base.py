@@ -15,7 +15,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 # Operating System Environment variables have precedence over variables defined in the .env file,
 # that is to say variables from the .env files will only be used if not defined
 # as environment variables.
-env = environ.Env.read_env('.env')
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------

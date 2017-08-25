@@ -12,7 +12,7 @@ SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
 
 # SECURITY CONFIGURATION
 # ------------------------------------------------------------------------------
-DEBUG = False
+DEBUG = True
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -48,15 +48,15 @@ DATABASES = {
 
 # CACHING # TODO
 # ------------------------------------------------------------------------------
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
+#CACHES = {
+#    "default": {
+#        "BACKEND": "django_redis.cache.RedisCache",
+#        "LOCATION": "redis://127.0.0.1:6379/1",
+#        "OPTIONS": {
+#            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#        }
+#    }
+#}
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
+#ESSION_ENGINE = "django.contrib.sessions.backends.cache"
+#SESSION_CACHE_ALIAS = "default"
