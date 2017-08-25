@@ -7,11 +7,22 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import environ
 import os
+import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
+
+# .env file, should load only in development environment
+READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
+
+if READ_DOT_ENV_FILE:
+    # Operating System Environment variables have precedence over variables defined in the .env file,
+    # that is to say variables from the .env files will only be used if not defined
+    # as environment variables.
+    env_file = str('.env')
+    print('Loading : {}'.format(env_file))
+    env.read_env(env_file)
+    print('The .env file has been loaded. See base.py for more information')
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -31,27 +42,27 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_auth.registration',
-    #'modelcluster',
-    #'taggit',
+    'modelcluster',
+    'taggit',
     # Admin
     'django.contrib.admin',
-    #'wagtail.wagtailforms',
-    #'wagtail.wagtailredirects',
-    #'wagtail.wagtailembeds',
-    #'wagtail.wagtailsites',
-    #'wagtail.wagtailusers',
-    #'wagtail.wagtailsnippets',
-    #'wagtail.wagtaildocs',
-    #'wagtail.wagtailimages',
-    #'wagtail.wagtailsearch',
-    #'wagtail.wagtailadmin',
-    #'wagtail.wagtailcore',
+    'wagtail.wagtailforms',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailimages',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailcore',
     'django_s3_storage',
     # Your stuff: custom apps go here
     'api',
     'events',
     'core',
-    #'blog',
+    'blog',
 ]
 
 # MIDDLEWARE CONFIGURATION
@@ -64,19 +75,21 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'wagtail.wagtailcore.middleware.SiteMiddleware',
-    #'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+    'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
+SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
 
 # DEBUG
 # ------------------------------------------------------------------------------
-DEBUG = False
+DEBUG = env.bool('DJANGO_DEBUG', False)
 
 ALLOWED_HOSTS = ['*']
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -88,14 +101,15 @@ ADMINS = [
 MANAGERS = ADMINS
 
 # DATABASE CONFIGURATION
-DATABASES =  {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'ispa_db',
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'PORT': 5432,
-    }
+        'HOST': 'ispa_db',
+        'PORT': '5432',
+    },
 }
 
 # GENERAL CONFIGURATION
@@ -218,13 +232,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LOGIN_REDIRECT_URL = '/events/'
 
-# Custom user app defaults
-# Select the correct user model
-#AUTH_USER_MODEL = 'auth.User'
-#LOGIN_REDIRECT_URL = 'users:redirect'
-#LOGIN_URL = 'account_login'
+WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
 
-# SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ADMIN_URL = r'^django-admin/'
@@ -243,8 +252,8 @@ REST_FRAMEWORK = {
 # ------------------------------------------------------------------------------
 # Redis
 
-REDIS_PORT = 6379
-REDIS_DB = 0
+#REDIS_PORT = 6379
+#REDIS_DB = 0
 #REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 # Celery configuration

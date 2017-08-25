@@ -1,12 +1,11 @@
-from .base import *  # noqa
+from .base import *
 
 # SECRET CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-DEBUG = True
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
 
@@ -21,15 +20,6 @@ DEBUG = True
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['*']
 # END SITE CONFIGURATION
-
-# URL that handles the media served from MEDIA_ROOT, used for managing
-# stored files.
-
-# Static Assets
-# ------------------------
-# See: https://github.com/antonagestam/collectfast
-# For Django 1.7+, 'collectfast' should come before
-# 'django.contrib.staticfiles'
 
 # EMAIL
 
@@ -48,9 +38,9 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'NAME': 'postgres', # Database name, *Not* the cloudsql instance name
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASS)',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
@@ -58,14 +48,15 @@ DATABASES = {
 
 # CACHING # TODO
 # ------------------------------------------------------------------------------
-# Heroku URL does not pass the DB number, so we parse it in
-# CACHES = {
-#    'default': {
-#        'BACKEND': 'django_redis.cache.RedisCache',
-#        'LOCATION': REDIS_LOCATION,
-#        'OPTIONS': {
-#            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#            'IGNORE_EXCEPTIONS': True,  # mimics memcache behavior.
-#
-#    }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
