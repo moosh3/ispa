@@ -222,6 +222,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LOGIN_REDIRECT_URL = '/events/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = False
+
+
 
 WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
 

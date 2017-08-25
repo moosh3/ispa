@@ -22,7 +22,11 @@ ALLOWED_HOSTS = ['*']
 # END SITE CONFIGURATION
 
 # EMAIL
-
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'isba-app'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_USE_TLS = True
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See:
