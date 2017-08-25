@@ -9,9 +9,14 @@ WORKDIR /home/docker/ispa
 COPY gunicorn.sh /gunicorn.sh
 
 RUN pip install --no-cache-dir -r /home/docker/requirements-base.txt\
-      -r /home/docker/requirements-prod.txt && \
-      chmod +x /gunicorn.sh
+      -r /home/docker/requirements-prod.txt
 
-COPY ispa .
+WORKDIR /home/docker/ispa
 
-CMD ["/gunicorn.sh"]
+COPY gunicorn.sh /gunicorn.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN  chmod +x /gunicorn.sh && chmod +x /docker-entrypoint.sh
+
+COPY ispa/ .
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
