@@ -3,6 +3,9 @@ GCLOUD_PROJECT=rapid-smithy-177819
 up:
 	docker-compose up -d
 
+down:
+	docker-compose down
+
 attach:
 	docker exec -it ispa /bin/bash
 
