@@ -1,20 +1,11 @@
-{% load static %}
-<html lang="en">
-  <head>
-    <!-- These meta tags come first. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-    <title>ISBA</title>
+</head>
 
-    <!-- Include the CSS -->
-    <link href="{% static "events/dist/toolkit.min.css" %}" rel="stylesheet">
-    <link fref="{% static "landing/css/sticky-footer.css" %}" rel="stylesheet">
-
-  </head>
-  <body>
-
+<body>
   <div class="container">
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,11 +55,53 @@
       </div>
     </nav>
       <br />
-      {% block content %}
-      {% endblock %}
 
-        <!-- Include jQuery (required) and the JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="{% static "events/dist/toolkit.min.js" %}"></script>
-      </body>
-      </html>
+<div class="container">
+  <div class="row align-items-center">
+      <div id="paypal-button-container"></div>
+
+      <script>
+          paypal.Button.render({
+
+              env: 'production', // sandbox | production
+
+              // PayPal Client IDs - replace with your own
+              // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+              client: {
+                  sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+                  production: 'AfCJjKkoXhXCRlkEH8GhHnAxWSW71OwRG9dg04MWGvYT6goPi8DTNcGhZqtinZjsCv3BCWsXYVaWSdUt'
+              },
+
+              // Show the buyer a 'Pay Now' button in the checkout flow
+              commit: true,
+
+              // payment() is called when the button is clicked
+              payment: function(data, actions) {
+
+                  // Make a call to the REST api to create the payment
+                  return actions.payment.create({
+                      payment: {
+                          transactions: [
+                              {
+                                  amount: { total: '30.00', currency: 'USD' }
+                              }
+                          ]
+                      }
+                  });
+              },
+
+              // onAuthorize() is called when the buyer approves the payment
+              onAuthorize: function(data, actions) {
+
+                  // Make a call to the REST api to execute the payment
+                  return actions.payment.execute().then(function() {
+                      window.alert('Payment Complete!');
+                  });
+              }
+
+          }, '#paypal-button-container');
+
+      </script>
+    </div>
+  </div>
+</body>
