@@ -15,7 +15,9 @@ WORKDIR /home/docker/ispa
 
 COPY gunicorn.sh /gunicorn.sh
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN  chmod +x /gunicorn.sh && chmod +x /docker-entrypoint.sh
+COPY migration.sh /migration.sh
+RUN  chmod +x /gunicorn.sh && chmod +x /docker-entrypoint.sh \
+    && chmod +x /migration.sh
 
 COPY ispa/ .
 
