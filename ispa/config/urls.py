@@ -12,10 +12,10 @@ from django.contrib.auth.views import (
     password_reset_done,
 )
 
-#from wagtail.wagtailadmin import urls as wagtailadmin_urls
-#from wagtail.wagtaildocs import urls as wagtaildocs_urls
-#from wagtail.wagtailcore import urls as wagtail_urls
-#from wagtail.wagtailsearch import urls as wagtailsearch_urls
+from wagtail.wagtailadmin import urls as wagtailadmin_urls
+from wagtail.wagtaildocs import urls as wagtaildocs_urls
+from wagtail.wagtailcore import urls as wagtail_urls
+from wagtail.wagtailsearch import urls as wagtailsearch_urls
 
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
@@ -27,7 +27,7 @@ from events.views import (
     locations,
     speakers,
 )
-#from blog.views import BlogIndexView
+from blog.views import BlogIndexView
 from api.viewsets import (
     EventViewSet,
     EventLocationViewSet,
@@ -88,9 +88,9 @@ urlpatterns += [
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-#urlpatterns += [
-#    url(r'^pages/blog/$', BlogIndexView.as_view(), name='blog'),
-#]
+urlpatterns += [
+    url(r'^pages/blog/$', BlogIndexView.as_view(), name='blog'),
+]
 
 # django-debug-toolbar
 #urlpatterns += [

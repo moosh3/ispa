@@ -27,7 +27,7 @@
             <a class="nav-link" href="{% url 'event-dashboard' %}">Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
+            <a class="nav-link" href="{% url 'blog' %}">Blog</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'member-list' %}">Members</a>
@@ -66,7 +66,7 @@
       <br />
       {% block content %}
       {% endblock %}
-
+  </div>
         <!-- Include jQuery (required) and the JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="{% static "events/dist/toolkit.min.js" %}"></script>
