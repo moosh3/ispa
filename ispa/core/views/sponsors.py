@@ -1,8 +1,6 @@
 from django.db import models
 from django.views.generic import CreateView, ListView
 
-from core import models
-
 
 class CreateSponsorView(CreateView):
 

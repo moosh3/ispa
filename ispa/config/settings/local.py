@@ -1,4 +1,3 @@
-import socket
 import os
 
 from .base import *  # noqa

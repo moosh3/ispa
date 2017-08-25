@@ -1,25 +1,25 @@
 from django.db import models
 from django.views.generic import CreateView, ListView, DetailView
 
-from events import models
+from events.models import Speaker
 
 
 class CreateSpeakerView(CreateView):
 
-    model = models.Speaker
+    model = Speaker
     fields = '__all__'
     success_url = '/events/'
 
 
 class ListSpeakerView(ListView):
 
-    model = models.Speaker
+    model = Speaker
 
 
 class DetailSpeakerView(DetailView):
 
     template_name = 'speakers/detail.html'
-    model = models.Speaker
+    model = Speaker
 
     def __init__(self, *args, **kwargs):
         super(De)
@@ -28,7 +28,7 @@ class DetailSpeakerView(DetailView):
 
     def dispatch(self, *args, **kwargs):
         self.speaker = get_object_or_404(
-            models.Speaker,
+            Speaker,
             slug=self.kwargs['slug']
         )
         return super(DetailSpeakerView, self).dispatch(*args, **kwargs)

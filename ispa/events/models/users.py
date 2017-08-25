@@ -1,16 +1,20 @@
+from __future__ import unicode_literals
 import os
 
+from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from events.models.base import BaseModel
 
 def avatar_field(instance, filename):
     return os.path.join('events', 'static', 'users', str(instance.user.pk), filename)
 
+
+@python_2_unicode_compatible
 class UserProfile(BaseModel):
 
     USER = 'user'

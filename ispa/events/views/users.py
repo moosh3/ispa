@@ -1,8 +1,7 @@
-from django.contrib.auth.decorators import login_required
-from django.views.generic.detail import SingleObjectMixin
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import TemplateView, UpdateView, CreateView, ListView
-from django.utils.decorators import method_decorator
+# from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView, UpdateView, ListView
+# from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 
 from events.models import UserProfile
@@ -26,12 +25,12 @@ class DetailUserView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(DetailUserView, self).get_context_data(**kwargs)
         try:
-            userprofile = models.UserProfile.objects.get(
+            userprofile = UserProfile.objects.get(
                 user=user,
             )
             context['userprofile'] = userprofile
         except:
-            pass
+            userprofile = None
 
         return context
 

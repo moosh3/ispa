@@ -8,7 +8,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import os
-import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 

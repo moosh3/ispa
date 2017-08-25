@@ -8,7 +8,7 @@ from django.views.generic import (
     CreateView,
 )
 
-from events import models
+from events.models import Event, Attendance
 
 
 class EventDashboard(TemplateView):
@@ -19,7 +19,7 @@ class EventDashboard(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(EventDashboard, self).get_context_data(**kwargs)
-        active_events = models.Event.objects.filter(
+        active_events = Event.objects.filter(
             is_active=True,
         ).order_by('-date')[:10]
         context['active_events'] = active_events
@@ -30,7 +30,7 @@ class EventDashboard(TemplateView):
 class DetailEventView(DetailView):
 
     template_name = 'events/detail.html'
-    model = models.Event
+    model = Event
 
     def __init__(self, *args, **kwargs):
         super(DetailEventView, self).__init__(*args, **kwargs)
@@ -39,7 +39,7 @@ class DetailEventView(DetailView):
 
     def dispatch(self, *args, **kwargs):
         self.event = get_object_or_404(
-            models.Event,
+            Event,
             slug=self.kwargs['slug']
         )
         return super(DetailEventView, self).dispatch(*args, **kwargs)
@@ -47,13 +47,13 @@ class DetailEventView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(DetailEventView, self).get_context_data(**kwargs)
         try:
-            creator = models.Attendance.objects.get(
+            creator = Attendance.objects.get(
                 event=self.event,
                 user=self.user,
                 is_owner=True
             )
             context['creator'] = creator
-        except models.Attendance.DoesNotExist:
+        except Attendance.DoesNotExist:
             creator = None
 
         context['event'] = self.event
@@ -70,7 +70,7 @@ class EditEventView(TemplateView):
         self.event_form = None
 
     def dispatch(self, request, *args, **kwargs):
-        self.event_inst = get_object_or_404(models.Event, pk=kwargs['pk'])
+        self.event_inst = get_object_or_404(Event, pk=kwargs['pk'])
         self.template_name = 'events/edit_event.html'
         return super(EditEventView, self).dispatch(request, *args, **kwargs)
 
@@ -80,7 +80,7 @@ class EditEventView(TemplateView):
 
 class ListEventView(ListView):
 
-    model = models.Event
+    model = Event
 
     @login_required
     def dispatch(self, request, *args, **kwargs):
@@ -89,7 +89,7 @@ class ListEventView(ListView):
 
 class CreateEventView(CreateView):
 
-    model = models.Event
+    model = Event
     fields = '__all__'
     success_url = '/events/'
 

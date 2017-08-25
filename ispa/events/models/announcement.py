@@ -1,6 +1,7 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.utils.text import slugify
 
 from events.models.base import BaseModel
 

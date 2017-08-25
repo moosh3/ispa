@@ -1,6 +1,6 @@
-from django import ModelForm
-from django.contrib.auth.models import User
-from events import models
+from django import ModelForm, forms
+
+from events.models import Event, EventLocation, Attendance
 
 
 ATTENDING_CHOICES = (
@@ -11,7 +11,7 @@ ATTENDING_CHOICES = (
 
 class EventForm(ModelForm):
     class Meta:
-        model = models.Event
+        model = Event
         fields = ['name', 'description', 'extended_description',
                   'image', 'location', 'date',
         ]
@@ -19,7 +19,7 @@ class EventForm(ModelForm):
 
 class EventForm(ModelForm):
     class Meta:
-        model = models.EventLocation
+        model = EventLocation
         fields = '__all__'
 
 class RSVPForm(forms.Form):
@@ -30,7 +30,7 @@ class RSVPForm(forms.Form):
         super(RSVPForm, self).__init__(*args, **kwargs)
 
     def save(self):
-        models.Attendance = self.User.objects.get(email=self.cleaned_data['email'])
+        Attendance = self.User.objects.get(email=self.cleaned_data['email'])
 
         Attendance.attending_status = self.cleaned_data['attending']
         Attendance.save()

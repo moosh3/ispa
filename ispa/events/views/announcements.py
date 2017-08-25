@@ -1,19 +1,19 @@
 from django.db import models
 from django.views.generic import CreateView, ListView
 
-from events import models
+from events.models import Announcement
 
 
 class CreateAnnouncementView(CreateView):
 
-    model = models.Annoncement
+    model = Announcement
     fields = '__all__'
     success_url = '/events/'
 
 
 class ListAnnouncementView(ListView):
 
-    model = models.Annoncement
+    model = Announcement
 
 
 create_view = CreateAnnouncementView.as_view()

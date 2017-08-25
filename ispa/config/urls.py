@@ -15,10 +15,8 @@ from django.contrib.auth.views import (
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
-from wagtail.wagtailsearch import urls as wagtailsearch_urls
 
 from rest_framework.routers import DefaultRouter
-from rest_framework.schemas import get_schema_view
 
 from core import urls as core_urls
 from events.views import (

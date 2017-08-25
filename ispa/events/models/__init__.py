@@ -1,3 +1,4 @@
+# pylint: disable=import-error
 from .event import Event
 from .eventlocation import EventLocation
 from .attendance import Attendance

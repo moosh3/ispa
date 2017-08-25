@@ -1,11 +1,11 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from events.tests import factories
 
 class Command(BaseCommand):
     help = 'Generates fake data for testing'
 
-    def handle(self, *args, **kwargs):
+    def handle(self, *args):
         factories.UserFactory.create_batch(size=50)
         self.stdout.write(self.style.SUCCESS('populated users...'))
         factories.EventFactory.create_batch(size=50)
