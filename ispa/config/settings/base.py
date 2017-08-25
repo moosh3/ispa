@@ -12,17 +12,10 @@ import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-# .env file, should load only in development environment
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
-
-if READ_DOT_ENV_FILE:
-    # Operating System Environment variables have precedence over variables defined in the .env file,
-    # that is to say variables from the .env files will only be used if not defined
-    # as environment variables.
-    env_file = str('.env')
-    print('Loading : {}'.format(env_file))
-    env.read_env(env_file)
-    print('The .env file has been loaded. See base.py for more information')
+# Operating System Environment variables have precedence over variables defined in the .env file,
+# that is to say variables from the .env files will only be used if not defined
+# as environment variables.
+env = environ.Env.read_env('.env')
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -57,7 +50,6 @@ INSTALLED_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
-    'django_s3_storage',
     # Your stuff: custom apps go here
     'api',
     'events',
@@ -83,13 +75,13 @@ SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
 
 # DEBUG
 # ------------------------------------------------------------------------------
-DEBUG = env.bool('DJANGO_DEBUG', False)
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+#EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND')
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------

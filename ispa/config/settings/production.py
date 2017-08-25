@@ -4,7 +4,7 @@ from .base import *
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
 
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
@@ -12,7 +12,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY CONFIGURATION
 # ------------------------------------------------------------------------------
-
+DEBUG = False
 
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -39,8 +39,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres', # Database name, *Not* the cloudsql instance name
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASS)',
+        'USER': 'dev',
+        'PASSWORD': 'justtestit',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
