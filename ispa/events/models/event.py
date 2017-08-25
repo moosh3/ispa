@@ -51,7 +51,7 @@ class Event(BaseModel):
     objects = EventManager()
 
     def get_absolute_url(self):
-        return reverse('event-detail', kwargs={'slug': self.slug})
+        return reverse('event-detail', args=[self.slug])
 
     def __str__(self):
         return '{}'.format(self.name)
