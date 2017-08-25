@@ -6,6 +6,6 @@ from django.views.generic import TemplateView
 
 # Create your views here.
 class PayDuesView(TemplateView):
-    template_name = 'ispa/dues.html'
+    template_name = 'events/dues.html'
 
 pay_dues = PayDuesView.as_view()
