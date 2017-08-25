@@ -8,7 +8,7 @@ __pycache__/
 
 # GCP credentials
 secrets/
-due.html
+dues.html
 
 # Specific
 vagrant/
