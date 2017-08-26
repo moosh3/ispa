@@ -48,6 +48,10 @@ DATABASES = {
         'PORT': '5432',
     },
 }
+
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
+SENDGRID_API_KEY = "Your SendGrid API Key"
+
 '''
  CACHING # TODO
  ------------------------------------------------------------------------------

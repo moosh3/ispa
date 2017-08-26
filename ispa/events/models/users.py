@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import RegexValidator
 
 from events.models.base import BaseModel
 
@@ -35,11 +36,7 @@ class UserProfile(BaseModel):
     user = models.OneToOneField('auth.User')
     avatar = models.ImageField(upload_to=avatar_field, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
-    user_type = models.CharField(
-        max_length=1024,
-        choices=USER_TYPE_CHOICES,
-        default=USER,
-    )
+    phone_number = models.CharField(max_length=12, null=True, blank=True)
     dues_paid = models.BooleanField(default=False)
     points = models.PositiveIntegerField(blank=True, null=True)
     year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
