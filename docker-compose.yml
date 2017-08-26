@@ -7,6 +7,7 @@ volumes:
 
 services:
   ispa_local:
+    container_name: ispa_local
     build:
       context: .
       dockerfile: Dockerfile.local
