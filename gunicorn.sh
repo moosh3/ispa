@@ -3,7 +3,7 @@
 set -e
 
 export DJANGO_SETTINGS_MODULE="config.settings.production"
-source vars.env
+source ./vars.env
 
 python manage.py migrate
 python manage.py collectstatic --clear --noinput # Remove current static files
