@@ -11,7 +11,7 @@ TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', default='CHANGEME!!!')
+SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
 
 # CACHING
 # ------------------------------------------------------------------------------

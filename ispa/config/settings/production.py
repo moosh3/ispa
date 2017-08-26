@@ -22,11 +22,10 @@ ALLOWED_HOSTS = ['*']
 # END SITE CONFIGURATION
 
 # EMAIL
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'isba-app'
-EMAIL_HOST_PASSWORD = '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'
-EMAIL_USE_TLS = True
+# ------------------------------------------------------------------------------
+#EMAIL_BACKEND = 'sgbackend.SendGridBackend'
+#SENDGRID_API_KEY = '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'
+
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See:
@@ -53,14 +52,14 @@ DATABASES = {
 # CACHING # TODO
 # ------------------------------------------------------------------------------
 #CACHES = {
-#    "default": {
-#        "BACKEND": "django_redis.cache.RedisCache",
-#        "LOCATION": "redis://127.0.0.1:6379/1",
-#        "OPTIONS": {
-#            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#    'default': {
+#        'BACKEND': 'django_redis.cache.RedisCache',
+#        'LOCATION': 'redis://127.0.0.1:6379/1',
+#        'OPTIONS': {
+#            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
 #        }
 #    }
 #}
 
-#ESSION_ENGINE = "django.contrib.sessions.backends.cache"
-#SESSION_CACHE_ALIAS = "default"
+#ESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+#SESSION_CACHE_ALIAS = 'default'

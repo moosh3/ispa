@@ -69,8 +69,6 @@ MIDDLEWARE = [
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
-SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
-
 # DEBUG
 # ------------------------------------------------------------------------------
 DEBUG = False
@@ -101,6 +99,7 @@ DATABASES = {
         'PORT': '5432',
     },
 }
+
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
