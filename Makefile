@@ -7,7 +7,7 @@ down:
 	docker-compose down
 
 attach:
-	docker exec -it ispa /bin/bash
+	docker exec -it ispa_local /bin/bash
 
 build:
 	docker build -t ispa_local -f Dockerfile.local .
