@@ -91,11 +91,6 @@ urlpatterns += [
     url(r'^pages/$', BlogIndexView.as_view(), name='blog'),
 ]
 
-# django-debug-toolbar
-#urlpatterns += [
-#    url(r'^__debug__/', include(debug_toolbar.urls)),
-#] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 # API
 urlpatterns += [
     url(r'^api/', include(router.urls, namespace='api')),
