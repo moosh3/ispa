@@ -23,45 +23,17 @@
               Discussions
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span class="icon icon-bell"></span>
-              Photos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span class="icon icon-users"></span>
-              Members
-            </a>
-          </li>
         </ul> <br />
         <!-- Map -->
 
-      <ul class="media-list media-list-conversation c-w-md">
+      <ul class="media-list">
         <li class="media media-current-user mb-4">
           <div class="media-body">
             <div class="media-body-text">
               {{ event.extended_description }}
             </div>
             <br />
-            <div class="media-footer">
-
-              <section id="contact" class="map">
-                  <iframe width="100%" height%="33%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
-                  <br />
-                  <small>
-                      <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
-                  </small>
-              </section>
-
-
-              <small class="text-muted">
-                <a href="#">Dave Gamache</a> at 4:20PM
-              </small>
-            </div>
           </div>
-          <img class="rounded-circle media-object ml-3" src="{% static "events/img/avatar-dhg.png" %}">
         </li>
       </ul>
     </div>
@@ -77,7 +49,6 @@
               Profile
             </a>
             <strong>{{ guest.username }}</strong>
-            <small>@fat - San Francisco</small>
           </div>
         </div>
       </li>

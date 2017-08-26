@@ -10,6 +10,9 @@ urlpatterns = [
     url(r'^about/$', TemplateView.as_view(
         template_name='ispa/about.html'),
         name='about'),
+    url(r'^team/$', TemplateView.as_view(
+        template_name='ispa/team.html'),
+        name='team'),
     url(r'^sponsors/$', sponsors.list_view, name='list-sponsors'),
     url(r'^sponsor/create/$', sponsors.create_view, name='create-sponsor')
 ]

@@ -1,11 +1,299 @@
-<html>
-<head>
-  <title>Homepage</title>
-</head>
-<body>
-  <p>Welcome home u bastard</p>
-  <a href={% url 'event-dashboard' %}>Events</a>
-  <a href={% url 'about' %}>About</a>
-  <a href={% url 'api' %}>API</a>
-</body>
+<!doctype html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Meetup</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static "landing/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/flexslider.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/elegant-icons.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/pe-icon-7-stroke.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/lightbox.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/theme.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+
+
+    	<a id="top"></a>
+
+		<div class="nav-container">
+
+				<nav class="relative-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-2">
+								<img alt="Logo" class="logo logo-dark" src="{% static "landing/img/logo.png" %}">
+							</div>
+
+							<div class="col-md-10 text-right">
+								<ul class="menu">
+									<li><a class="inner-link" href="{% url 'about' %}">About us</a></li>
+                  <li><a class="inner-link" href="{% url 'blog' %}">Blog<br></a></li>
+                  <li><a class="inner-link" href="{% url 'team' %}">Team<br></a></li>
+                  <li><a class="inner-link" href="{% url 'account_login' %}">Sign in<br></a></li>
+
+									<li class="social-link"><a href="https://twitter.com/IllinoisSBA"><i class="icon social_twitter"></i></a></li>
+									<li class="social-link"><a href="https://www.facebook.com/IllinoisSBA/"><i class="icon social_facebook"></i></a></li>
+
+								</ul>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="bottom-border"></div>
+
+
+				</nav>
+		</div>
+		<div class="main-container"><section class="section-header bg-primary">
+
+				<div class="background-image-holder">
+					<img class="background-image" alt="Background Image" src="{% static "landing/img/banner.jpg" %}">
+				</div>
+
+				<div class="container vertical-align">
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-">
+							<i class="icon pe-7s-culture icon-large"></i>
+
+
+							<h1 class="text-white">Illinois Sports Buisiness Association</h1>
+							<p class="lead text">
+                The mission of the SBA is to offer students that are interested in pursuing a career in sports with opportunities to expand their personal and professional competencies within the sports industry through insightful guest speakers, workshops, and professional conferences. Our organization is headed by dedicated students looking to better the University of Illinois as a whole.
+							</p>
+						</div>
+            <div class="col-sm-6">
+              <img alt="Logo" class="logo logo-dark" src="{% static "landing/img/isba-banner.png" %}">            </div>
+					</div>
+				</div>
+
+			</section>
+
+
+
+			<section class="speakers duplicatable-content">
+
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-12">
+							<h1>Team</h1>
+						</div>
+					</div>
+
+					<div class="row">
+
+            <div class="col-6 col-md-4">
+							<div class="speaker-with-bio">
+								<div class="speaker">
+									<div class="image-holder">
+										<img class="background-image" alt="Speaker" src="{% static "landing/img/team3.jpg" %}">
+										<div class="hover-state text-center preserve3d">
+											<div class="social-links vertical-align">
+												<a href="#"><i class="icon social_twitter"></i></a>
+												<a href="#"><i class="icon social_linkedin"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="speaker-description">
+									<h2>Abby Kalsto</h2>
+									<span class="sub">VP PR</span>
+									<p>
+									</p>
+								</div>
+							</div>
+						</div>
+
+            <div class="col-6 col-md-4">
+							<div class="speaker-with-bio">
+								<div class="speaker">
+									<div class="image-holder">
+										<img class="background-image" alt="Speaker" src="{% static "landing/img/team4.png" %}">
+										<div class="hover-state text-center preserve3d">
+											<div class="social-links vertical-align">
+												<a href="#"><i class="icon social_twitter"></i></a>
+												<a href="#"><i class="icon social_linkedin"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="speaker-description">
+									<h2>Austin Montbriand</h2>
+									<span class="sub">VP Events</span>
+									<p>
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-6 col-md-4">
+							<div class="speaker-with-bio">
+								<div class="speaker">
+									<div class="image-holder">
+										<img class="background-image" alt="Speaker" src="{% static "landing/img/team9.jpeg" %}">
+										<div class="hover-state text-center preserve3d">
+											<div class="social-links vertical-align">
+												<a href="#"><i class="icon social_twitter"></i></a>
+												<a href="#"><i class="icon social_linkedin"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="speaker-description">
+									<h2>Teagan Vogel</h2>
+									<span class="sub">Vice President</span>
+									<p>
+									</p>
+								</div>
+							</div>
+						</div>
+          </div>
+
+          <div class="row">
+            <div class="col-6 col-md-4">
+              <div class="speaker-with-bio">
+                <div class="speaker">
+                  <div class="image-holder">
+                    <img class="background-image" alt="Speaker" src="{% static "landing/img/team8.jpg" %}">
+                    <div class="hover-state text-center preserve3d">
+                      <div class="social-links vertical-align">
+                        <a href="#"><i class="icon social_twitter"></i></a>
+                        <a href="#"><i class="icon social_linkedin"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="speaker-description">
+                  <h2>Brandon Blunk</h2>
+									<span class="sub">VP Content Creator</span>
+                  <p>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4">
+              <div class="speaker-with-bio">
+                <div class="speaker">
+                  <div class="image-holder">
+                    <img class="background-image" alt="Speaker" src="{% static "landing/img/team7.jpg" %}">
+                    <div class="hover-state text-center preserve3d">
+                      <div class="social-links vertical-align">
+                        <a href="#"><i class="icon social_twitter"></i></a>
+                        <a href="#"><i class="icon social_linkedin"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="speaker-description">
+                  <h2>Nathan Cualoping</h2>
+                  <span class="sub">VP Marketing</span>
+                  <p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+        <div class="row">
+          <div class="col-6 col-md-4"
+            <div class="col-6 col-md-4">
+              <div class="speaker-with-bio">
+                <div class="speaker">
+                  <div class="image-holder">
+                    <img class="background-image" alt="Speaker" src="{% static "landing/img/team5.jpg" %}">
+                    <div class="hover-state text-center preserve3d">
+                      <div class="social-links vertical-align">
+                        <a href="#"><i class="icon social_twitter"></i></a>
+                        <a href="#"><i class="icon social_linkedin"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="speaker-description">
+                  <h2>Tristan Nelson</h2>
+									<span class="sub">Vice President</span>
+                  <p>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+					</div>
+
+
+				</div>
+
+			</section>
+		</div>
+		<div class="footer-container">
+			<footer class="classic">
+				<div class="container">
+					<div class="row ui-sortable">
+						<div class="col-sm-3">
+							<ul class="menu">
+								<li><a href="#">home</a></li>
+								<li><a href="#">teams</a></li>
+								<li><a href="#">sponsors</a></li>
+								<li><a href="#">subscribe</a></li>
+								<li><a class="inner-link back-to-top" href="#top">Back To Top</a></li>
+							</ul>
+						</div>
+
+
+						<div class="col-sm-4">
+							<ul class="contact-methods">
+								<li><i class="icon pe-7s-mail"></i><span>events@illinoissba.org</span></li>
+								<li><i class="icon pe-7s-phone"></i><span>1800 382 372</span></li>
+								<li><i class="icon pe-7s-map-marker"></i><span>Urbana-Champaign, IL</span></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="row ui-sortable">
+						<div class="col-sm-12 text-center">
+							<ul class="social-profiles">
+								<li><a href="https://twitter.com/IllinoisSBA"><i class="icon social_twitter"></i></a></li>
+								<li><a href="https://www.facebook.com/IllinoisSBA/"><i class="icon social_facebook"></i></a></li>
+
+
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+        <script src="{% static "landing/js/bootstrap.min.js" %}"></script>
+        <script src="{% static "landing/js/skrollr.min.js" %}"></script>
+        <script src="{% static "landing/js/spectragram.min.js" %}"></script>
+        <script src="{% static "landing/js/flexslider.min.js" %}"></script>
+        <script src="{% static "landing/js/jquery.plugin.min.js" %}"></script>
+        <script src="{% static "landing/js/jquery.countdown.min.js" %}"></script>
+        <script src="{% static "landing/js/lightbox.min.js" %}"></script>
+        <script src="{% static "landing/js/smooth-scroll.min.js" %}"></script>
+        <script src="{% static "landing/js/twitterfetcher.min.js" %}"></script>
+        <script src="{% static "landing/js/placeholders.min.js" %}"></script>
+        <script src="{% static "landing/js/scripts.js"></script>
+    </body>
 </html>

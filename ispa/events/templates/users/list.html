@@ -7,7 +7,7 @@
   <div class="col col-mid-8"
     <ul class="list-group">
     {% for member in userprofile_list %}
-        <li class="list-group-item" href="{{ member.get_absolute_url }}">{{ member.user.username }} - Points: {{ member.points }}</li>
+        <li class="list-group-item">{{ member.user.username }} - Points: {{ member.points }}</li>
     {% endfor %}
     </u>
   </div>
