@@ -9,7 +9,6 @@ from django.contrib.auth.views import (
     password_reset,
     password_reset_complete,
     password_reset_confirm,
-    password_reset_done,
 )
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
@@ -91,11 +90,6 @@ urlpatterns += [
 urlpatterns += [
     url(r'^pages/$', BlogIndexView.as_view(), name='blog'),
 ]
-
-# django-debug-toolbar
-#urlpatterns += [
-#    url(r'^__debug__/', include(debug_toolbar.urls)),
-#] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API
 urlpatterns += [

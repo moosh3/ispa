@@ -3,7 +3,6 @@ import os
 
 from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.core.urlresolvers import reverse
 

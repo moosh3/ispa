@@ -8,6 +8,7 @@ autodetect: true
 ignore-patterns:
   - ^tests/test_.*\.py$
   - (^|/)migrations(/|$)
+  - *__init__*
 python-targets:
   - 2
   - 3
