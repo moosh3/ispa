@@ -4,8 +4,7 @@ from .base import *
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
 
@@ -50,7 +49,7 @@ DATABASES = {
 }
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
-SENDGRID_API_KEY = "Your SendGrid API Key"
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
 '''
  CACHING # TODO
