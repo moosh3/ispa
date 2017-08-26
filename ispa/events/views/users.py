@@ -37,7 +37,7 @@ class DetailUserView(TemplateView):
 class EditUserView(UpdateView):
     template_name = 'users/userprofile_form.html'
     model = UserProfile
-    fields = '__all__'
+    fields = ['avatar', 'bio', 'phone_number', 'year']
 
     def dispatch(self, *args, **kwargs):
         self.user = get_object_or_404(
