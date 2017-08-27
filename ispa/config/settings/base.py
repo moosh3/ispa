@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
+    'widget_tweaks',
     # Your stuff: custom apps go here
     'api',
     'events',
