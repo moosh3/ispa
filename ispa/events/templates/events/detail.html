@@ -28,11 +28,11 @@
         {% for field in form %}
         <div class="input-group">
           {% render_field field type="text" class="form-control" placeholder="Post here.." %}
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="submit">Post</button>
-          </span>
         </div>
         {% endfor %}
+        <span class="input-group-btn">
+          <button class="btn btn-secondary" type="submit">Post</button>
+        </span>
       </form>
       <br />
 

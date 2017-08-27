@@ -8,7 +8,7 @@ from django.views.generic import (
     CreateView,
 )
 
-from events.models import Event, Attendance
+from events.models import Event, Attendance, Message
 from events.forms import EventMessageForm
 
 class EventDashboard(TemplateView):
