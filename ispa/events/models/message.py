@@ -12,7 +12,6 @@ class Message(BaseModel):
     user = models.ForeignKey('auth.User', related_name='messages',)
     events = models.ForeignKey('Event')
     text = models.CharField(max_length=1028, blank=True, null=True)
-    title = models.CharField(max_length=512, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('message', args=[self.title])
@@ -25,10 +24,9 @@ class Message(BaseModel):
         return self.__str__()
 
     @classmethod
-    def create_message(cls, user, event, text, title):
+    def create_message(cls, user, event, text):
         return cls.objects.create(
             user=user,
             event=event,
             text=text,
-            title=title,
         )

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
       <div class="card">
@@ -24,15 +24,33 @@
             </a>
           </li>
         </ul> <br />
+      <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
+        {% for field in form %}
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Post a message...">
+          {% render_field field type="text" class="form-control" placeholder="" aria-describedby="field.label|safe" %}
           <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button">Post</button>
+            <button class="btn btn-secondary" type="submit button">Post</button>
           </span>
         </div>
+        {% endfor %}
+      </form>
       <br />
 
-      {% include 'message.html' %}
+      {% for message in messages %}
+      <ul class="media-list media-list-conversation c-w-md">
+        <li class="media media-current-user mb-4">
+          <div class="media-body">
+            <div class="media-body-text">
+            </div>
+            <div class="media-footer">
+              <small class="text-muted">
+                <a href="#">{{ message.text }}</a>
+              </small>
+            </div>
+          </div>
+        </li>
+      </ul>
+      {% endfor %}
 
       <ul class="media-list">
         <li class="media media-current-user mb-4">
