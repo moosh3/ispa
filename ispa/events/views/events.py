@@ -60,16 +60,6 @@ class DetailEventView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(DetailEventView, self).get_context_data(*args, **kwargs)
         try:
-            creator = Attendance.objects.get(
-                event=self.event,
-                user=self.request.user,
-                is_owner=True
-            )
-            context['creator'] = creator
-        except Attendance.DoesNotExist:
-            creator = None
-
-        try:
             messages = Message.objects.filter(
                 event=self.event,
             )

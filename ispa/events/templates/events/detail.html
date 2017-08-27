@@ -27,9 +27,9 @@
       <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
         {% for field in form %}
         <div class="input-group">
-          {% render_field field type="text" class="form-control" placeholder="" aria-describedby="field.label|safe" %}
+          {% render_field field type="text" class="form-control" placeholder="Post here.." %}
           <span class="input-group-btn">
-            <button class="btn btn-secondary" type="submit button">Post</button>
+            <button class="btn btn-secondary" type="submit">Post</button>
           </span>
         </div>
         {% endfor %}

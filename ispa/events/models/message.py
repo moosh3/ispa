@@ -17,7 +17,7 @@ class Message(BaseModel):
         return reverse('message', args=[self.title])
 
     def __str__(self):
-        return '{}'.format(self.user.username)
+        return '{}'.format(self.text)
 
     @property
     def title(self):
