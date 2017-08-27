@@ -1,0 +1,30 @@
+{% load static %}
+
+<ul class="media-list media-list-conversation c-w-md">
+  <li class="media media-current-user mb-4">
+    <div class="media-body">
+      <div class="media-body-text">
+        {{ message.text }}
+      </div>
+      <div class="media-footer">
+        <small class="text-muted">
+          <a href="#">{{ message.user.username }}</a>
+        </small>
+      </div>
+    </div>
+    <img class="rounded-circle media-object ml-3" src="{% static "events/img/avatar-dhg.png" %}">
+  </li>
+  <li class="media mb-4">
+    <img class="rounded-circle media-object mr-3" src="{% static "events/img/avatar-fat.jpg" %}">
+    <div class="media-body">
+      <div class="media-body-text">
+        {{ message.text }}
+      </div>
+      <div class="media-footer">
+        <small class="text-muted">
+          <a href="#">Fat</a>
+        </small>
+      </div>
+    </div>
+  </li>
+</ul>
