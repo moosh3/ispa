@@ -1,8 +1,6 @@
 #!/bin/bash
 
 set -e
-
-export DJANGO_SETTINGS_MODULE="config.settings.production"
 source ./vars.env
 
 python manage.py migrate
