@@ -41,6 +41,8 @@ class UserProfile(BaseModel):
     )
 
     user = models.OneToOneField('auth.User')
+    first_name = models.CharField(max_length=128, blank=True, null=True)
+    last_name = models.CharField(max_length=128, blank=True, null=True)
     avatar = models.ImageField(upload_to=avatar_field, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     phone_number = models.CharField(max_length=12, null=True, blank=True)
