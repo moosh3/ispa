@@ -9,7 +9,7 @@ from django.views.generic import (
 )
 
 from events.models import Event, Attendance
-
+from events.forms import EventMessageForm
 
 class EventDashboard(TemplateView):
     template_name = 'events/home.html'
@@ -34,30 +34,53 @@ class DetailEventView(DetailView):
 
     def __init__(self, *args, **kwargs):
         super(DetailEventView, self).__init__(*args, **kwargs)
-        self.event = None
-        self.user = None
+        self.messages = None
+        self.guests = None
 
-    def dispatch(self, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         self.event = get_object_or_404(
             Event,
             slug=self.kwargs['slug']
         )
-        return super(DetailEventView, self).dispatch(*args, **kwargs)
+        return super(DetailEventView, self).dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(DetailEventView, self).get_context_data(**kwargs)
+    def post(self, request, *args, **kwargs):
+        self.message_form = EventMessageForm(
+            user=self.request.user,
+            event=self.event,
+        )
+        if self.message_form.is_valid():
+            data = self.message_form.cleaned_data
+            message = Message.create_message(**data)
+            return redirect('event-detail', slug=event.slug)
+
+        return self.get(request, *args, **kwargs)
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DetailEventView, self).get_context_data(*args, **kwargs)
         try:
             creator = Attendance.objects.get(
                 event=self.event,
-                user=self.user,
+                user=self.request.user,
                 is_owner=True
             )
             context['creator'] = creator
         except Attendance.DoesNotExist:
             creator = None
 
+        try:
+            messages = Message.objects.filter(
+                event=self.event,
+            )
+            context['messages'] = messages
+        except :
+            pass
+        context['form'] = EventMessageForm
+
         context['event'] = self.event
         return context
+
 
 class EditEventView(TemplateView):
 
