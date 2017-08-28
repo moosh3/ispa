@@ -38,7 +38,7 @@ class DetailUserView(TemplateView):
 class EditUserView(UpdateView):
     template_name = 'users/userprofile_form.html'
     model = UserProfile
-    fields = ['avatar', 'bio', 'phone_number', 'year']
+    fields = ['avatar', 'bio', 'phone_number', 'year', 'tshirt']
 
     def dispatch(self, *args, **kwargs):
         self.user = get_object_or_404(
@@ -70,7 +70,7 @@ class ListUserView(ListView):
         if form.is_valid():
             return form.return_members(qs)
 
-        return models.Review.objects.none()
+        return UserProfile.objects.none()
 
     def get_context_data(self, **kwargs):
         context = super(ListUserView, self).get_context_data(**kwargs)

@@ -40,9 +40,9 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres', # Database name, *Not* the cloudsql instance name
-        'USER': 'dev',
-        'PASSWORD': 'justtestit',
+        'NAME': os.environ.get('POSTGRES_DB'), # Database name, *Not* the cloudsql instance name
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASS'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },

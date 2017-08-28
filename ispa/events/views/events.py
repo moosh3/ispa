@@ -27,7 +27,7 @@ class EventDashboard(TemplateView):
         return context
 
 
-class DetailEventView(DetailView):
+class DetailEventView(TemplateView):
 
     template_name = 'events/detail.html'
     model = Event
@@ -60,6 +60,12 @@ class DetailEventView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(DetailEventView, self).get_context_data(*args, **kwargs)
         context['form'] = EventMessageForm
+        context['event'] = self.event
+
+        messages = Message.objects.filter(
+            event=self.event
+        )
+        context['messages'] = messages
 
         return context
 
