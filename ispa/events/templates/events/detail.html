@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
+
 {% load static %}
 {% block content %}
       <div class="card">
@@ -24,24 +24,39 @@
             </a>
           </li>
         </ul> <br />
+
+        {% for message in messages %}
+        <ul class="media-list media-list-conversation c-w-md">
+          <li class="media media-current-user mb-4">
+            <div class="media-body">
+              <div class="media-body-text">
+                {{ message.text }}
+              </div>
+              <div class="media-footer">
+                <small class="text-muted">
+                  <a href="{% url 'profile' message.user.username }">{{ message.user.first_name }} {{ message.user.last_name }}</a> at {{ message.modified }}
+                </small>
+              </div>
+            </div>
+            <img class="rounded-circle media-object ml-3" src="{% static "users/1/profile.png" %}">
+          </li>
+        </ul>
+        {% endfor %}
+
       <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
         {% for field in form %}
         <div class="input-group">
-          {% render_field field type="text" class="form-control" placeholder="Post here.." %}
+          {{ field }}
         </div>
         {% endfor %}
         <div class="form-group">
           <button type="submit" class="btn btn-success">
-            <span class="glyphicon glyphicon-ok"></span> Save
+            Save
           </button>
           </div>
         </form>
       <br />
 
-
-      {% for message in messages %}
-        <a href="#">{{ message.text }}</a>
-      {% endfor %}
 
     </div>
     <div class="col col-md-4">
