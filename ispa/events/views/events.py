@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.decorators import method_decorator
 from django.views.generic import (
     TemplateView,
     DetailView,
@@ -11,9 +12,12 @@ from django.views.generic import (
 from events.models import Event, Attendance, Message
 from events.forms import EventMessageForm
 
+
+@method_decorator(login_required)
 class EventDashboard(TemplateView):
     template_name = 'events/home.html'
 
+    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(EventDashboard, self).dispatch(*args, **kwargs)
 
@@ -37,6 +41,7 @@ class DetailEventView(TemplateView):
         self.messages = None
         self.guests = None
 
+        @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.event = get_object_or_404(
             Event,
