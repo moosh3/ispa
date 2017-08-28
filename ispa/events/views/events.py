@@ -46,16 +46,21 @@ class DetailEventView(TemplateView):
             Event,
             slug=self.kwargs['slug']
         )
+        self.user = self.request.user
         return super(DetailEventView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.message_form = EventMessageForm(
             user=self.request.user,
+            event=self.event,
         )
         if self.message_form.is_valid():
             data = self.message_form.cleaned_data
-            message = self.form.save()
-            message.save()
+            message = Message.create_message(
+                user=data['user'],
+                event=data['event'],
+                text=data['text'],
+            )
             return redirect('event-detail', slug=event.slug)
 
         return self.get(request, *args, **kwargs)
@@ -65,11 +70,18 @@ class DetailEventView(TemplateView):
         context = super(DetailEventView, self).get_context_data(*args, **kwargs)
         context['form'] = EventMessageForm
         context['event'] = self.event
-
+        try:
+            guests = Attendance.objects.filter(
+                event=self.event
+            )
+            context['guests'] = guests
+        except:
+            self.guests = None
         messages = Message.objects.filter(
             event=self.event
         )
         context['messages'] = messages
+        context['user'] = self.user
 
         return context
 
