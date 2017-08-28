@@ -12,6 +12,9 @@
     <link href="{% static "events/dist/toolkit.min.css" %}" rel="stylesheet">
     <link fref="{% static "events/css/sticky-footer.css" %}" rel="stylesheet">
 
+    <link rel="icon" type="image/png" href"{% static "landing/favicon-32x32.png" %}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{% static "landing/img/favicon-16x16.png" %}" sizes="16x16" />
+
   </head>
   <body>
   <div class="container">
@@ -58,6 +61,7 @@
         {% if user.is_authenticated %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'account_logout' %}">
+              <span class="icon icon-log-out"></span>
               Logout
             </a>
           </li>
@@ -65,7 +69,7 @@
         {% else %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'account_login' %}">
-
+              <span class="icon icon-login"></span>
               Login
             </a>
           </li>
