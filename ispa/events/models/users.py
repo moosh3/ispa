@@ -50,7 +50,6 @@ class UserProfile(BaseModel):
     points = models.PositiveIntegerField(blank=True, null=True)
     year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
     tshirt = models.CharField(max_length=56, choices=SHIRT_SIZES, default='M')
-
     def __str__(self):
         return '{}'.format(self.user.username)
 
