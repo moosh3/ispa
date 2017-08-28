@@ -30,38 +30,19 @@
           {% render_field field type="text" class="form-control" placeholder="Post here.." %}
         </div>
         {% endfor %}
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="submit">Post</button>
-        </span>
-      </form>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok"></span> Save
+          </button>
+          </div>
+        </form>
       <br />
 
-      {% for message in messages %}
-      <ul class="media-list media-list-conversation c-w-md">
-        <li class="media media-current-user mb-4">
-          <div class="media-body">
-            <div class="media-body-text">
-            </div>
-            <div class="media-footer">
-              <small class="text-muted">
-                <a href="#">{{ message.text }}</a>
-              </small>
-            </div>
-          </div>
-        </li>
-      </ul>
+
+      {% for message in event.messages.all %}
+        <a href="#">{{ message.text }}</a>
       {% endfor %}
 
-      <ul class="media-list">
-        <li class="media media-current-user mb-4">
-          <div class="media-body">
-            <div class="media-body-text">
-              {{ event.extended_description }}
-            </div>
-            <br />
-          </div>
-        </li>
-      </ul>
     </div>
     <div class="col col-md-4">
       <h3>Guests</h3>

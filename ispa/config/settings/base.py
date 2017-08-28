@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'modelcluster',
     'taggit',
+    'widget_tweaks',
     # Admin
     'django.contrib.admin',
     'wagtail.wagtailforms',
@@ -48,7 +49,6 @@ INSTALLED_APPS = [
     'wagtail.wagtailsearch',
     'wagtail.wagtailadmin',
     'wagtail.wagtailcore',
-    'widget_tweaks',
     # Your stuff: custom apps go here
     'api',
     'events',
