@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.decorators import method_decorator
 from django.views.generic import (
     TemplateView,
     DetailView,
@@ -8,12 +9,15 @@ from django.views.generic import (
     CreateView,
 )
 
-from events.models import Event, Attendance
+from events.models import Event, Attendance, Message
+from events.forms import EventMessageForm
 
 
+@method_decorator(login_required)
 class EventDashboard(TemplateView):
     template_name = 'events/home.html'
 
+    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(EventDashboard, self).dispatch(*args, **kwargs)
 
@@ -21,43 +25,55 @@ class EventDashboard(TemplateView):
         context = super(EventDashboard, self).get_context_data(**kwargs)
         active_events = Event.objects.filter(
             is_active=True,
-        ).order_by('-date')[:10]
+        ).order_by('date')[:10]
         context['active_events'] = active_events
 
         return context
 
 
-class DetailEventView(DetailView):
+class DetailEventView(TemplateView):
 
     template_name = 'events/detail.html'
     model = Event
 
     def __init__(self, *args, **kwargs):
         super(DetailEventView, self).__init__(*args, **kwargs)
-        self.event = None
-        self.user = None
+        self.messages = None
+        self.guests = None
 
-    def dispatch(self, *args, **kwargs):
+        @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
         self.event = get_object_or_404(
             Event,
             slug=self.kwargs['slug']
         )
-        return super(DetailEventView, self).dispatch(*args, **kwargs)
+        return super(DetailEventView, self).dispatch(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(DetailEventView, self).get_context_data(**kwargs)
-        try:
-            creator = Attendance.objects.get(
-                event=self.event,
-                user=self.user,
-                is_owner=True
-            )
-            context['creator'] = creator
-        except Attendance.DoesNotExist:
-            creator = None
+    def post(self, request, *args, **kwargs):
+        self.message_form = EventMessageForm(
+            user=self.request.user,
+        )
+        if self.message_form.is_valid():
+            data = self.message_form.cleaned_data
+            message = self.form.save()
+            message.save()
+            return redirect('event-detail', slug=event.slug)
 
+        return self.get(request, *args, **kwargs)
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(DetailEventView, self).get_context_data(*args, **kwargs)
+        context['form'] = EventMessageForm
         context['event'] = self.event
+
+        messages = Message.objects.filter(
+            event=self.event
+        )
+        context['messages'] = messages
+
         return context
+
 
 class EditEventView(TemplateView):
 

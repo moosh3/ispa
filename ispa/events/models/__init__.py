@@ -6,3 +6,4 @@ from .base import BaseModel
 from .users import UserProfile
 from .speaker import Speaker
 from .announcement import Announcement
+from .message import Message

@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
       <div class="card">
         <div class="card-block">
-          <h4 class="card-title">{{ event.name }}</h4>
+          <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
           <p class="card-text">{{ event.description }}</p>
           <button class="btn btn-secondary" type="button">
@@ -24,18 +24,25 @@
             </a>
           </li>
         </ul> <br />
-        <!-- Map -->
-
-      <ul class="media-list">
-        <li class="media media-current-user mb-4">
-          <div class="media-body">
-            <div class="media-body-text">
-              {{ event.extended_description }}
-            </div>
-            <br />
+      <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
+        {% for field in form %}
+        <div class="input-group">
+          {% render_field field type="text" class="form-control" placeholder="Post here.." %}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok"></span> Save
+          </button>
           </div>
-        </li>
-      </ul>
+        </form>
+      <br />
+
+
+      {% for message in messages %}
+        <a href="#">{{ message.text }}</a>
+      {% endfor %}
+
     </div>
     <div class="col col-md-4">
       <h3>Guests</h3>

@@ -28,19 +28,28 @@ class UserProfile(BaseModel):
         ('SR', 'Senior')
     )
 
+    SHIRT_SIZES = (
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large')
+    )
+
     USER_TYPE_CHOICES = (
         (USER, USER.capitalize()),
         (SYSTEM, SYSTEM.capitalize())
     )
 
     user = models.OneToOneField('auth.User')
+    first_name = models.CharField(max_length=128, blank=True, null=True)
+    last_name = models.CharField(max_length=128, blank=True, null=True)
     avatar = models.ImageField(upload_to=avatar_field, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     phone_number = models.CharField(max_length=12, null=True, blank=True)
     dues_paid = models.BooleanField(default=False)
     points = models.PositiveIntegerField(blank=True, null=True)
     year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
-
+    tshirt = models.CharField(max_length=56, choices=SHIRT_SIZES, default='M')
     def __str__(self):
         return '{}'.format(self.user.username)
 

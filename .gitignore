@@ -11,6 +11,8 @@ secrets/
 dues.html
 secrets.yml
 
+vars.env
+
 # Specific
 vagrant/
 .DS_Store

@@ -6,7 +6,8 @@ from events.models import (
     UserProfile,
     Speaker,
     Announcement,
-    Attendance
+    Attendance,
+    Message
 )
 
 class AttendanceInline(admin.TabularInline):
@@ -25,3 +26,4 @@ admin.site.register(EventLocation)
 admin.site.register(UserProfile)
 admin.site.register(Speaker, SpeakerAdmin)
 admin.site.register(Announcement)
+admin.site.register(Message)

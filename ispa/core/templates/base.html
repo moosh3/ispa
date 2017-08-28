@@ -5,31 +5,29 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{% static "landing/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
-    <link href="{% static "landing/css/flexslider.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
-    <link href="{% static "landing/css/elegant-icons.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
-    <link href="{% static "landing/css/pe-icon-7-stroke.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
-    <link href="{% static "landing/css/lightbox.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
-    <link href="{% static "landing/css/theme.css" %}" rel="stylesheet" type="text/css" media="all"/>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
     <title>ISBA</title>
 
     <!-- Include the CSS -->
     <link href="{% static "events/dist/toolkit.min.css" %}" rel="stylesheet">
-    <link fref="{% static "landing/css/sticky-footer.css" %}" rel="stylesheet">
+    <link fref="{% static "events/css/sticky-footer.css" %}" rel="stylesheet">
 
   </head>
   <body>
-
-  <div class="container">
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <nav class="navbar navbar-toggleable-sm navbar-inverse bg-primary app-navbar">
+      <button
+          class="navbar-toggler navbar-toggler-right hidden-md-up"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       <a class="navbar-brand" href="{% url 'home' %}">ISBA</a>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link" href="{% url 'event-dashboard' %}">Events</a>
           </li>
@@ -50,30 +48,35 @@
               {% endif %}
               <a class="dropdown-item" href="{% url 'user-settings' %}">Settings</a>
             </div>
-            {% if user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'account_logout' %}">
-                  <span class="icon icon-bell"></span>
-                  Logout
-                </a>
-              </li>
-            </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'account_login' %}">
-                  <span class="icon icon-bell"></span>
-                  Login
-                </a>
-              </li>
-            </li>
-            {% endif %}
-        </ul>
+          </ul>
+          <ul id="#js-popoverContent" class="nav navbar-nav float-right mr-0 hidden-sm-down">
+      <li class="nav-item ml-2">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_logout' %}">
+
+              Logout
+            </a>
+          </li>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'account_login' %}">
+
+              Login
+            </a>
+          </li>
+        </li>
+        {% endif %}
+        </li>
+      </ul>
       </div>
     </nav>
+  <div class="container">
       <br />
       {% block content %}
       {% endblock %}
-
+  </div>
         <!-- Include jQuery (required) and the JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="{% static "events/dist/toolkit.min.js" %}"></script>

@@ -4,8 +4,7 @@ from .base import *
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Raises ImproperlyConfigured exception if DJANGO_SECRET_KEY not in os.environ
-SECRET_KEY = 'y*$m6ms2fejwl)4nkhy5%@k4(n-@35e%60dtxl!=l%0sb&*0^f'
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # This ensures that Django will be able to detect a secure connection
 # properly on Heroku.
 
@@ -41,16 +40,16 @@ TEMPLATES[0]['OPTIONS']['loaders'] = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres', # Database name, *Not* the cloudsql instance name
-        'USER': 'dev',
-        'PASSWORD': 'justtestit',
+        'NAME': os.environ.get('POSTGRES_DB'), # Database name, *Not* the cloudsql instance name
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASS'),
         'HOST': '127.0.0.1',
         'PORT': '5432',
     },
 }
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
-SENDGRID_API_KEY = "Your SendGrid API Key"
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 
 '''
  CACHING # TODO
@@ -65,6 +64,6 @@ CACHES = {
     }
 }
 
-ESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
 '''

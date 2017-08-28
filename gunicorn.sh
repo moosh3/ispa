@@ -1,10 +1,7 @@
 #!/bin/bash
 
 set -e
-
-export DJANGO_SETTINGS_MODULE="config.settings.production"
-
-echo "test"
+source ./vars.env
 
 python manage.py migrate
 python manage.py collectstatic --clear --noinput # Remove current static files
