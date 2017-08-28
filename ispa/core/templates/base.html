@@ -14,6 +14,7 @@
 
   </head>
   <body>
+  <div class="container">
     <nav class="navbar navbar-toggleable-sm navbar-inverse bg-primary app-navbar">
       <button
           class="navbar-toggler navbar-toggler-right hidden-md-up"
@@ -27,15 +28,18 @@
         </button>
       <a class="navbar-brand" href="{% url 'home' %}">ISBA</a>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav mr-auto nav-pills">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'event-dashboard' %}">Events</a>
+            <a class="nav-link" href="{% url 'event-dashboard' %}">
+              <span class="icon icon-shop"s> Events</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'blog' %}">Blog</a>
+            <a class="nav-link" href="{% url 'blog' %}">
+              <span class="icon icon-book"s> Blog</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'member-list' %}">Members</a>
+            <a class="nav-link" href="{% url 'member-list' %}">
+              <span class="icon icon-user"s></span> Members</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,7 +58,6 @@
         {% if user.is_authenticated %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'account_logout' %}">
-
               Logout
             </a>
           </li>
@@ -72,11 +75,12 @@
       </ul>
       </div>
     </nav>
-  <div class="container">
-      <br />
-      {% block content %}
-      {% endblock %}
   </div>
+    <div class="container">
+        <br />
+        {% block content %}
+        {% endblock %}
+    </div>
         <!-- Include jQuery (required) and the JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="{% static "events/dist/toolkit.min.js" %}"></script>

@@ -13,7 +13,6 @@ from events.models import Event, Attendance, Message
 from events.forms import EventMessageForm
 
 
-@method_decorator(login_required)
 class EventDashboard(TemplateView):
     template_name = 'events/home.html'
 
@@ -41,7 +40,7 @@ class DetailEventView(TemplateView):
         self.messages = None
         self.guests = None
 
-        @method_decorator(login_required)
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.event = get_object_or_404(
             Event,
