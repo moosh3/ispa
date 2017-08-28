@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import os
 
 from django.utils.encoding import python_2_unicode_compatible
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.text import slugify
 from django.core.urlresolvers import reverse
@@ -51,6 +52,7 @@ class Event(BaseModel):
         related_name='attendees',
         through='Attendance',
     )
+    messages = models.ManyToManyField('Message', related_name='messages')
     objects = EventManager()
 
     def get_absolute_url(self):

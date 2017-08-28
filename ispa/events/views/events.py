@@ -47,11 +47,11 @@ class DetailEventView(DetailView):
     def post(self, request, *args, **kwargs):
         self.message_form = EventMessageForm(
             user=self.request.user,
-            event=self.event,
         )
         if self.message_form.is_valid():
             data = self.message_form.cleaned_data
-            message = Message.create_message(**data)
+            message = self.form.save()
+            message.save()
             return redirect('event-detail', slug=event.slug)
 
         return self.get(request, *args, **kwargs)
@@ -59,16 +59,8 @@ class DetailEventView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(DetailEventView, self).get_context_data(*args, **kwargs)
-        try:
-            messages = Message.objects.filter(
-                event=self.event,
-            )
-            context['messages'] = messages
-        except :
-            pass
         context['form'] = EventMessageForm
 
-        context['event'] = self.event
         return context
 
 
