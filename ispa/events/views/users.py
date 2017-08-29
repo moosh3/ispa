@@ -16,6 +16,7 @@ class DetailUserView(TemplateView):
         self.user = None
         self.userprofile = None
 
+    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         self.user = get_object_or_404(
             User,
@@ -40,6 +41,7 @@ class EditUserView(UpdateView):
     model = UserProfile
     fields = ['avatar', 'bio', 'phone_number', 'year', 'tshirt']
 
+    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         self.user = get_object_or_404(
             UserProfile,
