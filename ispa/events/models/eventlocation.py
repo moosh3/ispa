@@ -15,18 +15,21 @@ class EventLocation(BaseModel):
     city = models.CharField('City', max_length=45, null=True, blank=True)
     state = models.CharField('State', max_length=45, null=True, blank=True)
     zipcode = models.CharField('Zipcode', max_length=10, null=True, blank=True)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return '{}'.format(self.address)
 
     @classmethod
-    def create_location(cls, address, address2, city, state, zipcode):
+    def create_location(cls, address, address2, city,
+                        state, zipcode, is_active):
         return cls.objects.create(
             address=address,
             address2=address2,
             city=city,
             state=state,
             zipcode=zipcode,
+            is_active=is_active,
         )
 
     def to_json(self):
@@ -36,4 +39,5 @@ class EventLocation(BaseModel):
             'city': self.city,
             'state': self.state,
             'zipcode': self.zipcode,
+            'is_active': self.is_active,
         }
