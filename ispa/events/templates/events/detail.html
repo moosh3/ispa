@@ -13,7 +13,7 @@
             RSVP
           </button>
           {% else %}
-          <button class="btn btn-primary" type="button">
+          <button class="btn btn-secondary" type="button">
             <span class="icon icon-thumbs-up"></span>
             RSVP
           </button>
@@ -52,11 +52,9 @@
 
       <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
         {% for field in form %}
-        <div class="input-group">
-          {{ field }}
-        </div>
-        {% endfor %}
         <div class="form-group">
+          {{ field }}
+        {% endfor %}
           <button type="submit" value="Save" class="btn btn-success">
             Save
           </button>

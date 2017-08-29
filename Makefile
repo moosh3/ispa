@@ -16,3 +16,4 @@ build:
 deploy:
 	docker build -t gcr.io/${GCLOUD_PROJECT}/ispa .
 	gcloud docker -- push gcr.io/${GCLOUD_PROJECT}/ispa
+
