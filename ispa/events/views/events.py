@@ -114,6 +114,10 @@ class ListEventView(ListView):
         return super(ListEventView, self).dispatch(request, *args, **kwargs)
 
 
+class CreateRsvpView(JsonResponse):
+
+
+
 class CreateEventView(CreateView):
 
     model = Event

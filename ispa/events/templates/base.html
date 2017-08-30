@@ -88,5 +88,12 @@
         <!-- Include jQuery (required) and the JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="{% static "events/dist/toolkit.min.js" %}"></script>
+        <script>
+          $('#rsvp').on('click', function () {
+            var $btn = $(this).button('loading')
+            // business logic...
+            $btn.button('reset')
+          })
+        </script>
       </body>
       </html>

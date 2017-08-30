@@ -7,17 +7,10 @@
           <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
           <p class="card-text">{{ event.description }}</p>
-          {% if user.is_attending %}
-          <button class="btn btn-secondary" type="button">
+          <button id="rsvp" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off" type="button">
             <span class="icon icon-thumbs-up"></span>
             RSVP
           </button>
-          {% else %}
-          <button class="btn btn-secondary" type="button">
-            <span class="icon icon-thumbs-up"></span>
-            RSVP
-          </button>
-          {% endif %}
         </div>
       </div>
       <br />
@@ -69,7 +62,7 @@
         {% for guest in event.attendees.all %}
         <li class="list-group-item">
         <div class="media w-100">
-          <img class="media-object rounded-circle mr-3" src="{% static "events/img/avatar-dhg.png" %}">
+          <img class="media-object rounded-circle mr-3" src="{% static "users//1/" %}">
           <div class="media-body align-self-center">
             <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
               Profile

@@ -13,7 +13,7 @@ class DetailUserView(DetailView):
     model = UserProfile
 
     @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
+    def dispatch(self, *args, **kwargs):
         self.lookup_args = kwargs
 
         return super(DetailUserView, self).dispatch(*args, **kwargs)
