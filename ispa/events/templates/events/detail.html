@@ -62,7 +62,7 @@
         {% for guest in event.attendees.all %}
         <li class="list-group-item">
         <div class="media w-100">
-          <img class="media-object rounded-circle mr-3" src="{% static "users//1/" %}">
+          <img class="media-object rounded-circle mr-3" src="{% static "users/1/profile.png" %}">
           <div class="media-body align-self-center">
             <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
               Profile
