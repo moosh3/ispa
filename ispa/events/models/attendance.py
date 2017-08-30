@@ -1,7 +1,10 @@
+from __future__ import unicode_literals
+
+from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
-from django.contrib.auth.models import User
 
 
+@python_2_unicode_compatible
 class Attendance(models.Model):
 
     user = models.ForeignKey('auth.User', related_name='events',)
@@ -12,12 +15,19 @@ class Attendance(models.Model):
     def __str__(self):
         return '{}'.format(self.user.username)
 
-    def __unicode__(self):
-        return __str__()
-
     @property
     def name(self):
         return self.__str__()
+
+    @property
+    def event_owner(cls, user, event, attending, is_owner):
+        owner = cls.objects.get(
+            user=user,
+            event=event,
+            attending=True,
+            is_owner=True
+        )
+        return owner
 
     @classmethod
     def create_attendee(cls, user, event, attending, is_owner):

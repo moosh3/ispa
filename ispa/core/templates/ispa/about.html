@@ -1,0 +1,80 @@
+
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Illinois Sports Buisiness Association</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static "landing/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/flexslider.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/elegant-icons.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/pe-icon-7-stroke.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/lightbox.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/theme.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+
+
+
+		<div class="nav-container">
+
+				<nav class="relative-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-2">
+								<img alt="Logo" class="logo logo-dark" src="{% static "landing/img/logo.png" %}">
+							</div>
+
+							<div class="col-md-10 text-right">
+								<ul class="menu">
+									<li><a class="inner-link" href="{% url 'home' %}">Home</a></li>
+                  <li><a class="inner-link" href="{% url 'blog' %}">Blog<br></a></li>
+                  <li><a class="inner-link" href="{% url 'team' %}">Team<br></a></li>
+                  <li><a class="inner-link" href="{% url 'account_login' %}">Sign in<br></a></li>
+
+									<li class="social-link"><a href="https://twitter.com/IllinoisSBA"><i class="icon social_twitter"></i></a></li>
+									<li class="social-link"><a href="https://www.facebook.com/IllinoisSBA/"><i class="icon social_facebook"></i></a></li>
+
+								</ul>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="bottom-border"></div>
+
+
+				</nav>
+		</div>
+    <br />
+
+
+<div class="footer-container">
+  <footer class="classic">
+    <div class="container">
+      <div class="row ui-sortable">
+        <div class="col-sm-3">
+          <ul class="menu">
+            <li><a href="{% url 'home' %}">home</a></li>
+            <li><a href="{% url 'blog' %}">blog</a></li>
+            <li><a href="{% url 'team' %}">team</a></li>
+            <li><a href="{% url 'account_login' %}">sign in</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-5">
+          <span class="lead color-heading">About ISBA</span>
+          <p>
+            The mission of the SBA is to offer students that are interested in pursuing a career in sports with opportunities to expand their personal and professional competencies within the sports industry through insightful guest speakers, workshops, and professional conferences. Our organization is headed by dedicated students looking to better the University of Illinois as a whole.
+          </p>
+        </div>
+
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>

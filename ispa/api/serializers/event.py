@@ -10,7 +10,6 @@ class EventSerializer(serializers.ModelSerializer):
     # M2M relationship with attendees
     attendees = AttendeeSerializer(source='event', read_only=True, many=True)
 
-    class Meta:
+    class Meta: # pylint: disable=C1001
         model = Event
-        fields = ('location', 'slug', 'attendees', 'date',
-                  'description', 'is_active', 'name', 'event_type')
+        fields = '__all__'

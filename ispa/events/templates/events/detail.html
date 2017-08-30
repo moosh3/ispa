@@ -1,64 +1,16 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load static %}
-<html lang="en">
-  <head>
-    <!-- These meta tags come first. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Bootstrap Theme Example</title>
-
-    <!-- Include the CSS -->
-    <link href="{% static "events/dist/toolkit.min.css" %}" rel="stylesheet">
-
-  </head>
-  <body>
-    <div class="container">
-
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">ISBA</a>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'event-dashboard' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Events <span class="sr-only">(current)</span> </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Settings
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Dues</a>
-              <a class="dropdown-item" href="#">Edit Profile</a>
-              <a class="dropdown-item" href="#">Settings</a>
-            </div>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="icon icon-bell"></span>
-                  Notifications
-                </a>
-              </li>
-            </li>
-        </ul>
-      </div>
-    </nav>
-      <br />
-
+{% block content %}
       <div class="card">
         <div class="card-block">
-          <h4 class="card-title">{{ event.name }}</h4>
+          <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
           <p class="card-text">{{ event.description }}</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
+          <button class="btn btn-secondary" type="button">
+            <span class="icon icon-thumbs-up"></span>
+            RSVP
+          </button>
         </div>
       </div>
       <br />
@@ -71,54 +23,26 @@
               Discussions
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span class="icon icon-bell"></span>
-              Notifications
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span class="icon icon-users"></span>
-              Members
-            </a>
-          </li>
         </ul> <br />
+      <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
+        {% for field in form %}
+        <div class="input-group">
+          {% render_field field type="text" class="form-control" placeholder="Post here.." %}
+        </div>
+        {% endfor %}
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok"></span> Save
+          </button>
+          </div>
+        </form>
+      <br />
 
-      <ul class="media-list media-list-conversation c-w-md">
-        <li class="media media-current-user mb-4">
-          <div class="media-body">
-            <div class="media-body-text">
-              Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nulla vitae elit libero, a pharetra augue. Maecenas sed diam eget risus varius blandit sit amet non magna. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Sed posuere consectetur est at lobortis.
-            </div>
-            <div class="media-footer">
-              <small class="text-muted">
-                <a href="#">Dave Gamache</a> at 4:20PM
-              </small>
-            </div>
-          </div>
-          <img class="rounded-circle media-object ml-3" src="../assets/img/avatar-dhg.png">
-        </li>
-        <li class="media mb-4">
-          <img class="rounded-circle media-object mr-3" src="../assets/img/avatar-fat.jpg">
-          <div class="media-body">
-            <div class="media-body-text">
-             Cras justo odio, dapibus ac facilisis in, egestas eget quam. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            </div>
-            <div class="media-body-text">
-             Vestibulum id ligula porta felis euismod semper. Aenean lacinia bibendum nulla sed consectetur. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-            </div>
-            <div class="media-body-text">
-             Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget metus.
-            </div>
-            <div class="media-footer">
-              <small class="text-muted">
-                <a href="#">Fat</a> at 4:28PM
-              </small>
-            </div>
-          </div>
-        </li>
-      </ul>
+
+      {% for message in messages %}
+        <a href="#">{{ message.text }}</a>
+      {% endfor %}
+
     </div>
     <div class="col col-md-4">
       <h3>Guests</h3>
@@ -126,13 +50,12 @@
         {% for guest in event.attendees.all %}
         <li class="list-group-item">
         <div class="media w-100">
-          <img class="media-object rounded-circle mr-3" src="../assets/img/avatar-fat.jpg">
+          <img class="media-object rounded-circle mr-3" src="{% static "events/img/avatar-dhg.png" %}">
           <div class="media-body align-self-center">
-            <button href="{{ guest.user.get_absolute_url }}" class="btn btn-outline-primary btn-sm float-right">
-              <span class="icon icon-add-user"></span> Profile
-            </button>
+            <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
+              Profile
+            </a>
             <strong>{{ guest.username }}</strong>
-            <small>@fat - San Francisco</small>
           </div>
         </div>
       </li>
@@ -140,32 +63,4 @@
     </div>
   </div>
 
-
-      <br />
-      <div class="card card-link-list">
-        <div class="card-block">
-          © 2017 ISBA
-
-          <a href="#">About</a>
-          <a href="#">Help</a>
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
-          <a href="#">Cookies</a>
-          <a href="#">Ads </a>
-          <a href="#">Info</a>
-          <a href="#">Brand</a>
-          <a href="#">Blog</a>
-          <a href="#">Status</a>
-          <a href="#">Apps</a>
-          <a href="#">Jobs</a>
-          <a href="#">Advertise</a>
-        </div>
-      </div>
-    </div>
-
-    </div>
-    <!-- Include jQuery (required) and the JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{% static "events/dist/toolkit.min.js" %}"></script>
-  </body>
-</html>
+{% endblock %}

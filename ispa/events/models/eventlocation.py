@@ -1,10 +1,12 @@
+from __future__ import unicode_literals
+
+from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
-from django.conf import settings
-from django.contrib.auth.models import User
 
 from events.models.base import BaseModel
 
 
+@python_2_unicode_compatible
 class EventLocation(BaseModel):
 
     address = models.CharField('Address', max_length=45, null=True, blank=True)
@@ -16,9 +18,6 @@ class EventLocation(BaseModel):
 
     def __str__(self):
         return '{}'.format(self.address)
-
-    def __unicode__(self):
-        return __str__()
 
     @classmethod
     def create_location(cls, address, address2, city, state, zipcode):

@@ -1,0 +1,19 @@
+FROM python:3.5
+ENV PYTHONUNBUFFERED 1
+
+COPY requirements/base.txt /home/docker/requirements-base.txt
+COPY requirements/local.txt /home/docker/requirements-local.txt
+COPY requirements/test.txt /home/docker/requirements-test.txt
+
+RUN pip install -r /home/docker/requirements-base.txt\
+    -r /home/docker/requirements-local.txt \
+    -r /home/docker/requirements-test.txt
+
+WORKDIR /home/docker/ispa
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY start-dev.sh /start-dev.sh
+RUN chmod +x /docker-entrypoint.sh && \
+    chmod +x /start-dev.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -8,16 +8,10 @@ addons:
         - db
 
 install:
-  - docker build -f ispa/Dockerfile.local -t $REPO:$TRAVIS_COMMIT ./ispa
+  - docker build -f Dockerfile.local -t ispa_local:latest .
 
 script:
-  - docker run -it --rm --name ispa --entrypoint /bin/bash $REPO:$TRAVIS_COMMIT -c echo Tests passed
-after_success:
-  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-  - docker tag $REPO:$TRAVIS_COMMIT $REPO:$TAG
-  - docker tag $REPO:$DEV
-  - docker push $REPO
+  - echo "Built"
 
 notifications:
   email:

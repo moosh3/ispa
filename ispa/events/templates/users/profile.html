@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="container-inner">
+      <h3>{{ user.username }}</h3>
+      <p>{{ user.userprofile.bio }}, Points: {{ user.userprofile.points }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

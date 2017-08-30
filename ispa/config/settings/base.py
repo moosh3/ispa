@@ -7,28 +7,13 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import environ
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
-# Load operating system environment variables and then prepare to use them
-env = environ.Env()
-
-# .env file, should load only in development environment
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
-
-if READ_DOT_ENV_FILE:
-    # Operating System Environment variables have precedence over variables
-    # defined in the .env file, that is to say variables from the
-    # .env files will only be used if not defined
-    # as environment variables.
-    env_file = str('.env')
-    print('Loading : {}'.format(env_file))
-    env.read_env(env_file)
-    print('The .env file has been loaded. See base.py for more information')
-
-WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
+# Operating System Environment variables have precedence over variables defined in the .env file,
+# that is to say variables from the .env files will only be used if not defined
+# as environment variables.
 
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -46,9 +31,11 @@ INSTALLED_APPS = [
     # Registration
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'rest_auth.registration',
     'modelcluster',
     'taggit',
+    #'widget_tweaks',
     # Admin
     'django.contrib.admin',
     'wagtail.wagtailforms',
@@ -65,12 +52,9 @@ INSTALLED_APPS = [
     # Your stuff: custom apps go here
     'api',
     'events',
-    'graphene_django',
+    'core',
+    'blog',
 ]
-
-GRAPHENE = {
-    'SCHEMA': 'ispa_app.schema.schema'  # Where your Graphene schema lives
-}
 
 # MIDDLEWARE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -86,17 +70,15 @@ MIDDLEWARE = [
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
-
 # DEBUG
 # ------------------------------------------------------------------------------
-DEBUG = env.bool('DJANGO_DEBUG', False)
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
-                    default='django.core.mail.backends.smtp.EmailBackend')
+#EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND')
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -108,7 +90,6 @@ ADMINS = [
 MANAGERS = ADMINS
 
 # DATABASE CONFIGURATION
-# ------------------------------------------------------------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -119,6 +100,7 @@ DATABASES = {
         'PORT': '5432',
     },
 }
+
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -144,7 +126,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-
+            os.path.join(BASE_DIR, 'events', 'templates'),
+            os.path.join(BASE_DIR, 'core', 'templates'),
         ],
         'OPTIONS': {
             'debug': DEBUG,
@@ -166,8 +149,6 @@ TEMPLATES = [
         },
     },
 ]
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -207,7 +188,7 @@ PASSWORD_HASHERS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 # ------------------------------------------------------------------------------
 
-AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
+AUTH_PASSWORD_VALIDATORS = [  # pragma: no coverf
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -224,18 +205,29 @@ AUTH_PASSWORD_VALIDATORS = [  # pragma: no cover
 
 # AUTHENTICATION CONFIGURATION
 # ------------------------------------------------------------------------------
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
+AUTHENTICATION_BACKENDS = (
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
+    }
 ]
 
 
-# Custom user app defaults
-# Select the correct user model
-# AUTH_USER_MODEL = 'users.User'
-# LOGIN_REDIRECT_URL = 'users:redirect'
-# LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = '/events/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_SIGNUP_FORM_CLASS = 'core.forms.signup.SignupForm'
 
-# SLUGLIFIER
+
+WAGTAIL_SITE_NAME = "Illinois Sports Business Association"
+
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
 ADMIN_URL = r'^django-admin/'
@@ -254,9 +246,9 @@ REST_FRAMEWORK = {
 # ------------------------------------------------------------------------------
 # Redis
 
-REDIS_PORT = 6379
-REDIS_DB = 0
-REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
+#REDIS_PORT = 6379
+#REDIS_DB = 0
+#REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 # Celery configuration
 
@@ -276,7 +268,7 @@ CELERY_SEND_TASK_ERROR_EMAILS = False
 CELERY_TASK_RESULT_EXPIRES = 600
 
 # Set redis as celery result backend
-CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
+#CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 CELERY_REDIS_MAX_CONNECTIONS = 1
 
 # Don't use pickle as serializer, json is much safer

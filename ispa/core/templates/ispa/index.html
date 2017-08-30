@@ -1,0 +1,321 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Illinois Sports Buisiness Association</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static "landing/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/flexslider.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/elegant-icons.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/pe-icon-7-stroke.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/lightbox.min.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href="{% static "landing/css/theme.css" %}" rel="stylesheet" type="text/css" media="all"/>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
+
+        <link rel="icon" type="image/png" href"{% static "landing/favicon-32x32.png" %}" sizes="32x32" />
+        <link rel="icon" type="image/png" href="{% static "landing/img/favicon-16x16.png" %}" sizes="16x16" />
+
+    </head>
+    <body>
+
+
+    	<a id="top"></a>
+
+		<div class="nav-container">
+				<nav class="relative-nav">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-2">
+								<img alt="Logo" class="logo logo-dark" src="{% static "landing/img/logo.png" %}">
+							</div>
+
+							<div class="col-md-10 text-right">
+								<ul class="menu">
+									<li><a class="inner-link" href="{% url 'about' %}">About us</a></li>
+                  <li><a class="inner-link" href="{% url 'blog' %}">Blog<br></a></li>
+                  <li><a class="inner-link" href="{% url 'team' %}">Team<br></a></li>
+                  <li><a class="inner-link" href="{% url 'account_login' %}">Sign in<br></a></li>
+
+									<li class="social-link"><a href="https://twitter.com/IllinoisSBA"><i class="icon social_twitter"></i></a></li>
+									<li class="social-link"><a href="https://www.facebook.com/IllinoisSBA/"><i class="icon social_facebook"></i></a></li>
+
+								</ul>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="bottom-border"></div>
+
+
+				</nav>
+		</div>
+		<div class="main-container"><section class="section-header bg-primary">
+
+				<div class="background-image-holder">
+					<img class="background-image" alt="Background Image" src="{% static "landing/img/logo.jpg" %}">
+				</div>
+
+				<div class="container vertical-align">
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-">
+							<i class="icon pe-7s-culture icon-large"></i>
+
+
+							<h1 class="text-white">Illinois Sports Buisiness Association</h1>
+							<p class="lead text">
+                The mission of the SBA is to offer students that are interested in pursuing a career in sports with opportunities to expand their personal and professional competencies within the sports industry through insightful guest speakers, workshops, and professional conferences. Our organization is headed by dedicated students looking to better the University of Illinois as a whole.
+							</p>
+						</div>
+            <div class="col-sm-6">
+              <img alt="Logo" class="logo logo-dark" src="{% static "landing/img/isba-banner.png" %}">            </div>
+					</div>
+				</div>
+
+			</section>
+
+
+
+
+      <div class="nav-container"></div>
+      <div class="main-container"><section class="schedule schedule-with-text">
+  				<div class="container">
+  					<div class="row">
+  						<div class="col-md-5 col-sm-6">
+  							<h1>Past Events</h1>
+
+  							<p>
+  								Networking and attending events has been one of the most valuable service we've offered our members; trips to the NCAA headquarters, Speakers and Games are all part of our mission</p>
+
+  							<a href="{% url 'account_login' %}" class="btn">Join Us</a>
+
+  						</div>
+
+  						<div class="col-md-7 col-sm-6">
+  							<ul class="schedule-overview">
+  								<li>
+  									<div class="schedule-title">
+  										<span class="time">September 15, 2016</span>
+  										<span class="title">Chicago Cubs</span>
+  									</div>
+
+  									<div class="schedule-text">
+  										<p>Our members got the unique opportunity to sit in on the third baseline during batting practice and talk to some of the Cubs front office staff. Following our discussion, we stayed and enjoyed the game.</p>
+  									</div>
+
+  									<div class="marker-pin">
+  										<div class="top"></div>
+  										<div class="middle"></div>
+  										<div class="bottom"></div>
+  									</div>
+  								</li>
+
+  								<li>
+  									<div class="schedule-title">
+  										<span class="time">April 11, 2017</span>
+  										<span class="title">Chicago Bears</span>
+  									</div>
+
+  									<div class="schedule-text">
+  										<p>
+  											At SBA traveled to Soldier Field for a tour of the stadium and a chat with Bears employees. The Bears gave use an in depth tour of the stadium, including a look inside the locker rooms, a trip down onto the field and a peek into some of the top &nbsp;notch suites. Our panel discussion included around eleven Bears full time across several departments.</p>
+  									</div>
+
+  									<div class="marker-pin">
+  										<div class="top"></div>
+  										<div class="middle"></div>
+  										<div class="bottom"></div>
+  									</div>
+  								</li>
+
+  								<li>
+  									<div class="schedule-title">
+  										<span class="time">December 20, 2016</span>
+  										<span class="title">Chicago Bears &amp; Blackhawks</span>
+  									</div>
+
+  									<div class="schedule-text">
+  										<p>
+  											We had the opportunity to visit the United Center and hear from several executives from the Chicago Bulls and Chicago Blackhawks front offices, as well as some of the United Center staff. During lunch, we were able to meet and network with some of the Illinois alumni that work for both organizations. We ended the day with a tour of the stadium/</p>
+  									</div>
+
+  									<div class="marker-pin">
+  										<div class="top"></div>
+  										<div class="middle"></div>
+  										<div class="bottom"></div>
+  									</div>
+  								</li>
+
+  								<li>
+  									<div class="schedule-title">
+  										<span class="time">April 25, 2017</span>
+  										<span class="title">Chicago White Sox</span></div>
+
+  									<div class="marker-pin">
+  										<div class="top"></div>
+  										<div class="middle"></div>
+  										<div class="bottom"></div>
+  									</div>
+  								</li>
+  							</ul>
+  						</div>
+
+  					</div>
+  				</div>
+  			</section>
+
+        <section class="contained-gallery">
+        				<div class="container">
+        					<div class="row">
+
+        						<div class="col-md-7 col-sm-6">
+        							<div class="lightbox-gallery">
+        								<ul>
+        									<li>
+        										<a href="{% static "landing/img/trip7.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip7.jpg" %}">
+        										</a>
+        									</li>
+
+        									<li>
+        										<a href="{% static "landing/img/trip4.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip4.jpg" %}">
+        										</a>
+        									</li>
+
+        									<li>
+        										<a href="{% static "landing/img/trip3.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip3.jpg" %}">
+        										</a>
+        									</li>
+
+        									<li>
+        										<a href="{% static "landing/img/trip2.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip2.jpg" %}">
+        										</a>
+        									</li>
+
+        									<li>
+        										<a href="{% static "landing/img/trip6.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip6.jpg" %}">
+        										</a>
+        									</li>
+
+        									<li>
+        										<a href="{% static "landing/img/trip8.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip8.jpg" %}">
+        										</a>
+        									</li>
+
+        									<li>
+        										<a href="{% static "landing/img/trip4.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip4.jpg" %}">
+        										</a>
+        									</li>
+
+        									<li>
+        										<a href="{% static "landing/img/trip1.jpg" %}" class="lightbox-link-mrv" data-lightbox="true" data-title="Lightbox Image">
+        												<img class="background-image" alt="Lightbox Image" src="{% static "landing/img/trip1.jpg" %}">
+        										</a>
+        									</li>
+        								</ul>
+        							</div>
+        						</div>
+
+        						<div class="col-md-5 col-sm-6">
+        							<h1>2017 was a rousing success. Check out the highlights from last year's events.</h1>
+
+        							<p class="lead">
+        								Our members attended events throughout the year offering them networking experiences, speakers, and hands-on workshops.
+        							</p>
+
+        							<a href="https://www.instagram.com/illinoissba/?hl=en" class="btn"><i class="icon social_instagram">&nbsp;</i> Follow ISBA</a>
+        							<a href="{% url 'account_signup' %}" class="btn btn-hollow">Register Now</a>
+
+        						</div>
+
+        					</div>
+        				</div>
+        			</section>
+                </div>
+              <div class="row">
+                <div class="instafeed" data-user-name="illinoissba">
+                	<ul></ul>
+                </div>
+              </div>
+			<section class="subscribe-2">
+				<div class="container">
+          <div class="row">
+            <div class="col-sm-12">
+              <h1>Social Media</h1>
+            </div>
+          </div>
+
+					<div class="row">
+            <div class="col-md-6 col-sm-12">
+                  <div class="fb-page" data-href="http://www.facebook.com/illinoissba" data-tabs="timeline" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="true"><blockquote cite="http://www.facebook.com/illinoissba" class="fb-xfbml-parse-ignore"><a href="http://www.facebook.com/illinoissba">Illinois Sports Business Association</a></blockquote></div>
+                </div>
+              <div class="col-md-6 col-sm-12">
+                <a class="twitter-timeline" data-width="400" data-height="502" href="https://twitter.com/IllinoisSBA">Tweets by IllinoisSBA</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+			</section>
+		</div>
+		<div class="footer-container">
+			<footer class="classic">
+				<div class="container">
+					<div class="row ui-sortable">
+						<div class="col-12 col-sm-6 col-md-8">
+							<ul class="menu">
+								<li><a href="{% url 'home' %}">home</a></li>
+								<li><a href="{% url 'team' %}">team</a></li>
+								<li><a href="{% url 'about' %}">about</a></li>
+								<li><a class="inner-link back-to-top" href="#top">Back To Top</a></li>
+							</ul>
+						</div>
+
+
+						<div class="col-6 col-md-4">
+							<ul class="contact-methods">
+								<li><i class="icon pe-7s-mail"></i><span>events@illinoissba.org</span></li>
+								<li><i class="icon pe-7s-map-marker"></i><span>Urbana-Champaign, IL</span></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="row ui-sortable">
+						<div class="col-sm-12 text-center">
+							<ul class="social-profiles">
+								<li><a href="https://twitter.com/IllinoisSBA"><i class="icon social_twitter"></i></a></li>
+								<li><a href="https://www.facebook.com/IllinoisSBA/"><i class="icon social_facebook"></i></a></li>
+
+
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+        <script src="{% static "landing/js/bootstrap.min.js" %}"></script>
+        <script src="{% static "landing/js/skrollr.min.js" %}"></script>
+        <script src="{% static "landing/js/spectragram.min.js" %}"></script>
+        <script src="{% static "landing/js/flexslider.min.js" %}"></script>
+        <script src="{% static "landing/js/jquery.plugin.min.js" %}"></script>
+        <script src="{% static "landing/js/jquery.countdown.min.js" %}"></script>
+        <script src="{% static "landing/js/lightbox.min.js" %}"></script>
+        <script src="{% static "landing/js/smooth-scroll.min.js" %}"></script>
+        <script src="{% static "landing/js/twitterfetcher.min.js" %}"></script>
+        <script src="{% static "landing/js/placeholders.min.js" %}"></script>
+        <script src="{% static "landing/js/scripts.js"></script>
+    </body>
+</html>

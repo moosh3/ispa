@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h3>Active Members:</h3>
+<br />
+<div class="row">
+  <div class="col col-mid-8"
+    <ul class="list-group">
+    {% for member in userprofile_list %}
+        <li class="list-group-item">{{ member.user.username }} - Points: {{ member.points }}</li>
+    {% endfor %}
+    </u>
+  </div>
+
+  <div class="col-6 col-md-4">
+    <br />
+  </div>
+{% endblock %}

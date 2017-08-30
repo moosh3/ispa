@@ -1,5 +1,9 @@
+from __future__ import unicode_literals
+import os
+
+from django.utils.encoding import python_2_unicode_compatible
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.core.urlresolvers import reverse
 
@@ -13,7 +17,7 @@ class EventManager(models.Manager):
 def image_field(instance, filename):
     return os.path.join('events', str(instance.user.pk), filename)
 
-
+@python_2_unicode_compatible
 class Event(BaseModel):
 
     EVENT = 'event'
@@ -27,6 +31,7 @@ class Event(BaseModel):
     )
 
     name = models.CharField('Name', max_length=256, null=True, blank=True)
+    points = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(
         'Description', max_length=512,
         null=True, blank=True)
@@ -47,6 +52,7 @@ class Event(BaseModel):
         related_name='attendees',
         through='Attendance',
     )
+    messages = models.ManyToManyField('Message', related_name='messages')
     objects = EventManager()
 
     def get_absolute_url(self):
@@ -54,9 +60,6 @@ class Event(BaseModel):
 
     def __str__(self):
         return '{}'.format(self.name)
-
-    def __unicode__(self):
-        return __str__()
 
     @classmethod
     def create_event(cls, slug, location, attendees, date,
@@ -86,8 +89,8 @@ class Event(BaseModel):
             'slug': slugify(self.name),
         }
 
-    class Meta:
-        ordering = ('name',)
+    class Meta: # pylint: disable=C1001
+        ordering = ('date',)
 
     # def get_absolute_url(self):
     #    return reverse('profile', args=[self.user.username])
