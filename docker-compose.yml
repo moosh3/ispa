@@ -3,37 +3,57 @@ version: '2'
 volumes:
     ispa_pg_data:
         external: true
-    redisdata:
 
 services:
   ispa_local:
-    container_name: ispa_local
     build:
       context: .
       dockerfile: Dockerfile.local
+    container_name: ispa_local
     volumes:
       - ./ispa:/home/docker/ispa
     ports:
       - "8000:8000"
+    networks:
+      ispa:
+    hostname: ispa
     command: /start-dev.sh
-
   celery:
-    container_name: celery_worker
     image: ispa_local
+    container_name: celery_worker
+    networks:
+      ispa:
     command: /start-celery.sh
-
   db:
     image: postgres:9.4
-    container_name: ispa_db
-    ports:
-      - "5432:5432"
+    container_name: postgresql
     volumes:
       - ispa_pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    network:
+      ispa:
+        aliases:
+          ispa_db
+    hostname: postgresql
+  rabbit:
+    image: rabbitmq:3.6.2
+    container_name: rabbitmq
+    networks:
+      ispa:
+        aliases:
+          - rabbitmq
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=isba
+      - RABBITMQ_DEFAULT_PASS=justtestit
+      - RABBITMQ_DEFAULT_VHOST=ispa_host
 
-  redis:
-      container_name: redis
-      image: redis:3.2.0
-      ports:
-        - "6379:6379"
-      volumes:
-        - redisdata:/data
+#image
+#container_name
+#volumes
+#ports
+#network
+#hostname
+#environment
+#command
