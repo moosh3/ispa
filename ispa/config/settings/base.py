@@ -245,13 +245,17 @@ REST_FRAMEWORK = {
 # ------------------------------------------------------------------------------
 # Redis
 
-#REDIS_PORT = 6379
-#REDIS_DB = 0
-#REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 # Celery configuration
 
 # configure queues, currently we have only one
+CELERY_DEFAULT_QUEUE = 'default'
+CELERY_QUEUES = (
+    Queue('default', Exchange('default'), routing_key='default'),
+)
 
 # Sensible settings for celery
 CELERY_ALWAYS_EAGER = False
