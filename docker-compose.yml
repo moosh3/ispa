@@ -19,7 +19,7 @@ services:
     hostname: ispa
     command: /start-dev.sh
   celery:
-    image: ispa_local
+    image: ispa_local:latest
     container_name: celery_worker
     networks:
       ispa:
@@ -31,10 +31,10 @@ services:
       - ispa_pg_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    network:
+    networks:
       ispa:
         aliases:
-          ispa_db
+          - ispa_db
     hostname: postgresql
   rabbit:
     image: rabbitmq:3.6.2
@@ -49,11 +49,5 @@ services:
       - RABBITMQ_DEFAULT_PASS=justtestit
       - RABBITMQ_DEFAULT_VHOST=ispa_host
 
-#image
-#container_name
-#volumes
-#ports
-#network
-#hostname
-#environment
-#command
+networks:
+  ispa:

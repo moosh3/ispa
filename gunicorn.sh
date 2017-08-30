@@ -1,7 +1,8 @@
 #!/bin/bash
 
 set -e
-source ./vars.env
+
+source ./prod.env
 
 python manage.py migrate
 python manage.py collectstatic --clear --noinput # Remove current static files
