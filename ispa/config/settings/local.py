@@ -33,3 +33,6 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 # CELERY
 # ------------------------------------------------------------------------------
 CELERY_ALWAYS_EAGER = True
+
+BROKER_HOST = "rabbitmq"
+BROKEN_VHOST = "ispa_host"
