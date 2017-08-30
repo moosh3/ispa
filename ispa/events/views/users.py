@@ -1,39 +1,41 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView, UpdateView, ListView
+from django.views.generic import DetailView, UpdateView, ListView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django import forms
 
-from events.models import UserProfile
+from events.models import UserProfile, Attendance
 from events.forms import UserFilterForm
 
-class DetailUserView(TemplateView):
+class DetailUserView(DetailView):
     template_name = 'users/profile.html'  # That's All Folks!
-
-    def __init__(self, *args, **kwargs):
-        super(DetailUserView, self).__init__(*args, **kwargs)
-        self.user = None
-        self.userprofile = None
+    model = UserProfile
 
     @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.user = get_object_or_404(
-            User,
-            username=self.kwargs['username']
-        )
+    def dispatch(self, request, *args, **kwargs):
+        self.lookup_args = kwargs
+
         return super(DetailUserView, self).dispatch(*args, **kwargs)
+
+    def get_object(self, *args, **kwargs):
+        lookup_dict = {}
+        if self.lookup_args.get('pk'):
+            lookup_dict['pk'] = self.lookup_args['pk']
+        if self.lookup_args.get('username'):
+            lookup_dict['user__username'] = self.lookup_args['username'].lower()
+
+        return get_object_or_404(
+            UserProfile,
+            **lookup_dict
+        )
 
     def get_context_data(self, **kwargs):
         context = super(DetailUserView, self).get_context_data(**kwargs)
-        try:
-            userprofile = UserProfile.objects.get(
-                user=user,
-            )
-            context['userprofile'] = userprofile
-        except:
-            userprofile = None
-
+        obj = self.get_object()
+        context['rsvp_events'] = Attendance.objects.filter(
+            user=obj.user,
+        )
         return context
 
 class EditUserView(UpdateView):
