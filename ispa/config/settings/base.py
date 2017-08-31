@@ -243,10 +243,10 @@ REST_FRAMEWORK = {
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
 # Celery configuration
-BROKER_PORT = 5672
-BROKER_USER = "isba"
-BROKER_PASSWORD = "justtestit"
+BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 
 # configure queues, currently we have only one
 CELERY_DEFAULT_QUEUE = 'default'
