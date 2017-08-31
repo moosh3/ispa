@@ -71,6 +71,10 @@ urlpatterns += [
 # Events
 urlpatterns += [
     url(r'^events/$', events.dashboard_view, name='event-dashboard'),
+    url(r'^events/cubs/$', TemplateView.as_view(
+        template_name='events/cubs.html'),
+        name='cubs-tickets'
+    ),
     url(r'^events/list/$', events.list_view, name='event-list'),
     url(r'^events/create/$', events.create_view, name='event-create'),
     url(

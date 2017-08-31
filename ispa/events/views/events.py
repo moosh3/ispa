@@ -35,29 +35,18 @@ class DetailEventView(TemplateView):
     template_name = 'events/detail.html'
     model = Event
 
-    def __init__(self, *args, **kwargs):
-        super(DetailEventView, self).__init__(*args, **kwargs)
-        self.messages = None
-        self.guests = None
-
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.user = self.request.user
         self.event = get_object_or_404(
             Event,
             slug=self.kwargs['slug']
         )
-        self.user = self.request.user
         return super(DetailEventView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.message_form = EventMessageForm(
-            user=self.request.user,
-            event=self.event,
-        )
-        self.rsvp_form = RsvpForm(
-            user=self.request.user,
-            event=self.event,
-        )
+        self.message_form = EventMessageForm()
+        self.rsvp_form = RsvpForm()
         if self.message_form.is_valid():
             data = self.message_form.cleaned_data
             message = Message.create_message(
@@ -82,7 +71,10 @@ class DetailEventView(TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(DetailEventView, self).get_context_data(*args, **kwargs)
-        context['message_form'] = EventMessageForm
+        context['message_form'] = EventMessageForm(
+            event=self.event,
+            user=self.user
+        )
         context['event'] = self.event
         try:
             guests = Attendance.objects.filter(

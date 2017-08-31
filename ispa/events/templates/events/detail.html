@@ -29,18 +29,24 @@
           </li>
         </ul> <br />
 
-      <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
+      <form action="" method='post'>{% csrf_token %}
         {% for field in message_form %}
         <div class="form-group">
           {{ field }}
         {% endfor %}
-          <button type="submit" value="Save" class="btn btn-success">
+        <button type="submit" value="Save" class="btn btn-success">
             Save
           </button>
           </div>
         </form>
       <br />
 
+      {% for msg in messages %}
+
+        {{ msg.text }}
+
+      {% endfor %}
+      
     </div>
     <div class="col col-md-4">
       <h3>Guests</h3>
