@@ -52,7 +52,6 @@ class Event(BaseModel):
         related_name='attendees',
         through='Attendance',
     )
-    messages = models.ManyToManyField('Message', related_name='messages')
     objects = EventManager()
 
     def get_absolute_url(self):

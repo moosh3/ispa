@@ -7,10 +7,12 @@
           <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
           <p class="card-text">{{ event.description }}</p>
-          <button id="rsvp" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off" type="button">
+        <form action="{% url 'rsvp' event.slug } %}" method="post">
+          <button data-loading-text="Loading..." class="btn btn-primary" autocomplete="off" type="button">
             <span class="icon icon-thumbs-up"></span>
             RSVP
           </button>
+        </form>
         </div>
       </div>
       <br />
@@ -24,24 +26,6 @@
             </a>
           </li>
         </ul> <br />
-
-        {% for message in messages %}
-        <ul class="media-list media-list-conversation c-w-md">
-          <li class="media media-current-user mb-4">
-            <div class="media-body">
-              <div class="media-body-text">
-                {{ message.text }}
-              </div>
-              <div class="media-footer">
-                <small class="text-muted">
-                  <a href="{% url 'profile' message.user.username }">{{ message.user.first_name }} {{ message.user.last_name }}</a> at {{ message.modified }}
-                </small>
-              </div>
-            </div>
-            <img class="rounded-circle media-object ml-3" src="{% static "users/1/profile.png" %}">
-          </li>
-        </ul>
-        {% endfor %}
 
       <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
         {% for field in form %}
