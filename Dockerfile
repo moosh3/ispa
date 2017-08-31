@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r /home/docker/requirements-base.txt\
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY docker_bin/* /home/docker/bin/
 
-COPY ispa/ .
+COPY ispa/ /home/docker/ispa
 
 WORKDIR /home/docker/ispa
 
