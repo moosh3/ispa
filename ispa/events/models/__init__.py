@@ -7,3 +7,4 @@ from .users import UserProfile
 from .speaker import Speaker
 from .announcement import Announcement
 from .message import Message
+from .rsvp import Rsvp

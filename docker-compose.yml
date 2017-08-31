@@ -20,6 +20,7 @@ services:
       ispa:
     hostname: ispa
     command: /home/docker/bin/start_dev.sh
+    env_file: dev.env
   celery:
     image: aleccunningham/ispa_local:latest
     container_name: celery_worker
