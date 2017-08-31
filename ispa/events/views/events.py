@@ -10,7 +10,7 @@ from django.views.generic import (
 )
 
 from events.models import Event, Attendance, Message, UserProfile
-from events.forms import EventMessageForm
+from events.forms import EventMessageForm, RsvpForm
 
 
 class EventDashboard(TemplateView):
@@ -54,6 +54,10 @@ class DetailEventView(TemplateView):
             user=self.request.user,
             event=self.event,
         )
+        self.rsvp_form = RsvpForm(
+            user=self.request.user,
+            event=self.event,
+        )
         if self.message_form.is_valid():
             data = self.message_form.cleaned_data
             message = Message.create_message(
@@ -61,14 +65,24 @@ class DetailEventView(TemplateView):
                 event=data['event'],
                 text=data['text'],
             )
+            message.save()
             return redirect('event-detail', slug=event.slug)
+
+        if self.rsvp_form.is_valid():
+            rdata = self.rsvp_form.cleaned_data
+            attendee = Attendance.objects.create(
+                user=rdata['user'],
+                event=rdata['event'],
+                attending=rd['attending']
+            )
+            attendee.save()
 
         return self.get(request, *args, **kwargs)
 
 
     def get_context_data(self, *args, **kwargs):
         context = super(DetailEventView, self).get_context_data(*args, **kwargs)
-        context['form'] = EventMessageForm
+        context['message_form'] = EventMessageForm
         context['event'] = self.event
         try:
             guests = Attendance.objects.filter(
@@ -129,6 +143,15 @@ class RsvpView(View):
         self.event = kwargs.pop('event')
 
     def post(self, request, *args, **kwargs):
+        attendance = Attendance.objects.create(
+            user=self.user,
+            event=self.event,
+            attending=True
+        )
+        attendance.save()
+        return redirect('event-dashboard')
+
+    def get(self, request, *args, **kwargs):
         attendance = Attendance.objects.create(
             user=self.user,
             event=self.event,

@@ -1,6 +1,6 @@
 from django import forms
 
-from events.models import Event
+from events.models import Event, Attendance
 
 
 class EventForm(forms.ModelForm):
@@ -9,3 +9,12 @@ class EventForm(forms.ModelForm):
         fields = ['name', 'description', 'extended_description',
                   'image', 'location', 'date',
         ]
+
+class RsvpForm(forms.ModelForm):
+    class Meta:
+        model = Attendance
+        fields = ['user', 'event', 'attending']
+        widgets = {
+            'user': forms.HiddenInput(),
+            'event': forms.HiddenInput()
+        }

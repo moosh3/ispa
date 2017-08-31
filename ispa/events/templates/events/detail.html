@@ -7,11 +7,13 @@
           <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
           <p class="card-text">{{ event.description }}</p>
-        <form action="{% url 'rsvp' event.slug } %}" method="post">
-          <button data-loading-text="Loading..." class="btn btn-primary" autocomplete="off" type="button">
+          <form action="" method="post">{% csrf_token %}
+          {% for field in rsvp_form %}
+          <button class="btn btn-primary" autocomplete="off" type="button">
             <span class="icon icon-thumbs-up"></span>
             RSVP
           </button>
+          {% endfor %}
         </form>
         </div>
       </div>
@@ -28,7 +30,7 @@
         </ul> <br />
 
       <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
-        {% for field in form %}
+        {% for field in message_form %}
         <div class="form-group">
           {{ field }}
         {% endfor %}
