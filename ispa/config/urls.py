@@ -32,6 +32,7 @@ from api.viewsets import (
     AttendanceViewSet,
     SpeakerViewSet,
     SponsorViewSet,
+    UserProfileViewSet
 )
 
 
@@ -41,6 +42,7 @@ router.register(r'locations', EventLocationViewSet)
 router.register(r'attendees', AttendanceViewSet)
 router.register(r'sponsors', SponsorViewSet)
 router.register(r'speakers', SpeakerViewSet)
+router.register(r'users', UserProfileViewSet)
 
 # General
 urlpatterns = [
@@ -69,6 +71,10 @@ urlpatterns += [
 # Events
 urlpatterns += [
     url(r'^events/$', events.dashboard_view, name='event-dashboard'),
+    url(r'^events/cubs/$', TemplateView.as_view(
+        template_name='events/cubs.html'),
+        name='cubs-tickets'
+    ),
     url(r'^events/list/$', events.list_view, name='event-list'),
     url(r'^events/create/$', events.create_view, name='event-create'),
     url(
@@ -84,7 +90,7 @@ urlpatterns += [
     url(r'^locations/create/$', locations.create_view, name='location-create'),
     url(r'^speaker/(?P<slug>[-\w]+)/$', speakers.detail_view, name='speaker-detail'),
     url(r'^dues/$', dues.pay_dues, name='dues'),
-
+    url(r'^(?P<slug>[-\w]+)/rsvp/$', events.rsvp_view, name='rsvp'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [

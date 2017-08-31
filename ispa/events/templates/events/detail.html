@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
+
 {% load static %}
 {% block content %}
       <div class="card">
         <div class="card-block">
           <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
-          <p class="card-text">{{ event.description }}</p>
-          <button class="btn btn-secondary" type="button">
+          <p class="card-text">{{ event.extended_description }}</p>
+          <form action="" method="post">{% csrf_token %}
+          {% for field in rsvp_form %}
+          <button class="btn btn-primary" autocomplete="off" type="button">
             <span class="icon icon-thumbs-up"></span>
             RSVP
           </button>
+          {% endfor %}
+        </form>
         </div>
       </div>
       <br />
@@ -24,23 +28,23 @@
             </a>
           </li>
         </ul> <br />
-      <form action="{% url 'event-detail' event.slug %}" method='post'>{% csrf_token %}
-        {% for field in form %}
-        <div class="input-group">
-          {% render_field field type="text" class="form-control" placeholder="Post here.." %}
-        </div>
-        {% endfor %}
+
+      <form action="" method='post'>{% csrf_token %}
+        {% for field in message_form %}
         <div class="form-group">
-          <button type="submit" class="btn btn-success">
-            <span class="glyphicon glyphicon-ok"></span> Save
+          {{ field }}
+        {% endfor %}
+        <button type="submit" value="Save" class="btn btn-success">
+            Save
           </button>
           </div>
         </form>
       <br />
 
+      {% for msg in messages %}
 
-      {% for message in messages %}
-        <a href="#">{{ message.text }}</a>
+        {{ msg.text }}
+
       {% endfor %}
 
     </div>
@@ -50,7 +54,7 @@
         {% for guest in event.attendees.all %}
         <li class="list-group-item">
         <div class="media w-100">
-          <img class="media-object rounded-circle mr-3" src="{% static "events/img/avatar-dhg.png" %}">
+          <img class="media-object rounded-circle mr-3" src="{% static "users/1/profile.png" %}">
           <div class="media-body align-self-center">
             <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
               Profile

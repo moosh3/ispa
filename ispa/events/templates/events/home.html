@@ -15,12 +15,18 @@
           </div>
         </div>
       </div>
-        <div class="col">
-          <div class="carousel-item">
-            <img src="{% static "events/img/avatar-dhg.png" %}" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-              <h3>...</h3>
-              <p>...</p>
+      <div class="col">
+          <div class="growl growl-static">
+            <div class="alert alert-dark alert-dismissable" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              <strong>Well done!</strong> You've paid your dues.
+            </div>
+          </div>
+          <div class="growl growl-static">
+            <div class="alert alert-info" role="alert">
+              <strong>Heads up!</strong> Get cubs tickets <a href="{% url 'cubs-tickets' %}">Here!</a>
             </div>
           </div>
         </div>
@@ -43,11 +49,6 @@
       </div>
       <div class="col-4">
         <div class="row">
-          <ul class="list-group">
-            <li class="list-group-item active">Events</li>
-            <li class="list-group-item">Speakers</li>
-            <li class="list-group-item">Posts</li>
-          </ul>
       </div>
   </div>
   </div>

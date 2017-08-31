@@ -3,32 +3,53 @@ version: '2'
 volumes:
     ispa_pg_data:
         external: true
-    redisdata:
 
 services:
   ispa_local:
-    container_name: ispa_local
     build:
       context: .
       dockerfile: Dockerfile.local
+    container_name: ispa_local
     volumes:
       - ./ispa:/home/docker/ispa
+      - ./docker_bin:/home/docker/bin
+    working_dir: /home/docker/ispa
     ports:
       - "8000:8000"
-    command: /start-dev.sh
-
+    networks:
+      ispa:
+    hostname: ispa
+    command: /home/docker/bin/start_dev.sh
+  celery:
+    image: aleccunningham/ispa_local:latest
+    container_name: celery_worker
+    volumes:
+      - ./ispa:/home/docker/ispa
+    working_dir: /home/docker/ispa
+    networks:
+      ispa:
+    command: /home/docker/bin/start_celery.sh
   db:
     image: postgres:9.4
-    container_name: ispa_db
-    ports:
-      - "5432:5432"
+    container_name: postgresql
     volumes:
       - ispa_pg_data:/var/lib/postgresql/data
-
-#  redis:
-#      container_name: redis
-#      image: redis:3.2.0
-#      ports:
-#        - '127.0.0.1:6379:6379'
-#      volumes:
-#        - 'redisdata:/data'
+    ports:
+      - "5432:5432"
+    networks:
+      ispa:
+        aliases:
+          - ispa_db
+    hostname: postgresql
+  redis:
+      image: redis:latest
+      container_name: redis
+      networks:
+        ispa:
+          aliases:
+            - redis
+      hostname: redis
+      ports:
+       - "6379:6379"
+networks:
+  ispa:

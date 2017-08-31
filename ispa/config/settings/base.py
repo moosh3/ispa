@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'modelcluster',
     'taggit',
-    #'widget_tweaks',
     # Admin
     'django.contrib.admin',
     'wagtail.wagtailforms',
@@ -244,15 +243,13 @@ REST_FRAMEWORK = {
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
-# Redis
-
-#REDIS_PORT = 6379
-#REDIS_DB = 0
-#REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', 'redis')
 
 # Celery configuration
+BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 
 # configure queues, currently we have only one
+CELERY_DEFAULT_QUEUE = 'default'
 
 # Sensible settings for celery
 CELERY_ALWAYS_EAGER = False
@@ -266,10 +263,6 @@ CELERY_DISABLE_RATE_LIMITS = False
 CELERY_IGNORE_RESULT = True
 CELERY_SEND_TASK_ERROR_EMAILS = False
 CELERY_TASK_RESULT_EXPIRES = 600
-
-# Set redis as celery result backend
-#CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
-CELERY_REDIS_MAX_CONNECTIONS = 1
 
 # Don't use pickle as serializer, json is much safer
 CELERY_TASK_SERIALIZER = "json"
