@@ -12,6 +12,7 @@ services:
     container_name: ispa_local
     volumes:
       - ./ispa:/home/docker/ispa
+      - ./docker_bin:/home/docker/bin
     working_dir: /home/docker/ispa
     ports:
       - "8000:8000"
