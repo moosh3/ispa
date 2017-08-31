@@ -110,8 +110,9 @@ class Event(BaseModel):
                 'number_of_seats__sum') or 0)
         return _('Unlimited seats available.')
 
-    def is_bookable(self):
-        if self.start < timezone.now():
+    @property
+    def past_event(self):
+        if self.end < timezone.now():
             return False
         return True
 
@@ -133,7 +134,6 @@ class Event(BaseModel):
     def to_json(self):
         return {
             'location': self.location.to_json(),
-            'attendees': '',
             'date': self.date,
             'description': self.description,
             'is_active': self.is_active,
