@@ -6,7 +6,7 @@
         <div class="card-block">
           <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
-          <p class="card-text">{{ event.description }}</p>
+          <p class="card-text">{{ event.extended_description }}</p>
           <form action="" method="post">{% csrf_token %}
           {% for field in rsvp_form %}
           <button class="btn btn-primary" autocomplete="off" type="button">
@@ -46,7 +46,7 @@
         {{ msg.text }}
 
       {% endfor %}
-      
+
     </div>
     <div class="col col-md-4">
       <h3>Guests</h3>
