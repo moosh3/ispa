@@ -6,6 +6,9 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.text import slugify
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 
 from events.models.base import BaseModel
 
@@ -52,6 +55,46 @@ class Event(BaseModel):
         related_name='attendees',
         through='Attendance',
     )
+    max_guests = models.PositiveIntegerField(null=True, blank=True)
+    start = models.DateTimeField(
+        default=timezone.now(),
+        verbose_name=_('Start date'),
+    )
+    end = models.DateTimeField(
+        default=timezone.now() + timezone.timedelta(days=1),
+        verbose_name=_('End date'),
+    )
+    venue = models.CharField(max_length=100, blank=True)
+
+    contact_person = models.CharField(max_length=100, blank=True, null=True)
+    contact_email = models.CharField(max_length=100, blank=True, null=True)
+    contact_phone = models.CharField(max_length=100, blank=True, null=True)
+
+    available_seats = models.PositiveIntegerField(
+        verbose_name=_('Available seats'),
+        help_text=_(
+            'Set this to a number if only a limited amount of slots are '
+            ' available for this event. If you chose to display this on your'
+            ' site, you can create a sense of urgency for your users to'
+            ' RSVP before all slots are taken. As soon as all slots are taken,'
+            ' users cannot RSVP for this event any more.'),
+        blank=True, null=True,
+    )
+
+    hide_available_seats = models.BooleanField(
+        default=False,
+        verbose_name=_('Hide available seat information'),
+        help_text=_(
+            'If you set the number of available seats you can check this field'
+            ' in order to hide that number from your users.'),
+    )
+
+    allow_anonymous_rsvp = models.BooleanField(
+        default=False,
+        verbose_name=_('Allow anonymous RSVP'),
+        help_text=_('Even anonymous users can rsvp, without adding any info.'),
+    )
+
     objects = EventManager()
 
     def get_absolute_url(self):
@@ -59,6 +102,18 @@ class Event(BaseModel):
 
     def __str__(self):
         return '{}'.format(self.name)
+
+    def get_free_seats(self):
+        reserved = self.guests.all().aggregate(models.Sum('number_of_seats'))
+        if self.available_seats:
+            return self.available_seats - int(reserved.get(
+                'number_of_seats__sum') or 0)
+        return _('Unlimited seats available.')
+
+    def is_bookable(self):
+        if self.start < timezone.now():
+            return False
+        return True
 
     @classmethod
     def create_event(cls, slug, location, attendees, date,
