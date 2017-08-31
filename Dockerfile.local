@@ -7,15 +7,12 @@ COPY requirements/test.txt /home/docker/requirements-test.txt
 
 RUN pip install -r /home/docker/requirements-base.txt\
     -r /home/docker/requirements-local.txt \
-    -r /home/docker/requirements-test.txt
-
-WORKDIR /home/docker/ispa
+    -r /home/docker/requirements-test.txt && \
+    adduser --disabled-password --gecos '' isba
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-COPY start-dev.sh /start-dev.sh
-COPY start-celery.sh /start-celery.sh
-RUN chmod +x /docker-entrypoint.sh && \
-    chmod +x /start-dev.sh && \
-    chmod +x /start-celery.sh
+COPY docker_bin/* /home/docker/bin/
+
+WORKDIR /home/docker/ispa
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
