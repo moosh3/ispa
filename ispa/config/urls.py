@@ -86,7 +86,7 @@ urlpatterns += [
     url(r'^locations/create/$', locations.create_view, name='location-create'),
     url(r'^speaker/(?P<slug>[-\w]+)/$', speakers.detail_view, name='speaker-detail'),
     url(r'^dues/$', dues.pay_dues, name='dues'),
-
+    url(r'^(?P<slug>[\w.-_@]+)/rsvp/$', events.rsvp_view, name='rsvp'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [

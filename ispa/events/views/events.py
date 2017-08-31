@@ -9,7 +9,7 @@ from django.views.generic import (
     CreateView,
 )
 
-from events.models import Event, Attendance, Message
+from events.models import Event, Attendance, Message, UserProfile
 from events.forms import EventMessageForm
 
 
@@ -121,6 +121,25 @@ class CreateEventView(CreateView):
     success_url = '/events/'
 
 
+class RsvpView(View):
+
+    def __init__(self, request, *args, **kwargs):
+        super(RsvpView, self).__init__(request, *args, **kwargs)
+        self.user = self.request.user
+        self.event = kwargs.pop('event')
+
+    def post(self, request, *args, **kwargs):
+        attendance = Attendance.objects.create(
+            user=self.user,
+            event=self.event,
+            attending=True
+        )
+        attendance.save()
+        return redirect('event-dashboard')
+
+
+
+rsvp_view = RsvpView.as_view()
 dashboard_view = EventDashboard.as_view()
 detail_view = DetailEventView.as_view()
 create_view = CreateEventView.as_view()
