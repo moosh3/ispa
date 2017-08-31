@@ -13,7 +13,9 @@ WORKDIR /home/docker/ispa
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY start-dev.sh /start-dev.sh
+COPY start-celery.sh /start-celery.sh
 RUN chmod +x /docker-entrypoint.sh && \
-    chmod +x /start-dev.sh
+    chmod +x /start-dev.sh && \
+    chmod +x /start-celery.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

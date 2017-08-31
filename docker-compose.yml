@@ -12,18 +12,20 @@ services:
     container_name: ispa_local
     volumes:
       - ./ispa:/home/docker/ispa
+    working_dir: /home/docker/ispa
     ports:
       - "8000:8000"
     networks:
       ispa:
     hostname: ispa
-    command: /start-dev.sh
+    command: ./start-dev.sh
   celery:
-    image: ispa_local:latest
+    image: aleccunningham/ispa_local:latest
     container_name: celery_worker
+    working_dir: /home/docker/ispa
     networks:
       ispa:
-    command: /start-celery.sh
+    command: ./start-celery.sh
   db:
     image: postgres:9.4
     container_name: postgresql
