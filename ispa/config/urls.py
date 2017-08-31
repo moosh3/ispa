@@ -32,6 +32,7 @@ from api.viewsets import (
     AttendanceViewSet,
     SpeakerViewSet,
     SponsorViewSet,
+    UserProfileViewSet
 )
 
 
@@ -41,6 +42,7 @@ router.register(r'locations', EventLocationViewSet)
 router.register(r'attendees', AttendanceViewSet)
 router.register(r'sponsors', SponsorViewSet)
 router.register(r'speakers', SpeakerViewSet)
+router.register(r'users', UserProfileViewSet)
 
 # General
 urlpatterns = [

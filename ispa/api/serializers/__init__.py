@@ -3,3 +3,4 @@ from .event import EventSerializer
 from .attendees import AttendeeSerializer
 from .speakers import SpeakerSerializer
 from .sponsors import SponsorSerializer
+from .users import UserProfileSerializer
