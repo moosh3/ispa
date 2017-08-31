@@ -1,5 +1,2 @@
 .*
-!.env
 !.pylintrc
-prod.env
-dev.env
