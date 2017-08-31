@@ -2,7 +2,7 @@
 
 set -e
 
-source dev.env
+source ./dev.env
 
 sleep 5s
 
