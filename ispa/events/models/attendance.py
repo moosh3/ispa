@@ -9,7 +9,7 @@ class Attendance(models.Model):
 
     user = models.ForeignKey('auth.User', related_name='events',)
     event = models.ForeignKey('Event')
-    attending = models.BooleanField(default=True)
+    attending = models.BooleanField(default=False)
     is_owner = models.BooleanField(default=False)
 
     def __str__(self):

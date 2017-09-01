@@ -17,9 +17,8 @@ class EventDashboard(TemplateView):
     template_name = 'events/home.html'
 
     @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        self.user = self.request.user
-        return super(EventDashboard, self).dispatch(request, *args, **kwargs)
+    def dispatch(self, *args, **kwargs):
+        return super(EventDashboard, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(EventDashboard, self).get_context_data(**kwargs)

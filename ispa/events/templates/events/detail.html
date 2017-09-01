@@ -6,10 +6,8 @@
       <div class="card">
         <div class="card-block">
           <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
-          <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
-          <p class="card-text">{{ event.extended_description }}</p>
-          <button type="submit" href="{% url 'rsvp' %}" value="Save" class="btn btn-success">Rsvp</button>
-
+          <h6 class="card-subtitle mb-2 text-muted">{{ event.date }}</h6>
+          <p class="card-text">{{ event.description }}</p>
         </div>
       </div>
       <br />
@@ -64,7 +62,7 @@
         <li class="list-group-item">
         <div class="media w-100">
         {{ guest.username }}
-          <img class="media-object rounded-circle mr-3" src="{% static "events/img/blank-profile.png" %}">
+          <img class="media-object rounded-circle mr-3 float-right" src="{% static "events/img/blank-profile.png" %}">
         </div>
       </li>
       {% endfor %}
