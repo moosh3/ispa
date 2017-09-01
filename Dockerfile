@@ -13,5 +13,6 @@ COPY docker_bin/* /home/docker/bin/
 COPY ispa/ /home/docker/ispa
 
 WORKDIR /home/docker/ispa
+ADD VERSION .
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
