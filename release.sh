@@ -3,7 +3,8 @@
 set -ex
 
 REPO=marjoram0
-IMAGE=$2
+IMAGE=ispa
+GCLOUD_PROJECT=rapid-smithy-177819
 
 # ensure code is up to date
 git pull upstream master
@@ -23,6 +24,8 @@ git push
 git push --tags
 
 docker tag $REPO/$IMAGE:latest $USERNAME/$IMAGE:$version
-
+docker tag gcr.io/$GCLOUD_PROJECT
 docker push $REPO/$IMAGE:latest
 docker push $REPO/$IMAGE:$version
+gcloud docker -- push gcr.io/${GCLOUD_PROJECT}/ispa:$version
+gcloud docker -- push gcr.io/${GCLOUD_PROJECT}/ispa:latest
