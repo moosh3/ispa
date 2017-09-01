@@ -2,7 +2,7 @@
 
 set -e
 
-source ./prod.env
+source prod.env
 
 python manage.py migrate
 python manage.py collectstatic --clear --noinput # Remove current static files
