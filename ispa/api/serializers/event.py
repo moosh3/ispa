@@ -13,4 +13,4 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta: # pylint: disable=C1001
         model = Event
         fields = ('id', 'name', 'points', 'description', 'extended_description', 'location',
-                 'date', 'attendees')
+                 'date', 'attendees',)

@@ -2,24 +2,19 @@
 
 {% load static %}
 {% block content %}
+  <div class="container">
       <div class="card">
         <div class="card-block">
           <h4 class="card-title" href="{{ event.get_absolute_url }}">{{ event.name }}</h4>
           <h6 class="card-subtitle mb-2 text-muted">{{ creator }}</h6>
           <p class="card-text">{{ event.extended_description }}</p>
-          <form action="" method="post">{% csrf_token %}
-          {% for field in rsvp_form %}
-          <button class="btn btn-primary" autocomplete="off" type="button">
-            <span class="icon icon-thumbs-up"></span>
-            RSVP
-          </button>
-          {% endfor %}
-        </form>
+          <button type="submit" href="{% url 'rsvp' %}" value="Save" class="btn btn-success">Rsvp</button>
+
         </div>
       </div>
       <br />
     <div class="row">
-      <div class="col col-md-8">
+      <div class="col col-8">
         <ul class="nav nav-pills">
           <li class="nav-item active">
             <a class="nav-link" href="#">
@@ -28,38 +23,52 @@
             </a>
           </li>
         </ul> <br />
-
       <form action="" method='post'>{% csrf_token %}
         {% for field in message_form %}
         <div class="form-group">
           {{ field }}
         {% endfor %}
         <button type="submit" value="Save" class="btn btn-success">
-            Save
+            Post
           </button>
           </div>
         </form>
-      <br />
-
-
+      </div>
     </div>
-    <div class="col col-md-4">
+
+    <div class="row">
+      <div class="col col-6">
+      {% for message in messages %}
+      <ul class="media-list media-list-conversation c-w-md">
+          <li class="media media-current-user mb-4">
+            <div class="media-body">
+              <div class="media-body-text">
+                {{ message.text }}
+              </div>
+              <div class="media-footer">
+                <small class="text-muted">
+                  <a href="{% url 'profile' message.user.username }">{{ message.user.first_name }} {{ message.user.last_name }}</a> at {{ message.modified }}
+                </small>
+              </div>
+            </div>
+            <img class="rounded-circle media-object ml-3" src="{% static "events/img/blank-profile.png" %}">
+          </li>
+        </ul>
+        {% endfor %}
+    </div>
+
+    <div class="col col-6">
       <h3>Guests</h3>
       <ul class="media-list media-list-users list-group">
         {% for guest in event.attendees.all %}
         <li class="list-group-item">
         <div class="media w-100">
-          <img class="media-object rounded-circle mr-3" src="{% static "users/1/profile.png" %}">
-          <div class="media-body align-self-center">
-            <a class="btn btn-outline-primary btn-sm float-right" href="{% url 'profile' guest.username %}">
-              Profile
-            </a>
-            <strong>{{ guest.username }}</strong>
-          </div>
+        {{ guest.username }}
+          <img class="media-object rounded-circle mr-3" src="{% static "events/img/blank-profile.png" %}">
         </div>
       </li>
       {% endfor %}
     </div>
   </div>
-
+</div>
 {% endblock %}

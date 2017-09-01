@@ -17,8 +17,9 @@ class EventDashboard(TemplateView):
     template_name = 'events/home.html'
 
     @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(EventDashboard, self).dispatch(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        self.user = self.request.user
+        return super(EventDashboard, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(EventDashboard, self).get_context_data(**kwargs)
@@ -28,7 +29,6 @@ class EventDashboard(TemplateView):
         context['active_events'] = active_events
 
         return context
-
 
 class DetailEventView(TemplateView):
 
@@ -45,26 +45,10 @@ class DetailEventView(TemplateView):
         return super(DetailEventView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.message_form = EventMessageForm()
-        self.rsvp_form = RsvpForm()
+        self.message_form = EventMessageForm(request.POST)
         if self.message_form.is_valid():
-            data = self.message_form.cleaned_data
-            message = Message.create_message(
-                user=data['user'],
-                event=data['event'],
-                text=data['text'],
-            )
-            message.save()
-            return redirect('event-detail', slug=event.slug)
-
-        if self.rsvp_form.is_valid():
-            rdata = self.rsvp_form.cleaned_data
-            attendee = Attendance.objects.create(
-                user=rdata['user'],
-                event=rdata['event'],
-                attending=rd['attending']
-            )
-            attendee.save()
+            message = self.message_form.save()
+            return redirect('event-detail', slug=self.event.slug)
 
         return self.get(request, *args, **kwargs)
 
@@ -128,6 +112,7 @@ class CreateEventView(CreateView):
 
 
 class RsvpView(View):
+    template_name='events/rsvp.html'
 
     def __init__(self, request, *args, **kwargs):
         super(RsvpView, self).__init__(request, *args, **kwargs)
@@ -135,12 +120,8 @@ class RsvpView(View):
         self.event = kwargs.pop('event')
 
     def post(self, request, *args, **kwargs):
-        attendance = Attendance.objects.create(
-            user=self.user,
-            event=self.event,
-            attending=True
-        )
-        attendance.save()
+        self.rsvp_form = RsvpForm(request.POST)
+        self.rsvp_form.save()
         return redirect('event-dashboard')
 
     def get(self, request, *args, **kwargs):
