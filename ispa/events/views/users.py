@@ -8,6 +8,7 @@ from django import forms
 from events.models import UserProfile, Attendance
 from events.forms import UserFilterForm
 
+
 class DetailUserView(DetailView):
     template_name = 'users/profile.html'  # That's All Folks!
     model = UserProfile
@@ -38,10 +39,12 @@ class DetailUserView(DetailView):
         )
         return context
 
+
 class EditUserView(UpdateView):
     template_name = 'users/userprofile_form.html'
     model = UserProfile
-    fields = ['avatar', 'bio', 'phone_number', 'year', 'tshirt']
+    fields = ['avatar', 'bio', 'phone_number', 'year',
+             'tshirt', 'first_name', 'last_name']
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -65,27 +68,8 @@ class ListUserView(ListView):
     def dispatch(self, *args, **kwargs):
         return super(ListUserView, self).dispatch(*args, **kwargs)
 
-    def get_queryset(self):
-        qs = super(ListUserView, self).get_queryset()
-        form = UserFilterForm(
-            self.members,
-            data=self.request.GET
-        )
-        if form.is_valid():
-            return form.return_members(qs)
-
-        return UserProfile.objects.none()
-
     def get_context_data(self, **kwargs):
         context = super(ListUserView, self).get_context_data(**kwargs)
-        initial = self.request.GET.copy()
-        context.update({
-            'form': UserFilterForm(
-                self.members,
-                initial=initial,
-                data=self.request.GET
-            )
-        })
         return context
 
 list_view = ListUserView.as_view()

@@ -50,6 +50,7 @@ class UserProfile(BaseModel):
     points = models.PositiveIntegerField(blank=True, null=True)
     year = models.CharField(max_length=56, choices=YEAR_CHOICES, default='FR')
     tshirt = models.CharField(max_length=56, choices=SHIRT_SIZES, default='M')
+
     def __str__(self):
         return '{}'.format(self.user.username)
 
@@ -58,8 +59,20 @@ class UserProfile(BaseModel):
         return self.__unicode__()
 
     def get_absolute_url(self):
-        return reverse('profile', args=[self.user.username])
+        return reverse('profile', args=[self.user.pk])
 
+    def get_points(self):
+        points = 0
+        if self.email_is_verified:
+            points += 50
+        if self.personal_info_is_completed:
+            points += 50
+        return points
+
+    def update_points(self):
+        self.points = self.points()
+        self.save()
+        return
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
