@@ -73,7 +73,7 @@
                   <div class="media w-100">
                     <img class="media-object rounded-circle mr-3" src="{% static "events/img/blank-profile.png" %}">
                     <div class="media-body align-self-center">
-                      <small>@{{ member.user.username }}</small>
+                      <small>@{{ member.first_name }} {{ member.last_name }}</small>
                     </div>
                   </div>
                 </li>
