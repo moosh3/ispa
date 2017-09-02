@@ -21,7 +21,7 @@ git tag -a $version -m "version $version"
 git push
 git push --tags
 
-docker tag gcr.io/$GCLOUD_PROJECT/ispa:$version
+docker tag gcr.io/$GCLOUD_PROJECT/ispa:latest gcr.io/$GCLOUD_PROJECT/ispa:$version
 
 gcloud docker -- push gcr.io/${GCLOUD_PROJECT}/ispa:$version
 gcloud docker -- push gcr.io/${GCLOUD_PROJECT}/ispa:latest
