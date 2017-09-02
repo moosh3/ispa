@@ -60,7 +60,7 @@ urlpatterns += [
 # Members
 urlpatterns += [
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^member/profile/(?P<pk>\d+)/$', users.detail_view, name='profile'),
+    url(r'^member/profile/(?P<username>[\w.-_@]+)/$', users.detail_view, name='profile'),
     url(r'^member/edit/(?P<pk>\d+)/$', users.update_view, name='profile-edit'),
     url(r'^member/list/$', users.list_view, name='member-list'),
     url(r'^account/settings/', TemplateView.as_view(

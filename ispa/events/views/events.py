@@ -24,12 +24,15 @@ class EventDashboard(TemplateView):
         context = super(EventDashboard, self).get_context_data(**kwargs)
         active_events = Event.objects.filter(
             is_active=True,
-        ).order_by('date')[:10]
+        ).order_by('date').exclude(name__startswith='Speaker')[:10]
         context['active_events'] = active_events
 
         members = UserProfile.objects.all()
         context['members'] = members
-
+        speakers = Event.objects.filter(
+            name__startswith='Speaker'
+        )
+        context['speakers'] = speakers
         return context
 
 class DetailEventView(TemplateView):

@@ -10,6 +10,8 @@
           <div class="card card-inverse" style="background-color: #333; border-color: #333;">
             <div class="card-block text-left">
               <h3 class="card-title">Upcoming Events</h3>
+              <h3 class="float-right">Speakers</h3>
+
               <br />
             </div>
           </div>
@@ -38,8 +40,20 @@
       <br />
 
     <div class="row">
-      <div class="col-8">
+      <div class="col-4">
          {% for event in active_events %}
+          <div class="card card-outline-info mb-3">
+            <div class="card-block">
+              <h4 class="card-title">{{ event.name }}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">{{ event.date }}</h6>
+              <p class="card-text">{{ event.description }}</p>
+            <a href="{{ event.get_absolute_url }}" class="btn btn-primary">More</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col-4">
+         {% for event in speakers %}
           <div class="card card-outline-info mb-3">
             <div class="card-block">
               <h4 class="card-title">{{ event.name }}</h4>
@@ -59,9 +73,6 @@
                   <div class="media w-100">
                     <img class="media-object rounded-circle mr-3" src="{% static "events/img/blank-profile.png" %}">
                     <div class="media-body align-self-center">
-                      <a href="{{ member.get_absolute_url }}" class="btn btn-outline-primary btn-sm float-right">
-                        <span class="icon icon-add-user"></span> Follow
-                      </a>
                       <small>@{{ member.user.username }}</small>
                     </div>
                   </div>
