@@ -14,8 +14,24 @@ $ docker volume create --name ispa_pg_data
 For local development you'll want to bring up common services like the database, redis and ispa with docker-compose.
 
 ```Bash
-$ docker-compose up --remove-orphans -d
+$ make up
 ```
+
+Some quick commands:
+- make up = `docker-compose up -d`
+- make down = `docker-compose down --remove-orphans`
+- make sync = `git pull upstream master` # When pushing from fork
+- make build = `docker build -t $REPO/$IMAGE:$TAG`
+- make push = build + `docker push $REPO/$IMAGE:$TAG`
+- make attach = `docker exec -it ispa_local /bin/bash`
+
+## Deploying
+
+You can deploy small changes via `ispa:latest` with `make deploy`. It builds the image, pushes it to the `gcr.io` registry and then deletes all current pods so they restart with the newest image.
+
+If you are deploying a "release" aka 1.0, run `./release.sh` which pulls from git, build, creates a new tag/bumps version number, and deploys to GCP.
+
+Currently redis isn't running on GCP, and probably won't be. Looking to subsitute for rabbitmq instead.
 
 **Note**: For tagged releases, the data volume most likely will have to be delete due to modifications to the migrations, possible messing up postgresql. In `data/` will be a tarball that has the newest (clean) database -- all we did was run the new migrations. Here are some commands that might be of use:
 
