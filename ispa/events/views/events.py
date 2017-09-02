@@ -27,6 +27,9 @@ class EventDashboard(TemplateView):
         ).order_by('date')[:10]
         context['active_events'] = active_events
 
+        members = UserProfile.objects.all()
+        context['members'] = members
+
         return context
 
 class DetailEventView(TemplateView):

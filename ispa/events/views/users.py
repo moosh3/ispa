@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, UpdateView, ListView
+from django.views.generic import DetailView, UpdateView, ListView, TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django import forms
@@ -8,40 +8,31 @@ from django import forms
 from events.models import UserProfile, Attendance
 from events.forms import UserFilterForm
 
-class DetailUserView(DetailView):
+class DetailUserView(TemplateView):
+
     template_name = 'users/profile.html'  # That's All Folks!
-    model = UserProfile
+    model = User
 
     @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        self.lookup_args = kwargs
-
-        return super(DetailUserView, self).dispatch(*args, **kwargs)
-
-    def get_object(self, *args, **kwargs):
-        lookup_dict = {}
-        if self.lookup_args.get('pk'):
-            lookup_dict['pk'] = self.lookup_args['pk']
-        if self.lookup_args.get('username'):
-            lookup_dict['user__username'] = self.lookup_args['username'].lower()
-
-        return get_object_or_404(
+    def dispatch(self, request, *args, **kwargs):
+        self.member = get_object_or_404(
             UserProfile,
-            **lookup_dict
+            user=self.kwargs['user']
         )
+        return super(DetailUserView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(DetailUserView, self).get_context_data(**kwargs)
-        obj = self.get_object()
         context['rsvp_events'] = Attendance.objects.filter(
-            user=obj.user,
+            user=self.member.user,
         )
         return context
 
 class EditUserView(UpdateView):
     template_name = 'users/userprofile_form.html'
     model = UserProfile
-    fields = ['avatar', 'bio', 'phone_number', 'year', 'tshirt']
+    fields = ['avatar', 'bio', 'phone_number', 'year',
+             'tshirt', 'first_name', 'last_name']
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -65,27 +56,8 @@ class ListUserView(ListView):
     def dispatch(self, *args, **kwargs):
         return super(ListUserView, self).dispatch(*args, **kwargs)
 
-    def get_queryset(self):
-        qs = super(ListUserView, self).get_queryset()
-        form = UserFilterForm(
-            self.members,
-            data=self.request.GET
-        )
-        if form.is_valid():
-            return form.return_members(qs)
-
-        return UserProfile.objects.none()
-
     def get_context_data(self, **kwargs):
         context = super(ListUserView, self).get_context_data(**kwargs)
-        initial = self.request.GET.copy()
-        context.update({
-            'form': UserFilterForm(
-                self.members,
-                initial=initial,
-                data=self.request.GET
-            )
-        })
         return context
 
 list_view = ListUserView.as_view()

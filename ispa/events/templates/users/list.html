@@ -6,15 +6,21 @@
 <h3>Active Members:</h3>
 <br />
 <div class="row">
-  <div class="col col-mid-8"
-    <ul class="list-group">
-    {% for member in userprofile_list %}
-        <li class="list-group-item">{{ member.user.username }} | Points: {{ member.points }}</li>
-    {% endfor %}
-    </u>
-  </div>
-
-  <div class="col-6 col-md-4">
-    <br />
-  </div>
+  <ul class="media-list media-list-users list-group">
+      {% for member in members %}
+      <li class="list-group-item">
+          <div class="media w-100">
+            <img class="media-object rounded-circle mr-3" src="{% static "events/img/blank-profile.png" %}">
+            <div class="media-body align-self-center">
+              <a href="{{ member.get_absolute_url }}" class="btn btn-outline-primary btn-sm float-right">
+                <span class="icon icon-add-user"></span> Follow
+              </a>
+              <small>@{{ member.user.username }}</small>
+            </div>
+          </div>
+        </li>
+        <br />
+  {% endfor %}
+</ul>
+</div>
 {% endblock %}

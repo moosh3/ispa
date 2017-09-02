@@ -25,3 +25,5 @@ docker tag gcr.io/$GCLOUD_PROJECT/ispa:$version
 
 gcloud docker -- push gcr.io/${GCLOUD_PROJECT}/ispa:$version
 gcloud docker -- push gcr.io/${GCLOUD_PROJECT}/ispa:latest
+
+kubectl delete pods --all
