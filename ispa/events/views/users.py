@@ -50,7 +50,7 @@ class EditUserView(UpdateView):
     def dispatch(self, *args, **kwargs):
         self.user = get_object_or_404(
             UserProfile,
-            pk=self.kwargs['pk']
+            user_id=self.kwargs['user_id']
         )
 
         return super(EditUserView, self).dispatch(*args, **kwargs)

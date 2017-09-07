@@ -10,7 +10,7 @@ RUN pip install -r /home/docker/requirements-base.txt\
     -r /home/docker/requirements-test.txt
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-COPY docker_bin/* /home/docker/bin/
+COPY bin/* /home/docker/bin/
 
 WORKDIR /home/docker/ispa
 

@@ -9,18 +9,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import RegexValidator
 
-from enumfields import EnumField, Enum 
-
 from events.models.base import BaseModel
 
 def avatar_field(instance, filename):
     return os.path.join('events', 'static', 'users', str(instance.user.pk), filename)
-
-
-@python_2_unicode_compatible
-class UserStatus(BaseModel):
-    DUES_PAID = 'dues_paid'
-    DUES_NOT_PAID = 'dues_not_paid'
 
 
 @python_2_unicode_compatible
